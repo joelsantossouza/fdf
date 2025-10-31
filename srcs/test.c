@@ -3,7 +3,7 @@
 #include <fcntl.h>
 #include "libft/libft.h"
 #include <math.h>
-#include "minilibx_linux/mlx.h"
+#include "minilibx-linux/mlx.h"
 
 
 typedef struct s_point
@@ -46,7 +46,8 @@ typedef struct s_image
 {
 	unsigned int	width;
 	unsigned int	height;
-	char			*data;
+	void			*mlx;
+	void			*window;
 }	t_image;
 
 void	render(t_camera camera, t_voxelmap map, t_image image)
@@ -76,7 +77,7 @@ void	render(t_camera camera, t_voxelmap map, t_image image)
 			{
 				color = map.color[map.width * ray.position.x + ray.position.y];
 				while (max_height < new_height)
-					image.data[map.width * width + ++max_height] = color;
+					mlx_pixel_put(image.mlx, image.window, width, ++max_height, color);
 			}
 			ray.position.x = round(ray.position.x + ray.direction.x);
 			ray.position.y = round(ray.position.y + ray.direction.y);
@@ -139,8 +140,7 @@ int	import_map(t_voxelmap *map, const char *path)
 		while (*ptr)
 		{
 			map->altitude[++i] = ft_atol_base(ptr, &ptr, "0123456789");
-			map->color[i] = *++ptr;
-			ptr++;
+			map->color[i] = ft_atol_base(++ptr, &ptr, "0123456789abcdef");
 		}
 		if (get_next_line(&line, file) < 0)
 			return (close(file), -1);
@@ -148,21 +148,6 @@ int	import_map(t_voxelmap *map, const char *path)
 	if (close(file) < 0)
 		return (-1);
 	return (0);
-}
-
-void	draw_image(t_image image)
-{
-	unsigned int	i;
-	unsigned int	j;
-
-	i = -1;
-	while (++i < image.width)
-	{
-		j = -1;
-		while (++j < image.height)
-			ft_printf("%c", image.data[image.width * i + j]);
-		ft_printf("\n");
-	}
 }
 
 int	main(void)
@@ -175,9 +160,12 @@ int	main(void)
 		.width = 320,
 		.height = 150,
 	};
-	image.data = malloc(sizeof(char) * image.width * image.height);
-	if (!image.data)
-		return (2);
+	image.mlx = mlx_init();
+	if (!image.mlx)
+		return (1);
+	image.window = mlx_new_window(image.mlx, image.width, image.height, "Voxel");
+	if (!image.window)
+		return (1);
 	if (import_map(&map, "map") < 0)
 		return (1);
 	camera = (t_camera) {
@@ -189,6 +177,6 @@ int	main(void)
 		.zfar = 30,
 	};
 	render(camera, map, image);
-	draw_image(image);
+	mlx_loop(image.mlx);
 	return (0);
 }
