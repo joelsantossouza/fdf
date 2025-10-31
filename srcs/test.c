@@ -1,3 +1,11 @@
+#include <unistd.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include "libft/libft.h"
+#include <math.h>
+#include "minilibx_linux/mlx.h"
+
+
 typedef struct s_point
 {
 	int	x;
@@ -5,7 +13,12 @@ typedef struct s_point
 	int	z;
 }	t_point;
 
-typedef t_point	t_vector;
+typedef struct s_vector
+{
+	double	x;
+	double	y;
+	double	z;
+}	t_vector;
 
 typedef struct s_camera
 {
@@ -17,10 +30,10 @@ typedef struct s_camera
 
 typedef struct s_voxelmap
 {
-	int	width;
-	int	height;
-	int	**altitude;
-	int	**color;
+	unsigned int	width;
+	unsigned int	height;
+	int				*altitude;
+	int				*color;
 }	t_voxelmap;
 
 typedef struct s_ray
@@ -31,20 +44,21 @@ typedef struct s_ray
 
 typedef struct s_image
 {
-	int		width;
-	int		height;
-	char	**data;
+	unsigned int	width;
+	unsigned int	height;
+	char			*data;
 }	t_image;
 
 void	render(t_camera camera, t_voxelmap map, t_image image)
 {
-	t_ray	ray;
-	int		zfar;
-	int		width;
-	int		new_height;
-	int		max_height;
-	char	color;
+	t_ray			ray;
+	int				zfar;
+	unsigned int	width;
+	int				new_height;
+	int				max_height;
+	char			color;
 
+	// camera.zfar = 0 DOES SEGFAULT
 	width = -1;
 	max_height = 0;
 	while (++width < image.width)
@@ -52,37 +66,129 @@ void	render(t_camera camera, t_voxelmap map, t_image image)
 		zfar = -1;
 		ray = (t_ray) {
 			.position = camera.position,
-			.direction.x = (-zfar + (zfar - -zfar) / image.width * width) / camera.zfar,
-			.direction.y = (zfar + (zfar - zfar) / image.width * width) / camera.zfar,
+			.direction.x = (-camera.zfar + (camera.zfar - -camera.zfar) / (double) image.width * width) / camera.zfar,
+			.direction.y = (camera.zfar + (camera.zfar - camera.zfar) / (double) image.width * width) / camera.zfar,
 		};
 		while (++zfar < camera.zfar)
 		{
-			new_height = map.altitude[ray.position.x][ray.position.y];
+			new_height = map.altitude[map.width * ray.position.x + ray.position.y] / ft_max(1, zfar);
 			if (new_height > max_height)
 			{
-				color = map.color[ray.position.x][ray.position.y];
+				color = map.color[map.width * ray.position.x + ray.position.y];
 				while (max_height < new_height)
-					image.data[width][++max_height] = color;
+					image.data[map.width * width + ++max_height] = color;
 			}
+			ray.position.x = round(ray.position.x + ray.direction.x);
+			ray.position.y = round(ray.position.y + ray.direction.y);
 		}
+	}
+}
+
+int	validate_file_map(t_voxelmap *map, const char *path)
+{
+	const int	file = open(path, O_RDONLY);
+	char		*line;
+	int			total_size;
+
+	*map = (t_voxelmap) {};
+	if (file < 0)
+		return (-1);
+	line = 0;
+	if (get_next_line(&line, file) < 0)
+		return (close(file), -1);
+	map->width = ft_word_count(line, ' ');
+	map->height = 1;
+	while (line)
+	{
+		if (ft_word_count(line, ' ') != map->width)
+			return (close(file), free(line), -1);
+		if (get_next_line(&line, file) < 0)
+			return (close(file), -1);
+		map->height++;
+	}
+	if (close(file) < 0)
+		return (-1);
+	total_size = map->width * map->height;
+	map->altitude = malloc(sizeof(int) * total_size);
+	if (!map->altitude)
+		return (-1);
+	map->color = malloc(sizeof(char) * total_size);
+	if (!map->color)
+		return (free(map->altitude), -1);
+	return (0);
+}
+
+int	import_map(t_voxelmap *map, const char *path)
+{
+	const int	file = open(path, O_RDONLY);
+	char		*line;
+	char		*ptr;
+	int			i;
+
+	if (file < 0)
+		return (-1);
+	if (validate_file_map(map, path) < 0)
+		return (close(file), -1);
+	line = 0;
+	if (get_next_line(&line, file) < 0)
+		return (close(file), -1);
+	i = -1;
+	while (line)
+	{
+		ptr = line;
+		while (*ptr)
+		{
+			map->altitude[++i] = ft_atol_base(ptr, &ptr, "0123456789");
+			map->color[i] = *++ptr;
+			ptr++;
+		}
+		if (get_next_line(&line, file) < 0)
+			return (close(file), -1);
+	}
+	if (close(file) < 0)
+		return (-1);
+	return (0);
+}
+
+void	draw_image(t_image image)
+{
+	unsigned int	i;
+	unsigned int	j;
+
+	i = -1;
+	while (++i < image.width)
+	{
+		j = -1;
+		while (++j < image.height)
+			ft_printf("%c", image.data[image.width * i + j]);
+		ft_printf("\n");
 	}
 }
 
 int	main(void)
 {
-	t_player	camera;
+	t_voxelmap	map;
+	t_image		image;
+	t_camera	camera;
 
-	camera = (t_camera) {
-		.position.x =
-		.position.y =
-		.position.z = 
-		.direction.x =
-		.direction.y =
-		.fov =
+	image = (t_image) {
+		.width = 320,
+		.height = 150,
 	};
-	while (1)
-	{
-		render(player, map, image);
-		draw_image(image);
-	}
+	image.data = malloc(sizeof(char) * image.width * image.height);
+	if (!image.data)
+		return (2);
+	if (import_map(&map, "map") < 0)
+		return (1);
+	camera = (t_camera) {
+		.position.x = map.width / 2,
+		.position.y = map.height / 2,
+		.position.z = 0,
+		.direction.x = 0,
+		.direction.y = 0,
+		.zfar = 30,
+	};
+	render(camera, map, image);
+	draw_image(image);
+	return (0);
 }
