@@ -22,6 +22,7 @@ typedef struct s_camera
 {
 	t_point		position;
 	t_vector	direction;
+	int			height;
 	int			zfar;
 	double		fov;
 }	t_camera;
@@ -75,7 +76,7 @@ void	render(t_camera camera, t_voxelmap map, t_image image)
 			offset = ray.position.x * ray.position.y;
 			if (offset >= end)
 				break ;
-			new_height = map.altitude[offset] / zfar;
+			new_height = (map.altitude[offset] / zfar * 50) - camera.height;
 			if (new_height > max_height)
 			{
 				color = map.color[offset];
@@ -174,8 +175,9 @@ int	main(void)
 	if (import_map(&map, "map") < 0)
 		return (1);
 	camera = (t_camera) {
-		.position.x = 30,
-		.position.y = map.height - 20,
+		.position.x = map.width + map.width / 2,
+		.position.y = map.height / 4,
+		.height = 1,
 		.direction.x = 0,
 		.direction.y = 0,
 		.zfar = 30,
