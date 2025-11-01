@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:19 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/01 19:13:44 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/01 20:16:38 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@
 static
 int	validate_map(const char *path, t_map *map)
 {
-	const int		file = open(path, O_RDONLY);
-	const char		*line = 0;
+	const int	file = open(path, O_RDONLY);
+	char		*line;
 
-	if (file < 0)
-		return (-1);
+	line = 0;
 	get_next_line(&line, file);
 	map->width = ft_word_count(line, ' ');
 	if (!map->width)
@@ -50,13 +49,25 @@ t_map	*parse_fdf_file(const char *path)
 	const int	file = open(path, O_RDONLY);
 	size_t		i;
 	t_map		*map;
+	char		*line;
+	char		*ptr;
 
-	if (file < 0)
-		return (0);
+	line = 0;
 	map = malloc(sizeof(t_map));
-	if (!map)
-		return (close(file), 0);
-	if (map_dimensions(path, map) < 0)
+	if (!map || map_dimensions(path, map) < 0 || get_next_line(&line, file) < 0)
 		return (close(file), free(map), 0);
-	i = 0;
+	i = -1;
+	while (line)
+	{
+		ptr = line;
+		while (++i + 1 % map->width != 0)
+		{
+			map->altitude[i] = ft_atol_base(ptr, &ptr, DEC_BASE);
+			if (*ptr++ == ',')
+				map->color[i] = ft_atoh(ptr, &ptr);
+		}
+		if (get_next_line(&line, file) < 0)
+			return (close(file), free(map), 0);
+	}
+	return (close(file), map);
 }
