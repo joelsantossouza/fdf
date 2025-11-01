@@ -1,0 +1,214 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi_test.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/28 19:25:36 by joesanto          #+#    #+#             */
+/*   Updated: 2025/10/01 15:57:22 by joesanto         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+#include <stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <atf-c.h>
+
+#define RED		"\e[0;31m"
+#define GREEN	"\e[0;32m"
+#define RESET	"\e[0m"
+#define NELEM(tab) (sizeof(tab) / sizeof(char *))
+
+char	*tests_titles[] = {
+	"Null inputs",
+	"Empty inputs",
+	"Normal strings",
+};
+static int	i;
+
+void	test_libc(char *tab[], size_t size)
+{
+	int		output;
+	int		expected;
+	char	*color;
+
+	printf("\n<test%02d> %s\n", i, tests_titles[i]);
+	while (size--)
+	{
+		expected = tab[size] ? atoi(tab[size]) : 0;
+		output = ft_atoi(tab[size]);
+		color = expected == output ? GREEN : RED;
+
+		printf("%s", color);
+		printf("Input:   \t%s\n", tab[size]);
+		printf("Expected:\t%d\n", expected);
+		printf("Output:  \t%d\n", output);
+		printf("%s", RESET);
+
+		ATF_CHECK_EQ(expected, output);
+		printf("----------\n");
+	}
+}
+
+// TEST 00 --> NULL INPUTS
+ATF_TC(test00);
+ATF_TC_HEAD(test00, tc)
+{
+	atf_tc_set_md_var(tc, "descr", tests_titles[0]);
+}
+ATF_TC_BODY(test00, tc)
+{
+	char	*tab[] = {
+		0,
+	};
+
+	i = 0;
+	test_libc(tab, NELEM(tab));
+}
+
+// TEST 01 --> EMPTY INPUTS
+ATF_TC(test01);
+ATF_TC_HEAD(test01, tc)
+{
+	atf_tc_set_md_var(tc, "descr", tests_titles[1]);
+}
+ATF_TC_BODY(test01, tc)
+{
+	char	*tab[] = {
+		"",
+	};
+
+	i = 1;
+	test_libc(tab, NELEM(tab));
+}
+
+// TEST 02 --> NORMAL STRINGS
+ATF_TC(test02);
+ATF_TC_HEAD(test02, tc)
+{
+	atf_tc_set_md_var(tc, "descr", tests_titles[2]);
+}
+ATF_TC_BODY(test02, tc)
+{
+	char	*tab[] = {
+		"\x9a\x01\xaf\x22\x13\xff\x02",
+		"\x10\x33\x44\x55\x66\x77\x88\x99\xaa\xbb",
+		"\x01",
+		"\xab\xcd\xef\x12\x34\x56\x78\x90",
+		"\xff\xfe\xfd\xfc\xfb\xfa\xf9\xf8\xf7\xf6",
+		"\x00\x11\x22\x33\x44\x55\x66\x77\x88\x99\xaa\xbb\xcc",
+		"\x42\x42\x42",
+		"\x7f\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b",
+		"",
+		"\x10\x20\x30\x40\x50\x60\x70",
+		"\xaa\xbb\xcc\xdd\xee\xff",
+		"\x01\x23\x45\x67\x89\xab\xcd\xef",
+		"\xff",
+		"\x99\x98\x97\x96\x95\x94",
+		"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09",
+		"\xfe\xdc\xba\x98\x76\x54\x32\x10",
+		"\x0f\x1e\x2d\x3c\x4b\x5a\x69\x78\x87",
+		"\x01\x01\x01\x01\x01\x01\x01\x01",
+		"\xaa",
+		"\x7e\x7d\x7c\x7b\x7a\x79\x78\x77\x76",
+		"\x55\xaa\x55\xaa\x55\xaa",
+		"\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19",
+		"\xff\xee\xdd\xcc\xbb\xaa",
+		"\x21\x43\x65\x87\xa9\xcb\xed",
+		"\x99\x00\x99\x00\x99\x00\x99",
+		"\x01\x02\x03",
+		"\xab\xac\xad\xae\xaf",
+		"\x12\x34\x56\x78\x9a\xbc\xde\xf0",
+		"\xcd\xdc\xcd\xdc\xcd",
+		"\x90\x80\x70\x60\x50\x40\x30\x20\x10",
+		"\x77\x66\x55\x44\x33\x22\x11",
+		"\xfa\xfb\xfc\xfd\xfe\xff",
+		"\x01\x23\x45\x67",
+		"\x7f\x7e\x7d\x7c\x7b",
+		"\x10\x20\x30\x40\x50",
+		"\xff\x00\xff\x00",
+		"\x12\x12\x12\x12\x12\x12",
+		"\x45\x46\x47\x48\x49\x4a\x4b",
+		"\x98\x97\x96\x95\x94\x93",
+		"\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3",
+		"\x33\x66\x99\xcc\xff",
+		"\x01\x10\x20\x30\x40\x50\x60\x70\x80\x90",
+		"\x00",
+		"\xff\xff\xff\xff",
+		"\xab\xcd",
+		"\x12\x34\x56\x78\x90",
+		"\x89\x88\x87\x86\x85\x84\x83\x82\x81\x80",
+		"\x55\x44\x33\x22\x11",
+		"\x00\xff",
+		"\x0a\x0b\x0c\x0d\x0e\x0f",
+		"\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a",
+		"\xf1\xf2\xf3\xf4\xf5",
+		"\xaa\xaa\xaa\xaa\xaa\xaa",
+		"\x7f",
+		"\x12\x13\x14\x15\x16",
+		"\x9a\xbc\xde\xf0\x12\x34",
+		"\x55\x66\x77\x88\x99\xaa",
+		"\x01\x11\x21\x31\x41\x51\x61",
+		"\xfe\xed\xdc\xcb\xba\xa9",
+		"\x10\x10\x10\x10",
+		"\x77\x88\x99",
+		"\xaa\xbb\xcc",
+		"\x0f\x1f\x2f\x3f\x4f\x5f\x6f",
+		"\x01\x23\x45\x67\x89",
+		"\x44\x55\x66\x77\x88\x99\xaa\xbb",
+		"\xff\xfe\xfd\xfc",
+		"\x00\x01\x02\x03",
+		"\x12\x22\x32\x42\x52",
+		"\x9f\x9e\x9d\x9c\x9b",
+		"\x33\x34\x35\x36\x37\x38\x39",
+		"\x01\x02",
+		"\xab\xbb\xcb\xdb\xeb\xfb",
+		"\x77\x76\x75\x74\x73\x72\x71\x70",
+		"\x10\x20",
+		"\x42\x41\x40\x3f\x3e",
+		"\x55\x65\x75\x85\x95\xa5",
+		"\x01\x23",
+		"\x7f\x7f\x7f\x7f\x7f",
+		"\xaa\x99\x88\x77\x66",
+		"\x12\x13\x14",
+		"\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99",
+		"\x01\x02\x03\x04\x05",
+		"\xfe\xdc\xba",
+		"\x66\x77\x88\x99",
+		"\x0a\x0b\x0c\x0d",
+		"\x21\x22\x23\x24\x25",
+		"\x11\x22\x33\x44\x55\x66",
+		"\xff\x01\x02\x03",
+		"\xab\xac\xad",
+		"\x42\x43\x44\x45\x46\x47",
+		"\x01\x10\x20\x30",
+		"\x99\x88\x77\x66\x55\x44",
+		"\x0f\x0e\x0d\x0c\x0b",
+		"\x10\x11\x12\x13",
+		"\xfe\xff",
+		"\x01\x01\x01",
+		"\x33\x22\x11",
+		"\x55\x44\x33\x22",
+		"\xaa\xbb",
+		"203948\x77\x77\x77\x77",
+		"000024\x12\x34",
+		"11111\x99",
+		"\t239822\x01",
+		"   -221029\xff",
+	};
+
+	i = 2;
+	test_libc(tab, NELEM(tab));
+}
+
+// TEST PROGRAM
+ATF_TP_ADD_TCS(tp)
+{
+	ATF_TP_ADD_TC(tp, test00);
+	ATF_TP_ADD_TC(tp, test01);
+	ATF_TP_ADD_TC(tp, test02);
+
+	return (atf_no_error());
+}
