@@ -6,11 +6,12 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:19 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/01 20:16:38 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/01 20:54:49 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "fdf.h"
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -25,23 +26,23 @@ int	validate_map(const char *path, t_map *map)
 	get_next_line(&line, file);
 	map->width = ft_word_count(line, ' ');
 	if (!map->width)
-		return (close(file), -1);
+		return (close(file), ERROR);
 	map->height = 1;
 	while (line)
 	{
 		get_next_line(&line, file);
 		if (ft_word_count(line, ' ') != map->width)
-			return (close(file), free(line), -1);
+			return (close(file), free(line), ERROR);
 		map->height++;
 	}
 	map->total = map->width * map->height;
 	map->altitude = malloc(sizeof(*map->altitude) * map->total);
 	if (!map->altitude)
-		return (close(file), 0);
+		return (close(file), ERROR);
 	map->color = malloc(sizeof(*map->color) * map->total);
 	if (!map->color)
-		return (close(file), free(map->altitude), 0);
-	return (close(file), 0);
+		return (close(file), free(map->altitude), ERROR);
+	return (close(file), SUCCESS);
 }
 
 t_map	*parse_fdf_file(const char *path)
@@ -54,8 +55,8 @@ t_map	*parse_fdf_file(const char *path)
 
 	line = 0;
 	map = malloc(sizeof(t_map));
-	if (!map || map_dimensions(path, map) < 0 || get_next_line(&line, file) < 0)
-		return (close(file), free(map), 0);
+	if (!map || validate_map(path, map) < 0 || get_next_line(&line, file) < 0)
+		return (close(file), free(map), NULL);
 	i = -1;
 	while (line)
 	{
@@ -67,7 +68,7 @@ t_map	*parse_fdf_file(const char *path)
 				map->color[i] = ft_atoh(ptr, &ptr);
 		}
 		if (get_next_line(&line, file) < 0)
-			return (close(file), free(map), 0);
+			return (close(file), free(map), NULL);
 	}
 	return (close(file), map);
 }
