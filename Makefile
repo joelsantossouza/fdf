@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/30 15:41:12 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/01 17:22:00 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/01 17:37:33 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,8 @@ OBJS = $(PARSERS:.c=.o)
 CC = cc
 FLAGS = -Wall -Wextra -Werror -O3 -g
 
-LIBFT = libft.a
-MINILIBX = libmlx_Linux.a
+LIBFT = libft/libft.a
+MINILIBX = minilibx-linux/libmlx_Linux.a
 LIBS_DIR = libs
 LIBS = $(addprefix $(LIBS_DIR)/, $(LIBFT) $(MINILIBX))
 
@@ -43,3 +43,12 @@ $(NAME): $(OBJS) $(LIBS)
 		git clone git@github.com:42paris/minilibx-linux.git $(dir $@); \
 	fi
 	make -C $(dir $@)
+
+clean:
+	rm -f $(OBJS)
+
+fclean: clean
+	rm -rf $(LIBS_DIR)
+	rm -f $(NAME)
+
+re: fclean all
