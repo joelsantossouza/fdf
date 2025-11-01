@@ -10,14 +10,12 @@ typedef struct s_point
 {
 	int	x;
 	int	y;
-	int	z;
 }	t_point;
 
 typedef struct s_vector
 {
 	double	x;
 	double	y;
-	double	z;
 }	t_vector;
 
 typedef struct s_camera
@@ -33,7 +31,7 @@ typedef struct s_voxelmap
 	unsigned int	width;
 	unsigned int	height;
 	int				*altitude;
-	int				*color;
+	unsigned int	*color;
 }	t_voxelmap;
 
 typedef struct s_ray
@@ -57,14 +55,16 @@ void	render(t_camera camera, t_voxelmap map, t_image image)
 	unsigned int	width;
 	int				new_height;
 	int				max_height;
-	char			color;
+	unsigned int	color;
+	int				offset;
+	const int		end = map.width * map.height;
 
 	// camera.zfar = 0 DOES SEGFAULT
 	width = -1;
-	max_height = 0;
 	while (++width < image.width)
 	{
-		zfar = -1;
+		zfar = 0;
+		max_height = 0;
 		ray = (t_ray) {
 			.position = camera.position,
 			.direction.x = (-camera.zfar + (camera.zfar - -camera.zfar) / (double) image.width * width) / camera.zfar,
@@ -72,10 +72,13 @@ void	render(t_camera camera, t_voxelmap map, t_image image)
 		};
 		while (++zfar < camera.zfar)
 		{
-			new_height = map.altitude[map.width * ray.position.x + ray.position.y] / ft_max(1, zfar);
+			offset = ray.position.x * ray.position.y;
+			if (offset >= end)
+				break ;
+			new_height = map.altitude[offset] / zfar;
 			if (new_height > max_height)
 			{
-				color = map.color[map.width * ray.position.x + ray.position.y];
+				color = map.color[offset];
 				while (max_height < new_height)
 					mlx_pixel_put(image.mlx, image.window, width, ++max_height, color);
 			}
@@ -113,7 +116,7 @@ int	validate_file_map(t_voxelmap *map, const char *path)
 	map->altitude = malloc(sizeof(int) * total_size);
 	if (!map->altitude)
 		return (-1);
-	map->color = malloc(sizeof(char) * total_size);
+	map->color = malloc(sizeof(int) * total_size);
 	if (!map->color)
 		return (free(map->altitude), -1);
 	return (0);
@@ -137,10 +140,12 @@ int	import_map(t_voxelmap *map, const char *path)
 	while (line)
 	{
 		ptr = line;
-		while (*ptr)
+		while (*ptr && *ptr != '\n')
 		{
 			map->altitude[++i] = ft_atol_base(ptr, &ptr, "0123456789");
-			map->color[i] = ft_atol_base(++ptr, &ptr, "0123456789abcdef");
+			while (*ptr++ != 'x')
+				;
+			map->color[i] = ft_atol_base(ptr, &ptr, "0123456789abcdef");
 		}
 		if (get_next_line(&line, file) < 0)
 			return (close(file), -1);
@@ -157,8 +162,8 @@ int	main(void)
 	t_camera	camera;
 
 	image = (t_image) {
-		.width = 320,
-		.height = 150,
+		.width = 1000,
+		.height = 600,
 	};
 	image.mlx = mlx_init();
 	if (!image.mlx)
@@ -169,9 +174,8 @@ int	main(void)
 	if (import_map(&map, "map") < 0)
 		return (1);
 	camera = (t_camera) {
-		.position.x = map.width / 2,
-		.position.y = map.height / 2,
-		.position.z = 0,
+		.position.x = 30,
+		.position.y = map.height - 20,
 		.direction.x = 0,
 		.direction.y = 0,
 		.zfar = 30,
