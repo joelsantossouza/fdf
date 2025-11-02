@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:19 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/02 00:52:36 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/02 15:06:07 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ int	validate_map(const char *path, t_map *map)
 	line = NULL;
 	get_next_line(&line, file);
 	map->width = ft_word_count(line, ' ');
-	if (!map->width)
+	if (!map->width || get_next_line(&line, file) < 0)
 		return (close(file), ERROR);
 	map->height = 1;
 	while (line)
 	{
-		get_next_line(&line, file);
 		if (ft_word_count(line, ' ') != map->width)
 			return (close(file), free(line), ERROR);
 		map->height++;
+		get_next_line(&line, file);
 	}
 	map->total = map->width * map->height;
 	map->altitude = malloc(sizeof(*map->altitude) * map->total);
