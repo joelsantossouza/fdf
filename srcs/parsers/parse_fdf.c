@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:19 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/02 16:35:16 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/02 18:23:39 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@ void	free_map(t_map *map, void (*free_struct)(void *))
 static
 int	validate_map(const char *path, t_map *map)
 {
-	const int	file = open(path, O_RDONLY);
+	const int	fd = open(path, O_RDONLY);
 	char		*line;
 
 	line = NULL;
-	get_next_line(&line, file);
+	ft_getline(&line, fd);
 	map->width = ft_word_count(line, ' ');
-	if (!map->width || get_next_line(&line, file) < 0)
-		return (close(file), ft_bzero(map, sizeof(*map)), ERROR);
+	if (!map->width || ft_getline(&line, fd) < 0)
+		return (close(fd), ft_bzero(map, sizeof(*map)), ERROR);
 	map->height = 1;
 	while (line)
 	{
-		if (ft_word_count(line, ' ') != map->width || get_next_line(&line, file) < 0)
-			return (close(file), ft_bzero(map, sizeof(*map)), free(line), ERROR);
+		if (ft_word_count(line, ' ') != map->width || ft_getline(&line, fd) < 0)
+			return (close(fd), ft_bzero(map, sizeof(*map)), free(line), ERROR);
 		map->height++;
 	}
 	map->total = map->width * map->height;
@@ -48,36 +48,38 @@ int	validate_map(const char *path, t_map *map)
 	if (!map->altitude || !map->color)
 	{
 		free_map(map, NULL);
-		return (close(file), ft_bzero(map, sizeof(*map)), ERROR);
+		return (close(fd), ft_bzero(map, sizeof(*map)), ERROR);
 	}
-	return (close(file), SUCCESS);
+	return (close(fd), SUCCESS);
 }
 
 int	parse_fdf_file(const char *path, t_map *map)
 {
-	const int	file = open(path, O_RDONLY);
-	char		**split;
+	const int	fd = open(path, O_RDONLY);
+	char		**data;
 	char		*line;
-	size_t		i;
+	unsigned int	i;
+	unsigned int	j;
 
+	if (fd < 0 || validate_map(path, map) < 0)
+		return (close(fd), ERROR);
+	j = -1;
 	line = NULL;
-	if (validate_map(path, map) < 0 || get_next_line(&line, file) < 0)
-		return (close(file), free_map(map, NULL), ERROR);
-	i = -1;
-	while (line)
+	while (++j < map->height)
 	{
-		ptr = line;
-		width = map->width;
-		while (width--)
+		i = -1;
+		ft_getline(&line, fd);
+		data = ft_split(line, ' ');
+		if (!data)
+			return (close(fd), free_map(map, NULL), free(line), ERROR);
+		while (++i < map->width)
 		{
-			map->altitude[++i] = ft_atol_base(ptr, &ptr, DEC_BASE);
+			map->altitude[map->width * j + i] = ft_atol_base(data[i], NULL, DEC);
 			if (*ptr++ == ',')
 				map->color[i] = ft_atoh(ptr, &ptr);
 			else
 				map->color[i] = WHITE;
 		}
-		if (get_next_line(&line, file) < 0)
-			return (close(file), free_map(map, NULL), ERROR);
 	}
-	return (close(file), SUCCESS);
+	return (close(fd), SUCCESS);
 }
