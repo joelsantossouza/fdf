@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:19 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/01 20:54:49 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/02 00:52:36 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,21 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+void	free_map(t_map *map, void (*free_struct)(void *))
+{
+	free(map->altitude);
+	free(map->color);
+	if (free_struct)
+		free_struct(map);
+}
+
 static
 int	validate_map(const char *path, t_map *map)
 {
 	const int	file = open(path, O_RDONLY);
 	char		*line;
 
-	line = 0;
+	line = NULL;
 	get_next_line(&line, file);
 	map->width = ft_word_count(line, ' ');
 	if (!map->width)
@@ -45,18 +53,16 @@ int	validate_map(const char *path, t_map *map)
 	return (close(file), SUCCESS);
 }
 
-t_map	*parse_fdf_file(const char *path)
+int	parse_fdf_file(const char *path, t_map *map)
 {
 	const int	file = open(path, O_RDONLY);
-	size_t		i;
-	t_map		*map;
 	char		*line;
 	char		*ptr;
+	size_t		i;
 
-	line = 0;
-	map = malloc(sizeof(t_map));
-	if (!map || validate_map(path, map) < 0 || get_next_line(&line, file) < 0)
-		return (close(file), free(map), NULL);
+	line = NULL;
+	if (validate_map(path, map) < 0 || get_next_line(&line, file) < 0)
+		return (close(file), free_map(map, NULL), ERROR);
 	i = -1;
 	while (line)
 	{
@@ -66,9 +72,11 @@ t_map	*parse_fdf_file(const char *path)
 			map->altitude[i] = ft_atol_base(ptr, &ptr, DEC_BASE);
 			if (*ptr++ == ',')
 				map->color[i] = ft_atoh(ptr, &ptr);
+			else
+				map->color[i] = WHITE;
 		}
 		if (get_next_line(&line, file) < 0)
-			return (close(file), free(map), NULL);
+			return (close(file), free_map(map, NULL), ERROR);
 	}
-	return (close(file), map);
+	return (close(file), SUCCESS);
 }

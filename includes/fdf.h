@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/01 20:57:01 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/02 00:51:39 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 # define ERROR		-1
 # define SUCCESS	0
-
 # define DEC_BASE	"0123456789"
+
+# define WHITE		0xFFFFFF
 
 typedef struct s_map
 {
@@ -26,5 +27,8 @@ typedef struct s_map
 	unsigned int	*color;	
 	int				*altitude;	
 }	t_map;
+
+void	free_map(t_map *map, void (*free_struct)(void *));
+int		parse_fdf_file(const char *path, t_map *map);
 
 #endif

@@ -5,53 +5,32 @@
 #                                                     +:+ +:+         +:+      #
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/10/30 15:41:12 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/02 01:36:09 by joesanto         ###   ########.fr        #
+#    Created: 2025/11/02 01:11:47 by joesanto          #+#    #+#              #
+#    Updated: 2025/11/02 01:29:23 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-NAME = fdf
-
-LIBS_DIR = libs
-SRCS_DIR = srcs
-
-PARSERS = $(addprefix parsers/, parse_fdf.c)
-
-OBJS = $(addprefix $(SRCS_DIR)/, $(PARSERS:.c=.o))
 
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g
 
-LIBFT = libft/libft.a
-MINILIBX = minilibx-linux/libmlx_Linux.a
-LIBS = $(addprefix $(LIBS_DIR)/, $(LIBFT) $(MINILIBX))
-INCLUDES=$(addprefix -I, $(dir $(LIBS)) includes)
+NAME = parse_fdf_test
+
+INCLUDES = $(addprefix -I, ../../../includes/ ../../../libs/libft)
+LIBS = ../../../libs/libft/libft.a
+SRCS = ../parse_fdf.c
 
 all: $(NAME)
 
-$(NAME): $(LIBS) $(OBJS)
-	$(CC) $(OBJS) $(LIBS) -o $@
+%_test: %_test.o $(SRCS:.c=.o) $(LIBS)
+	$(CC) $^ -o $@
 
-%.o: %.c $(HEADERS)
+%.o: %.c
 	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
 
-%$(LIBFT):
-	@if [ ! -d "$(dir $@)" ]; then \
-		git clone git@github.com:joelsantossouza/libft.git $(dir $@); \
-	fi
-	make -C $(dir $@)
-
-%$(MINILIBX):
-	@if [ ! -d "$(dir $@)" ]; then \
-		git clone git@github.com:42paris/minilibx-linux.git $(dir $@); \
-	fi
-	make -C $(dir $@)
-
 clean:
-	rm -f $(OBJS)
+	rm -f $(addsufix .o, $(NAME))
 
 fclean: clean
-	rm -rf $(LIBS_DIR)
 	rm -f $(NAME)
 
 re: fclean all
