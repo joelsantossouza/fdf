@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:19 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/02 15:06:07 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/02 16:35:16 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,30 +34,30 @@ int	validate_map(const char *path, t_map *map)
 	get_next_line(&line, file);
 	map->width = ft_word_count(line, ' ');
 	if (!map->width || get_next_line(&line, file) < 0)
-		return (close(file), ERROR);
+		return (close(file), ft_bzero(map, sizeof(*map)), ERROR);
 	map->height = 1;
 	while (line)
 	{
-		if (ft_word_count(line, ' ') != map->width)
-			return (close(file), free(line), ERROR);
+		if (ft_word_count(line, ' ') != map->width || get_next_line(&line, file) < 0)
+			return (close(file), ft_bzero(map, sizeof(*map)), free(line), ERROR);
 		map->height++;
-		get_next_line(&line, file);
 	}
 	map->total = map->width * map->height;
 	map->altitude = malloc(sizeof(*map->altitude) * map->total);
-	if (!map->altitude)
-		return (close(file), ERROR);
 	map->color = malloc(sizeof(*map->color) * map->total);
-	if (!map->color)
-		return (close(file), free(map->altitude), ERROR);
+	if (!map->altitude || !map->color)
+	{
+		free_map(map, NULL);
+		return (close(file), ft_bzero(map, sizeof(*map)), ERROR);
+	}
 	return (close(file), SUCCESS);
 }
 
 int	parse_fdf_file(const char *path, t_map *map)
 {
 	const int	file = open(path, O_RDONLY);
+	char		**split;
 	char		*line;
-	char		*ptr;
 	size_t		i;
 
 	line = NULL;
@@ -67,9 +67,10 @@ int	parse_fdf_file(const char *path, t_map *map)
 	while (line)
 	{
 		ptr = line;
-		while (++i + 1 % map->width != 0)
+		width = map->width;
+		while (width--)
 		{
-			map->altitude[i] = ft_atol_base(ptr, &ptr, DEC_BASE);
+			map->altitude[++i] = ft_atol_base(ptr, &ptr, DEC_BASE);
 			if (*ptr++ == ',')
 				map->color[i] = ft_atoh(ptr, &ptr);
 			else

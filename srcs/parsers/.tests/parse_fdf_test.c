@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 01:07:08 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/02 01:35:10 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/02 15:30:21 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,21 @@ void	print_map(t_map map)
 	unsigned int	j;
 
 	ft_printf("-- Color Map --\n");
-	i = -1;
-	while (++i < map.width)
+	j = -1;
+	while (++j < map.height)
 	{
-		j = -1;
-		while (++j < map.height)
+		i = -1;
+		while (++i < map.width)
 			ft_printf("%u ", map.color[map.width * j + i]);
 		ft_printf("\n");
 	}
 	ft_printf("\n");
 	ft_printf("-- Altitude Map --\n");
-	i = -1;
-	while (++i < map.width)
+	j = -1;
+	while (++j < map.height)
 	{
-		j = -1;
-		while (++j < map.height)
+		i = -1;
+		while (++i < map.width)
 			ft_printf("%d ", map.altitude[map.width * j + i]);
 		ft_printf("\n");
 	}
