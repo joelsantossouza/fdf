@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:19 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/02 18:23:39 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/03 10:08:42 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,31 +55,23 @@ int	validate_map(const char *path, t_map *map)
 
 int	parse_fdf_file(const char *path, t_map *map)
 {
-	const int	fd = open(path, O_RDONLY);
-	char		**data;
-	char		*line;
-	unsigned int	i;
-	unsigned int	j;
+	char	*file;
+	char	*ptr;
+	size_t	i;
 
-	if (fd < 0 || validate_map(path, map) < 0)
-		return (close(fd), ERROR);
-	j = -1;
-	line = NULL;
-	while (++j < map->height)
+	file = NULL;
+	if (validate_map(path, map) < 0 || ft_getfile(&file, path) < 0)
+		return (free_map(map, NULL), ERROR);
+	i = -1;
+	ptr = file;
+	while (++i < map->total)
 	{
-		i = -1;
-		ft_getline(&line, fd);
-		data = ft_split(line, ' ');
-		if (!data)
-			return (close(fd), free_map(map, NULL), free(line), ERROR);
-		while (++i < map->width)
-		{
-			map->altitude[map->width * j + i] = ft_atol_base(data[i], NULL, DEC);
-			if (*ptr++ == ',')
-				map->color[i] = ft_atoh(ptr, &ptr);
-			else
-				map->color[i] = WHITE;
-		}
+		map->altitude[i] = ft_atol_base(ptr, &ptr, DEC_BASE);
+		if (*ptr == ',')
+			map->color[i] = ft_atoh(++ptr, &ptr);
+		else
+			map->color[i] = WHITE;
+		ptr = ft_strpbrknul(ptr, " \n");
 	}
-	return (close(fd), SUCCESS);
+	return (free(file), SUCCESS);
 }

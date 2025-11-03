@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 01:07:08 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/02 15:30:21 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/03 10:03:05 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_map(t_map map)
 	{
 		i = -1;
 		while (++i < map.width)
-			ft_printf("%u ", map.color[map.width * j + i]);
+			ft_printf("%3u ", map.color[map.width * j + i]);
 		ft_printf("\n");
 	}
 	ft_printf("\n");
@@ -35,7 +35,7 @@ void	print_map(t_map map)
 	{
 		i = -1;
 		while (++i < map.width)
-			ft_printf("%d ", map.altitude[map.width * j + i]);
+			ft_printf("%3d ", map.altitude[map.width * j + i]);
 		ft_printf("\n");
 	}
 	ft_printf("\n");
