@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 11:42:29 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/03 12:14:56 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/03 12:26:49 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,18 @@ void	putpixel(t_image image, int width, int height, unsigned int color)
 	*(unsigned int *) (image.addr + (image.size_line * height + width * (image.bits_per_pixel / 8))) = color;
 }
 
+void	drawline(t_image image, unsigned int width, unsigned int height, int deltax, int deltay)
+{
+	int i = WIDTH - 10;
+
+	while (i-- > 0)
+	{
+		putpixel(image, width, height, 0xFFFFFF);
+		width += deltax;
+		height += deltay;
+	}
+}
+
 int	main(void)
 {
 	void	*mlx = mlx_init();
@@ -42,7 +54,7 @@ int	main(void)
 	if (!image.data)
 		return (3);
 	image.addr = mlx_get_data_addr(image.data, &image.bits_per_pixel, &image.size_line, &image.endian);
-	putpixel(image, 10, 10, 0xFFFFFF);
+	drawline(image, 0, 0, 1, 1);
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
 	mlx_loop(mlx);
 	return (0);
