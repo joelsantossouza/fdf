@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/03 10:35:39 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/03 17:44:33 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,22 @@ typedef struct s_map
 	unsigned int	*color;	
 	int				*altitude;	
 }	t_map;
+
+typedef struct s_image
+{
+	void	*data;
+	char	*addr;
+	int		bpp;
+	int		width;
+	int		endian;
+}	t_image;
+
+typedef struct s_pixel
+{
+	int				x;
+	int				y;
+	unsigned int	color;
+}	t_pixel;
 
 // UTILS
 void	free_map(t_map *map, void (*free_struct)(void *));
