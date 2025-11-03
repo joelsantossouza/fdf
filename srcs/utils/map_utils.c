@@ -1,37 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/03 10:35:39 by joesanto         ###   ########.fr       */
+/*   Created: 2025/11/03 10:34:34 by joesanto          #+#    #+#             */
+/*   Updated: 2025/11/03 10:35:04 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "fdf.h"
+#include <stdlib.h>
 
-# define ERROR		-1
-# define SUCCESS	0
-# define DEC_BASE	"0123456789"
-
-# define WHITE		0xFFFFFF
-
-typedef struct s_map
+void	free_map(t_map *map, void (*free_struct)(void *))
 {
-	unsigned int	width;
-	unsigned int	height;
-	unsigned long	total;
-	unsigned int	*color;	
-	int				*altitude;	
-}	t_map;
-
-// UTILS
-void	free_map(t_map *map, void (*free_struct)(void *));
-
-// PARSING
-int		parse_fdf_file(const char *path, t_map *map);
-
-#endif
+	free(map->altitude);
+	free(map->color);
+	if (free_struct)
+		free_struct(map);
+}

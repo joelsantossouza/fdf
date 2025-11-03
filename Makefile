@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/30 15:41:12 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/02 01:36:09 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/03 10:38:17 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,9 @@ NAME = fdf
 LIBS_DIR = libs
 SRCS_DIR = srcs
 
-PARSERS = $(addprefix parsers/, parse_fdf.c)
+UTILS = $(addprefix utils/, map_utils.c)
 
-OBJS = $(addprefix $(SRCS_DIR)/, $(PARSERS:.c=.o))
+PARSERS = $(addprefix parsers/, parse_fdf.c)
 
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g
@@ -26,6 +26,7 @@ LIBFT = libft/libft.a
 MINILIBX = minilibx-linux/libmlx_Linux.a
 LIBS = $(addprefix $(LIBS_DIR)/, $(LIBFT) $(MINILIBX))
 INCLUDES=$(addprefix -I, $(dir $(LIBS)) includes)
+OBJS = $(addprefix $(SRCS_DIR)/, $(PARSERS:.c=.o) $(UTILS:.c=.o))
 
 all: $(NAME)
 
