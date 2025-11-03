@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/03 18:28:35 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/03 22:31:31 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,8 @@ void	putpixel(t_image image, unsigned int width, unsigned int height, unsigned i
 
 // PARSING
 int		parse_fdf_file(const char *path, t_map *map);
+
+// RENDER
+void	bresenham_drawline(t_image image, t_pixel p0, t_pixel p1);
 
 #endif
