@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/02 00:51:39 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/03 10:24:30 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_map
 {
 	unsigned int	width;
 	unsigned int	height;
-	unsigned int	total;
+	unsigned long	total;
 	unsigned int	*color;	
 	int				*altitude;	
 }	t_map;
