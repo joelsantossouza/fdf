@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/03 17:44:33 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/03 18:28:35 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_pixel
 
 // UTILS
 void	free_map(t_map *map, void (*free_struct)(void *));
+void	putpixel(t_image image, unsigned int width, unsigned int height, unsigned int color);
 
 // PARSING
 int		parse_fdf_file(const char *path, t_map *map);
