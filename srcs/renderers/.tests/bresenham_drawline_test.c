@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/03 23:11:31 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/04 09:17:09 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(void)
 	if (!image.data)
 		return (3);
 	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.width, &image.endian);
-	bresenham_drawline(image, (t_pixel) {.x = 1002, .y = 900}, (t_pixel) {.x = 0, .y = 50});
+	bresenham_drawline(image, (t_pixel) {.x = 10, .y = 10}, (t_pixel) {.x = 10, .y = 500});
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
 	mlx_loop(mlx);
 	mlx_destroy_image(mlx, image.data);
