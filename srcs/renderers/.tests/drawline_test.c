@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/04 13:57:11 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/04 18:32:02 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,17 @@ t_image	image;
 t_pixel pixel1 = {
 	.x = WIDTH / 4,
 	.y = HEIGHT / 2,
-	.color = 0xffffffff,
+	.color.r = 0xff,
+	.color.g = 0xff,
+	.color.b = 0xff,
 };
 
 t_pixel pixel2 = {
 	.x = WIDTH - WIDTH / 4,
 	.y = HEIGHT / 2,
-	.color = 0xffffffff,
+	.color.r = 0xff,
+	.color.g = 0xff,
+	.color.b = 0xff,
 };
 
 void	(*drawline)(t_image, t_pixel, t_pixel) = bresenham_drawline;

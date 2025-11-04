@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/04 13:13:54 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/04 18:29:05 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,30 @@ typedef struct s_image
 	int		endian;
 }	t_image;
 
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}	t_point;
+
+typedef struct s_color
+{
+	double	r;
+	double	g;
+	double	b;
+}	t_color;
+
 typedef struct s_pixel
 {
-	int				x;
-	int				y;
-	unsigned int	color;
+	unsigned int	x;
+	unsigned int	y;
+	t_color			color;
 }	t_pixel;
 
 // UTILS
 void			free_map(t_map *map, void (*free_struct)(void *));
 void			putpixel(t_image image, unsigned int width, unsigned int height, unsigned int color);
-unsigned int	transparency(unsigned int color, double scale);
+unsigned int	brightness(t_color color, double scale);
 
 // PARSING
 int		parse_fdf_file(const char *path, t_map *map);

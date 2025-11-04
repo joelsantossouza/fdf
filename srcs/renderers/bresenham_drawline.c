@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:19:01 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/04 12:00:17 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/04 17:33:54 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 static
 void	bresenham_drawline_horizontal(t_image image, t_pixel p0, t_pixel p1)
 {
-	const t_pixel	delta = (t_pixel) {.x = p1.x - p0.x, .y = p1.y - p0.y};
+	const t_point	delta = (t_point) {.x = p1.x - p0.x, .y = p1.y - p0.y};
 	const int		dir = 1 - 2 * (delta.y < 0);
-	const t_pixel	inc = (t_pixel) {.x = delta.x<<1, .y = (delta.y * dir)<<1};
+	const t_point	inc = (t_point) {.x = delta.x<<1, .y = (delta.y * dir)<<1};
 	int				decision;
 
 	decision = inc.y - delta.x;
@@ -37,9 +37,9 @@ void	bresenham_drawline_horizontal(t_image image, t_pixel p0, t_pixel p1)
 static
 void	bresenham_drawline_vertical(t_image image, t_pixel p0, t_pixel p1)
 {
-	const t_pixel	delta = (t_pixel) {.x = p1.x - p0.x, .y = p1.y - p0.y};
+	const t_point	delta = (t_point) {.x = p1.x - p0.x, .y = p1.y - p0.y};
 	const int		dir = 1 - 2 * (delta.x < 0);
-	const t_pixel	inc = (t_pixel) {.x = (delta.x * dir)<<1, .y = delta.y<<1};
+	const t_point	inc = (t_point) {.x = (delta.x * dir)<<1, .y = delta.y<<1};
 	int				decision;
 
 	decision = inc.x - delta.y;
