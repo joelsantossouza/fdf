@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/04 19:27:31 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/04 19:43:15 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ typedef struct s_point
 	int	x;
 	int	y;
 }	t_point;
+
+typedef void (t_linedrawer)(t_image, t_point, t_point, unsigned int);
 
 // UTILS
 void			free_map(t_map *map, void (*free_struct)(void *));
