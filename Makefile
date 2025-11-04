@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/30 15:41:12 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/03 22:39:01 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/04 13:15:29 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ UTILS = $(addprefix utils/, map_utils.c renderer_utils.c)
 
 PARSERS = $(addprefix parsers/, parse_fdf.c)
 
-RENDERERS = $(addprefix renderers/, bresenham_drawline.c)
+RENDERERS = $(addprefix renderers/, bresenham_drawline.c xiaolinwu_drawline.c)
 
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g

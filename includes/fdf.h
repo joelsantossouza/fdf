@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/04 09:24:34 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/04 13:13:54 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,15 @@ typedef struct s_pixel
 }	t_pixel;
 
 // UTILS
-void	free_map(t_map *map, void (*free_struct)(void *));
-void	putpixel(t_image image, unsigned int width, unsigned int height, unsigned int color);
+void			free_map(t_map *map, void (*free_struct)(void *));
+void			putpixel(t_image image, unsigned int width, unsigned int height, unsigned int color);
+unsigned int	transparency(unsigned int color, double scale);
 
 // PARSING
 int		parse_fdf_file(const char *path, t_map *map);
 
 // RENDER
 void	bresenham_drawline(t_image image, t_pixel p0, t_pixel p1);
+void	xiaolinwu_drawline(t_image image, t_pixel p0, t_pixel p1);
 
 #endif

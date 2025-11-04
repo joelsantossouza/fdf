@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:19:01 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/04 09:14:35 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/04 12:00:17 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void	bresenham_drawline_horizontal(t_image image, t_pixel p0, t_pixel p1)
 	int				decision;
 
 	decision = inc.y - delta.x;
-	while (p0.y <= p1.y)
+	while (p0.x <= p1.x)
 	{
-		putpixel(image, p0.x, p0.y++, 0xFFFFFF);
+		putpixel(image, p0.x++, p0.y, 0xFFFFFF);
 		if (decision >= 0)
 		{
-			p0.x += dir;
+			p0.y += dir;
 			decision -= inc.x;
 		}
 		decision += inc.y;

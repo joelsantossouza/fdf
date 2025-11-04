@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/02 01:11:47 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/02 01:29:23 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/04 13:13:15 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ NAME = parse_fdf_test
 
 INCLUDES = $(addprefix -I, ../../../includes/ ../../../libs/libft)
 LIBS = ../../../libs/libft/libft.a
-SRCS = ../parse_fdf.c
+SRCS = ../parse_fdf.c ../../utils/map_utils.c
 
 all: $(NAME)
 
