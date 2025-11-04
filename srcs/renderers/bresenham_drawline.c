@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:19:01 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/04 17:33:54 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/04 19:27:11 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 
 static
-void	bresenham_drawline_horizontal(t_image image, t_pixel p0, t_pixel p1)
+void	bresenham_drawline_horizontal(t_image image, t_point p0, t_point p1, unsigned int color)
 {
 	const t_point	delta = (t_point) {.x = p1.x - p0.x, .y = p1.y - p0.y};
 	const int		dir = 1 - 2 * (delta.y < 0);
@@ -24,7 +24,7 @@ void	bresenham_drawline_horizontal(t_image image, t_pixel p0, t_pixel p1)
 	decision = inc.y - delta.x;
 	while (p0.x <= p1.x)
 	{
-		putpixel(image, p0.x++, p0.y, 0xFFFFFF);
+		putpixel(image, p0.x++, p0.y, color);
 		if (decision >= 0)
 		{
 			p0.y += dir;
@@ -35,7 +35,7 @@ void	bresenham_drawline_horizontal(t_image image, t_pixel p0, t_pixel p1)
 }
 
 static
-void	bresenham_drawline_vertical(t_image image, t_pixel p0, t_pixel p1)
+void	bresenham_drawline_vertical(t_image image, t_point p0, t_point p1, unsigned int color)
 {
 	const t_point	delta = (t_point) {.x = p1.x - p0.x, .y = p1.y - p0.y};
 	const int		dir = 1 - 2 * (delta.x < 0);
@@ -45,7 +45,7 @@ void	bresenham_drawline_vertical(t_image image, t_pixel p0, t_pixel p1)
 	decision = inc.x - delta.y;
 	while (p0.y <= p1.y)
 	{
-		putpixel(image, p0.x, p0.y++, 0xFFFFFF);
+		putpixel(image, p0.x, p0.y++, color);
 		if (decision >= 0)
 		{
 			p0.x += dir;
@@ -55,20 +55,20 @@ void	bresenham_drawline_vertical(t_image image, t_pixel p0, t_pixel p1)
 	}
 }
 
-void	bresenham_drawline(t_image image, t_pixel p0, t_pixel p1)
+void	bresenham_drawline(t_image image, t_point p0, t_point p1, unsigned int color)
 {
 	if (ft_abs(p1.x - p0.x) > ft_abs(p1.y - p0.y))
 	{
 		if (p0.x <= p1.x)
-			bresenham_drawline_horizontal(image, p0, p1);
+			bresenham_drawline_horizontal(image, p0, p1, color);
 		else
-			bresenham_drawline_horizontal(image, p1, p0);
+			bresenham_drawline_horizontal(image, p1, p0, color);
 	}
 	else
 	{
 		if (p0.y <= p1.y)
-			bresenham_drawline_vertical(image, p0, p1);
+			bresenham_drawline_vertical(image, p0, p1, color);
 		else
-			bresenham_drawline_vertical(image, p1, p0);
+			bresenham_drawline_vertical(image, p1, p0, color);
 	}
 }

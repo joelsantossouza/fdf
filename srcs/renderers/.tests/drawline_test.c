@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/04 18:32:02 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/04 19:28:26 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,17 @@ void	*mlx;
 void	*window;
 t_image	image;
 
-t_pixel pixel1 = {
+t_point pixel1 = {
 	.x = WIDTH / 4,
 	.y = HEIGHT / 2,
-	.color.r = 0xff,
-	.color.g = 0xff,
-	.color.b = 0xff,
 };
 
-t_pixel pixel2 = {
+t_point pixel2 = {
 	.x = WIDTH - WIDTH / 4,
 	.y = HEIGHT / 2,
-	.color.r = 0xff,
-	.color.g = 0xff,
-	.color.b = 0xff,
 };
 
-void	(*drawline)(t_image, t_pixel, t_pixel) = bresenham_drawline;
+void	(*drawline)(t_image, t_point, t_point, unsigned int) = bresenham_drawline;
 
 int	render(int keycode)
 {
@@ -65,7 +59,7 @@ int	render(int keycode)
 		pixel2.y+= SPEED;
 	else if (keycode == 65363)
 		pixel2.x+= SPEED;
-	drawline(image, pixel1, pixel2);
+	drawline(image, pixel1, pixel2, 0xffffffff);
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
 	return (0);
 }
