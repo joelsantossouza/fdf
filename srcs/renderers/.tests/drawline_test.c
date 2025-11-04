@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bresenham_drawline_test.c                          :+:      :+:    :+:   */
+/*   drawline_test.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/04 12:57:06 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/04 13:57:11 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,16 @@ t_pixel pixel2 = {
 	.color = 0xffffffff,
 };
 
+void	(*drawline)(t_image, t_pixel, t_pixel) = bresenham_drawline;
+
 int	render(int keycode)
 {
 	ft_bzero(image.addr, WIDTH * HEIGHT * (image.bpp / 8));
-	if (keycode == 119)
+	if (keycode == 113)
+		drawline = bresenham_drawline;
+	else if (keycode == 101)
+		drawline = xiaolinwu_drawline;
+	else if (keycode == 119)
 		pixel1.y-= SPEED;
 	else if (keycode == 97)
 		pixel1.x-= SPEED;
@@ -55,7 +61,7 @@ int	render(int keycode)
 		pixel2.y+= SPEED;
 	else if (keycode == 65363)
 		pixel2.x+= SPEED;
-	bresenham_drawline(image, pixel1, pixel2);
+	drawline(image, pixel1, pixel2);
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
 	return (0);
 }
