@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/03 22:31:31 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/04 09:24:34 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define SUCCESS	0
 # define DEC_BASE	"0123456789"
 
-# define WHITE		0xFFFFFF
+# define WHITE		0xFFFFFFFF
 
 typedef struct s_map
 {
