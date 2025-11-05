@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:19 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/03 10:34:08 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/05 12:23:06 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	validate_map(const char *path, t_map *map)
 	map->height = 1;
 	while (line)
 	{
-		if (ft_word_count(line, ' ') != map->width || ft_getline(&line, fd) < 0)
+		if (ft_word_count(line, ' ') != (size_t) map->width || ft_getline(&line, fd) < 0)
 			return (close(fd), ft_bzero(map, sizeof(*map)), free(line), ERROR);
 		map->height++;
 	}
@@ -49,7 +49,7 @@ int	parse_fdf_file(const char *path, t_map *map)
 {
 	char	*file;
 	char	*ptr;
-	size_t	i;
+	long	i;
 
 	file = NULL;
 	if (validate_map(path, map) < 0 || ft_getfile(&file, path) < 0)

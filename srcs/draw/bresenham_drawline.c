@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:19:01 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/04 19:27:11 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/05 15:40:49 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ void	bresenham_drawline_vertical(t_image image, t_point p0, t_point p1, unsigned
 	}
 }
 
-void	bresenham_drawline(t_image image, t_point p0, t_point p1, unsigned int color)
+int	bresenham_drawline(t_image image, t_point p0, t_point p1, unsigned int color)
 {
+	if (liangbarsky_clipping(&p0, &p1, image.width - 1, image.height - 1) < 0)
+		return (-1);
 	if (ft_abs(p1.x - p0.x) > ft_abs(p1.y - p0.y))
 	{
 		if (p0.x <= p1.x)
@@ -71,4 +73,5 @@ void	bresenham_drawline(t_image image, t_point p0, t_point p1, unsigned int colo
 		else
 			bresenham_drawline_vertical(image, p1, p0, color);
 	}
+	return (0);
 }

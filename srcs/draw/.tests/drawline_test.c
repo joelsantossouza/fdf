@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/04 19:28:26 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/05 16:27:33 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ void	*window;
 t_image	image;
 
 t_point pixel1 = {
-	.x = WIDTH / 4,
+	.x = WIDTH / 2,
 	.y = HEIGHT / 2,
 };
 
 t_point pixel2 = {
-	.x = WIDTH - WIDTH / 4,
+	.x = WIDTH + 50,
 	.y = HEIGHT / 2,
 };
 
-void	(*drawline)(t_image, t_point, t_point, unsigned int) = bresenham_drawline;
+t_linedrawer *drawline = bresenham_drawline;
 
 int	render(int keycode)
 {
@@ -66,6 +66,7 @@ int	render(int keycode)
 
 int	main(void)
 {
+	int	temp;
 	mlx = mlx_init();
 	if (!mlx)
 		return (1);
@@ -75,7 +76,9 @@ int	main(void)
 	image.data = mlx_new_image(mlx, WIDTH, HEIGHT);
 	if (!image.data)
 		return (3);
-	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.width, &image.endian);
+	image.width = WIDTH;
+	image.height = HEIGHT;
+	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.linelen, &temp);
 	mlx_hook(window, 2, 1L<<0, render, 0);
 	mlx_loop(mlx);
 	mlx_destroy_image(mlx, image.data);

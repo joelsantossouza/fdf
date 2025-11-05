@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/04 23:31:14 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/05 12:00:46 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_image	image;
 t_map	map;
 t_fdf	fdf;
 
-void	(*drawline)(t_image, t_point, t_point, unsigned int) = bresenham_drawline;
+t_linedrawer *drawline = bresenham_drawline;
 
 int	render(int keycode)
 {
@@ -43,13 +43,19 @@ int	render(int keycode)
 		fdf.position.y += SPEED;
 	else if (keycode == 100)
 		fdf.position.x += SPEED;
-	render_fdf(image, fdf, drawline);
+	render_fdf(image, map, fdf, drawline);
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
 	return (0);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
+	int	temp;
+	if (argc != 2)
+	{
+		ft_fprintf(2, "Usage: %s <map>\n", *argv);
+		return (2);
+	}
 	mlx = mlx_init();
 	if (!mlx)
 		return (1);
@@ -59,14 +65,15 @@ int	main(void)
 	image.data = mlx_new_image(mlx, WIDTH, HEIGHT);
 	if (!image.data)
 		return (3);
-	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.width, &image.endian);
-	if (parse_fdf_file("../../../maps/42.fdf", &map) < 0)
+	image.width = WIDTH;
+	image.height = HEIGHT;
+	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.linelen, &temp);
+	if (parse_fdf_file(argv[1], &map) < 0)
 	{
 		ft_fprintf(2, "Fail to load map\n");
 		return (1);
 	}
 	fdf = (t_fdf) {
-		.map = map,
 		.position.x = WIDTH / 4,
 		.position.y = HEIGHT / 4,
 		.spacing = 15,

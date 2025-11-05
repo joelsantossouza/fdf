@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 09:19:53 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/04 19:31:48 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/05 16:29:03 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,10 @@ void	xiaolinwu_drawline_vertical(t_image image, t_point p0, t_point p1, unsigned
 	}
 }
 
-void	xiaolinwu_drawline(t_image image, t_point p0, t_point p1, unsigned int color)
+int	xiaolinwu_drawline(t_image image, t_point p0, t_point p1, unsigned int color)
 {
+	if (liangbarsky_clipping(&p0, &p1, image.width - 1, image.height - 1) < 0)
+		return (-1);
 	if (ft_abs(p1.x - p0.x) > ft_abs(p1.y - p0.y))
 	{
 		if (p0.x <= p1.x)
@@ -73,4 +75,5 @@ void	xiaolinwu_drawline(t_image image, t_point p0, t_point p1, unsigned int colo
 		else
 			xiaolinwu_drawline_vertical(image, p1, p0, color);
 	}
+	return (0);
 }

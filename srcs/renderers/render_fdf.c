@@ -6,37 +6,34 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:11:03 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/04 23:19:36 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/05 18:04:43 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	render_fdf(t_image image, t_fdf fdf, t_linedrawer *drawline)
+void	render_fdf(t_image image, t_map map, t_fdf fdf, t_linedrawer *drawline)
 {
-	t_point	back;
-	t_point	start = (t_point) {.x = fdf.position.x, .y = fdf.position.y};
-	unsigned int	i;
-	unsigned int	j;
+	const t_point	end = (t_point){
+		fdf.position.x + map.width * fdf.spacing,
+		fdf.position.y + map.height * fdf.spacing,
+	};
+	t_point			p;
 
-	back.y = 0;
-	j = 0;
-	while (j < fdf.map.height)
+	if (map.width == 1 && map.height == 1)
+		putpixel(image, fdf.position.x, fdf.position.y, WHITE);
+	p.y = fdf.position.y;
+	while (p.y < end.y)
 	{
-		back.x = 0;
-		i = 0;
-		while (i < fdf.map.width)
+		p.x = fdf.position.x;
+		while (p.x < end.x)
 		{
-			drawline(image, (t_point) {
-				.x = start.x + back.x * fdf.spacing,
-				.y = start.y + back.y * fdf.spacing,
-			},
-			(t_point) {
-				.x = start.x + i * fdf.spacing,
-				.y = start.y + j * fdf.spacing,
-			}, 0xffffffff);
-			back.x = i++;
+			if (p.y + fdf.spacing < end.y)
+				drawline(image, p, (t_point){p.x, p.y + fdf.spacing}, WHITE);
+			if (p.x + fdf.spacing < end.x)
+				drawline(image, p, (t_point){p.x + fdf.spacing, p.y}, WHITE);
+			p.x += fdf.spacing;
 		}
-		back.y = j++;
+		p.y += fdf.spacing;
 	}
 }
