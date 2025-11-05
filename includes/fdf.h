@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/05 18:06:05 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/05 21:00:04 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ typedef struct s_rotation
 
 typedef struct s_fdf
 {
+	t_map		*map;
 	t_point		position;
+	t_point		*transformed;
 	t_rotation	rotation;
 	double		zoom;
 	int			spacing;

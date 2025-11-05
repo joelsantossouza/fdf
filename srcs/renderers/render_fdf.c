@@ -6,14 +6,14 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:11:03 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/05 19:11:56 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/05 21:10:46 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 static inline
-void	render_fdf_horizontal_lines(t_image image, t_map map, t_fdf fdf, t_linedrawer *drawline)
+void	render_fdf_horizontal_lines(t_image image, t_fdf fdf, t_linedrawer *drawline)
 {
 	t_point			p;
 	const int		start_x = fdf.position.x + fdf.spacing;
@@ -23,10 +23,10 @@ void	render_fdf_horizontal_lines(t_image image, t_map map, t_fdf fdf, t_linedraw
 	};
 
 	p.y = fdf.position.y;
-	while (p.y < end.y)
+	while (p.y <= end.y)
 	{
 		p.x = start_x;
-		while (p.x < end.x)
+		while (p.x <= end.x)
 		{
 			drawline(image, (t_point){p.x - fdf.spacing, p.y}, p, WHITE);
 			p.x += fdf.spacing;
@@ -36,7 +36,7 @@ void	render_fdf_horizontal_lines(t_image image, t_map map, t_fdf fdf, t_linedraw
 }
 
 static inline
-void	render_fdf_vertical_lines(t_image image, t_map map, t_fdf fdf, t_linedrawer *drawline)
+void	render_fdf_vertical_lines(t_image image, t_fdf fdf, t_linedrawer *drawline)
 {
 	t_point			p;
 	const int		start_y = fdf.position.y + fdf.spacing;
@@ -46,10 +46,10 @@ void	render_fdf_vertical_lines(t_image image, t_map map, t_fdf fdf, t_linedrawer
 	};
 
 	p.x = fdf.position.x;
-	while (p.x < end.x)
+	while (p.x <= end.x)
 	{
 		p.y = start_y;
-		while (p.y < end.y)
+		while (p.y <= end.y)
 		{
 			drawline(image, (t_point){p.x, p.y - fdf.spacing}, p, WHITE);
 			p.y += fdf.spacing;
@@ -58,7 +58,21 @@ void	render_fdf_vertical_lines(t_image image, t_map map, t_fdf fdf, t_linedrawer
 	}
 }
 
-void	render_fdf(t_image image, t_map map, t_fdf fdf, t_linedrawer *drawline)
+static inline
+void	transform_fdf_points(t_fdf fdf)
+{
+	t_point	p;
+	long	i;
+	const t_point	end = (t_point){
+
+	};
+
+	i = 0;
+	p.y = fdf.position.y;
+	while (p.y < fdf.ma
+}
+
+void	render_fdf(t_image image, t_fdf fdf, t_linedrawer *drawline)
 {
 	if (map.width == 1 && map.height == 1)
 		return (putpixel(image, fdf.position.x, fdf.position.y, WHITE));
