@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 13:55:37 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/05 17:23:20 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/06 11:56:38 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	liangbarsky_clipping(t_point *p0, t_point *p1, int width, int height)
 {
-	const t_point	delta = (t_point) {.x = p1->x - p0->x, .y = p1->y - p0->y};
+	const t_point	delta = {p1->x - p0->x, p1->y - p0->y};
 	const int		p[4] = {-(delta.x), delta.x, -delta.y, delta.y};
 	const int		q[4] = {p0->x, width - p0->x, p0->y, height - p0->y};
 	double			t[2];
