@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/05 23:59:45 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/06 16:04:21 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_fdf
 {
 	t_map		*map;
 	t_point		position;
+	t_point		center;
 	t_point		*transformed;
 	t_rotation	rotation;
 	double		zoom;
@@ -77,6 +78,9 @@ int		parse_fdf_file(const char *path, t_map *map);
 int	liangbarsky_clipping(t_point *p0, t_point *p1, int width, int height);
 int	bresenham_drawline(t_image image, t_point p0, t_point p1, unsigned int color);
 int	xiaolinwu_drawline(t_image image, t_point p0, t_point p1, unsigned int color);
+
+// TRANSFORMATION
+t_point	rotate(t_rotation rotation, int x, int y, int z);
 
 // RENDER
 void	render_fdf(t_image image, t_fdf fdf, t_linedrawer *drawline);

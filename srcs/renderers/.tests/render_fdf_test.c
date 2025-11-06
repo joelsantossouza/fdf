@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/06 00:02:01 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/06 16:05:25 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@
 #define WIDTH	1000
 #define HEIGHT	1000
 #define SPEED	10
+
+# define KEY1 65436
+# define KEY2 65433
+# define KEY3 65435
+# define KEY4 65430
+# define KEY5 65437
+# define KEY6 65432
 
 void	*mlx;
 void	*window;
@@ -44,6 +51,18 @@ int	render(int keycode)
 		fdf.position.y += SPEED;
 	else if (keycode == 100)
 		fdf.position.x += SPEED;
+	else if (keycode == KEY1)
+		fdf.rotation.x += 0.1;
+	else if (keycode == KEY2)
+		fdf.rotation.x -= 0.1;
+	else if (keycode == KEY3)
+		fdf.rotation.y += 0.1;
+	else if (keycode == KEY4)
+		fdf.rotation.y -= 0.1;
+	else if (keycode == KEY5)
+		fdf.rotation.z += 0.1;
+	else if (keycode == KEY6)
+		fdf.rotation.z -= 0.1;
 	render_fdf(image, fdf, drawline);
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
 	return (0);
@@ -76,8 +95,10 @@ int	main(int argc, char **argv)
 	}
 	fdf = (t_fdf) {
 		.map = &map,
-		.position.x = WIDTH / 4,
-		.position.y = HEIGHT / 4,
+		.position.x = -(map.width / 2 * 15),
+		.position.y = -(map.height / 2 * 15),
+		.center.x = WIDTH / 2,
+		.center.y = HEIGHT / 2,
 		.spacing = 15,
 	};
 	fdf.transformed = malloc(sizeof(t_point) * fdf.map->total);

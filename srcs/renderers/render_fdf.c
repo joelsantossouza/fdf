@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:11:03 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/06 00:52:56 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/06 16:04:55 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ void	render_fdf_vertical_lines(t_image image, t_fdf fdf, t_linedrawer *drawline)
 static inline
 void	transform_fdf_points(t_fdf fdf)
 {
-	t_point	p;
 	long	i;
-	const t_point	end = (t_point){
+	t_point	p;
+	t_point	new;
+	const t_point	end = {
 		fdf.position.x + fdf.map->width * fdf.spacing,
 		fdf.position.y + fdf.map->height * fdf.spacing,
 	};
-	t_point	transform;
 
 	i = 0;
 	p.y = fdf.position.y;
@@ -72,8 +72,8 @@ void	transform_fdf_points(t_fdf fdf)
 		p.x = fdf.position.x;
 		while (p.x < end.x)
 		{
-			transform = rotate(fdf.rotation, p.x, p.y, fdf.map->altitude[i]);
-			fdf.transformed[i++] = transform;
+			new = rotate(fdf.rotation, p.x, p.y, fdf.map->altitude[i]);
+			fdf.transformed[i++] = (t_point){new.x + fdf.center.x, new.y + fdf.center.y};
 			p.x += fdf.spacing;
 		}
 		p.y += fdf.spacing;
