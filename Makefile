@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/30 15:41:12 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/06 16:09:06 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/06 16:22:26 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,8 @@ TRANSFORMATIONS = $(addprefix transformations/, rotate.c)
 RENDERERS = $(addprefix renderers/, render_fdf.c)
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g -O3 -Ofast -march=native -mtune=native -fopenmp -funroll-loops -fprefetch-loop-arrays -flto
-#FLAGS= -Wall -Wextra -Werror -g
+#FLAGS = -Wall -Wextra -Werror -g -O3 -Ofast -march=native -mtune=native -fopenmp -funroll-loops -fprefetch-loop-arrays -flto
+FLAGS= -Wall -Wextra -Werror -g
 
 LIBFT = libft/libft.a
 MINILIBX = minilibx-linux/libmlx_Linux.a

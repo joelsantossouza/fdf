@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/06 16:05:25 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/06 16:54:17 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	render(int keycode)
 		fdf.rotation.z += 0.1;
 	else if (keycode == KEY6)
 		fdf.rotation.z -= 0.1;
-	render_fdf(image, fdf, drawline);
+	render_fdf(&image, &fdf, drawline);
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
 	return (0);
 }

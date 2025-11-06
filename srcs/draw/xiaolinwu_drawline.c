@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 09:19:53 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/05 16:29:03 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/06 16:46:17 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 
 static
-void	xiaolinwu_drawline_horizontal(t_image image, t_point p0, t_point p1, unsigned int color)
+void	xiaolinwu_drawline_horizontal(t_image *image, t_point p0, t_point p1, unsigned int color)
 {
 	const int	delta_x = p1.x - p0.x;
 	double		m;
@@ -36,7 +36,7 @@ void	xiaolinwu_drawline_horizontal(t_image image, t_point p0, t_point p1, unsign
 }
 
 static
-void	xiaolinwu_drawline_vertical(t_image image, t_point p0, t_point p1, unsigned int color)
+void	xiaolinwu_drawline_vertical(t_image *image, t_point p0, t_point p1, unsigned int color)
 {
 	const int	delta_y = p1.y - p0.y;
 	double		m;
@@ -57,9 +57,9 @@ void	xiaolinwu_drawline_vertical(t_image image, t_point p0, t_point p1, unsigned
 	}
 }
 
-int	xiaolinwu_drawline(t_image image, t_point p0, t_point p1, unsigned int color)
+int	xiaolinwu_drawline(t_image *image, t_point p0, t_point p1, unsigned int color)
 {
-	if (liangbarsky_clipping(&p0, &p1, image.width - 1, image.height - 1) < 0)
+	if (liangbarsky_clipping(&p0, &p1, image->width - 1, image->height - 1) < 0)
 		return (-1);
 	if (ft_abs(p1.x - p0.x) > ft_abs(p1.y - p0.y))
 	{
