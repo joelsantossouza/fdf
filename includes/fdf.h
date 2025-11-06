@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/06 17:17:46 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/06 19:52:59 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ typedef struct s_angle
 	double	z;
 }	t_angle;
 
+typedef struct s_trig
+{
+	t_angle	sine;
+	t_angle	cosine;
+}	t_trig;
+
 typedef struct s_fdf
 {
 	t_map		*map;
@@ -60,6 +66,7 @@ typedef struct s_fdf
 	t_point		center;
 	t_point		*transformed;
 	t_angle		angle;
+	t_trig		trig;
 	double		zoom;
 	int			spacing;
 }	t_fdf;
@@ -80,7 +87,7 @@ int	bresenham_drawline(t_image *image, t_point p0, t_point p1, unsigned int colo
 int	xiaolinwu_drawline(t_image *image, t_point p0, t_point p1, unsigned int color);
 
 // TRANSFORMATION
-t_point	rotate(t_rotation *rotation, int x, int y, int z);
+t_point	rotate(t_trig *t, int x, int y, int z);
 
 // RENDER
 void	render_fdf(t_image *image, t_fdf *fdf, t_linedrawer *drawline);

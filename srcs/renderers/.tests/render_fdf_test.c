@@ -6,13 +6,14 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/06 16:54:17 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/06 20:02:25 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
 #include "fdf.h"
 #include <stdio.h>
+#include <math.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "libft.h"
@@ -52,17 +53,41 @@ int	render(int keycode)
 	else if (keycode == 100)
 		fdf.position.x += SPEED;
 	else if (keycode == KEY1)
-		fdf.rotation.x += 0.1;
+	{
+		fdf.angle.x += 0.1;
+		fdf.trig.cosine.x = cos(fdf.angle.x);
+		fdf.trig.sine.x = sin(fdf.angle.x);
+	}
 	else if (keycode == KEY2)
-		fdf.rotation.x -= 0.1;
+	{
+		fdf.angle.x -= 0.1;
+		fdf.trig.cosine.x = cos(fdf.angle.x);
+		fdf.trig.sine.x = sin(fdf.angle.x);
+	}
 	else if (keycode == KEY3)
-		fdf.rotation.y += 0.1;
+	{
+		fdf.angle.y += 0.1;
+		fdf.trig.cosine.y = cos(fdf.angle.y);
+		fdf.trig.sine.y = sin(fdf.angle.y);
+	}
 	else if (keycode == KEY4)
-		fdf.rotation.y -= 0.1;
+	{
+		fdf.angle.y -= 0.1;
+		fdf.trig.cosine.y = cos(fdf.angle.y);
+		fdf.trig.sine.y = sin(fdf.angle.y);
+	}
 	else if (keycode == KEY5)
-		fdf.rotation.z += 0.1;
+	{
+		fdf.angle.z += 0.1;
+		fdf.trig.cosine.z = cos(fdf.angle.z);
+		fdf.trig.sine.z = sin(fdf.angle.z);
+	}
 	else if (keycode == KEY6)
-		fdf.rotation.z -= 0.1;
+	{
+		fdf.angle.z -= 0.1;
+		fdf.trig.cosine.z = cos(fdf.angle.z);
+		fdf.trig.sine.z = sin(fdf.angle.z);
+	}
 	render_fdf(&image, &fdf, drawline);
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
 	return (0);
@@ -101,6 +126,12 @@ int	main(int argc, char **argv)
 		.center.y = HEIGHT / 2,
 		.spacing = 15,
 	};
+	fdf.trig.cosine.x = cos(fdf.angle.x);
+	fdf.trig.sine.x = sin(fdf.angle.x);
+	fdf.trig.cosine.y = cos(fdf.angle.y);
+	fdf.trig.sine.y = sin(fdf.angle.y);
+	fdf.trig.cosine.z = cos(fdf.angle.z);
+	fdf.trig.sine.z = sin(fdf.angle.z);
 	fdf.transformed = malloc(sizeof(t_point) * fdf.map->total);
 	if (!fdf.transformed)
 		return (3);

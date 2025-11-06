@@ -6,11 +6,12 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:11:03 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/06 17:08:07 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/06 19:54:08 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <math.h>
 
 static inline
 void	render_fdf_horizontal_lines(t_image *image, t_fdf *fdf, t_linedrawer *drawline)
@@ -72,7 +73,7 @@ void	transform_fdf_points(t_fdf *fdf)
 		p.x = fdf->position.x;
 		while (p.x < end.x)
 		{
-			new = rotate(&fdf->rotation, p.x, p.y, fdf->map->altitude[i]);
+			new = rotate(&fdf->trig, p.x, p.y, fdf->map->altitude[i]);
 			fdf->transformed[i++] = (t_point){new.x + fdf->center.x, new.y + fdf->center.y};
 			p.x += fdf->spacing;
 		}
