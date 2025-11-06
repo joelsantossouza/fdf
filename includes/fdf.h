@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/05 21:00:04 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/05 23:59:45 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,6 @@ int	bresenham_drawline(t_image image, t_point p0, t_point p1, unsigned int color
 int	xiaolinwu_drawline(t_image image, t_point p0, t_point p1, unsigned int color);
 
 // RENDER
-void	render_fdf(t_image image, t_map map, t_fdf fdf, t_linedrawer *drawline);
+void	render_fdf(t_image image, t_fdf fdf, t_linedrawer *drawline);
 
 #endif

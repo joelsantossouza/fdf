@@ -6,13 +6,14 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/05 12:00:46 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/06 00:02:01 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
 #include "fdf.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include "libft.h"
 
@@ -43,7 +44,7 @@ int	render(int keycode)
 		fdf.position.y += SPEED;
 	else if (keycode == 100)
 		fdf.position.x += SPEED;
-	render_fdf(image, map, fdf, drawline);
+	render_fdf(image, fdf, drawline);
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
 	return (0);
 }
@@ -74,10 +75,14 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	fdf = (t_fdf) {
+		.map = &map,
 		.position.x = WIDTH / 4,
 		.position.y = HEIGHT / 4,
 		.spacing = 15,
 	};
+	fdf.transformed = malloc(sizeof(t_point) * fdf.map->total);
+	if (!fdf.transformed)
+		return (3);
 	mlx_hook(window, 2, 1L<<0, render, 0);
 	mlx_loop(mlx);
 	mlx_destroy_image(mlx, image.data);
