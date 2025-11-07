@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:29 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/07 21:43:54 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/07 23:07:50 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "fdf.h"
 #include <stdlib.h>
 
-#define RGBA		4
+#define RGB		3
 #define	GRAYSCALE	1
 
 int	parse_voxel_file(const char *color_file, const char *altitude_file, t_map *map)
@@ -26,7 +26,7 @@ int	parse_voxel_file(const char *color_file, const char *altitude_file, t_map *m
 	unsigned char	*altitude;
 	long			i;
 
-	color = stbi_load(color_file, &dimension.x, &dimension.y, 0, RGBA);
+	color = stbi_load(color_file, &dimension.x, &dimension.y, 0, RGB);
 	altitude = stbi_load(altitude_file, &map->width, &map->height, 0, GRAYSCALE);
 	if (!color || !altitude || map->width != dimension.x || map->height != dimension.y)
 		return (ft_bzero(map, sizeof(*map)), free(color), free(altitude), ERROR);
@@ -41,7 +41,7 @@ int	parse_voxel_file(const char *color_file, const char *altitude_file, t_map *m
 	i = -1;
 	while (++i < map->total)
 	{
-		map->color[i] = ((unsigned int *) color)[i];
+		map->color[i] = color[i * 3] << 16 | color[i * 3 + 1] << 8 | color[i * 3 + 2];
 		map->altitude[i] = altitude[i];
 	}
 	return (stbi_image_free(color), stbi_image_free(altitude), SUCCESS);

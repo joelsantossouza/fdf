@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_voxelspace_test.c                           :+:      :+:    :+:   */
+/*   parse_voxel_test.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/07 23:46:28 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/07 23:02:19 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 #include <unistd.h>
 #include "libft.h"
 
-#define WIDTH	1000
-#define HEIGHT	1000
+#define WIDTH	1024
+#define HEIGHT	1024
 #define SPEED	1
 
 # define KEY1 65436
@@ -35,27 +35,23 @@ void	*mlx;
 void	*window;
 t_image	image;
 t_map	map;
-t_voxelspace	vox;
-t_camera	camera;
 
-int	render(int keycode)
+void	test_image(t_image image, t_map map)
 {
-	ft_bzero(image.addr, WIDTH * HEIGHT * (image.bpp / 8));
-	if (keycode == 119)
-		camera.position.y -= SPEED;
-	else if (keycode == 97)
-		camera.position.x -= SPEED;
-	else if (keycode == 115)
-		camera.position.y += SPEED;
-	else if (keycode == 100)
-		camera.position.x += SPEED;
-	else if (keycode == KEY1)
-		camera.altitude += SPEED;
-	else if (keycode == KEY2)
-		camera.altitude -= SPEED;
-	render_voxelspace(&image, &vox, &camera);
+	t_point	p;
+	unsigned int	color;
+
+	p.y = -1;
+	while (++p.y < map.height)
+	{
+		p.x = -1;
+		while (++p.x < map.width)
+		{
+			color = map.color[map.width * p.y + p.x];
+			putpixel(&image, p.x, p.y, color);
+		}
+	}
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
-	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -83,17 +79,7 @@ int	main(int argc, char **argv)
 		ft_fprintf(2, "Fail to load map\n");
 		return (1);
 	}
-	vox = (t_voxelspace) {
-		.map = &map,
-		.scale = 300,
-	};
-	camera = (t_camera){
-		.position.x = map.width / 2,
-		.position.y = map.height / 2,
-		.zfar = 200,
-		.altitude = 50,
-	};
-	mlx_hook(window, 2, 1L<<0, render, 0);
+	test_image(image, map);
 	mlx_loop(mlx);
 	mlx_destroy_image(mlx, image.data);
 	mlx_destroy_window(mlx, window);
