@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/07 14:50:19 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/07 18:23:33 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ typedef struct s_fdf
 	t_point		*transformed;
 	t_angle		angle;
 	t_trig		trig;
-	double		zoom;
 	int			spacing;
 }	t_fdf;
 
@@ -93,6 +92,7 @@ unsigned int	brightness(unsigned int color, double scale);
 
 // PARSING
 int		parse_fdf_file(const char *path, t_map *map);
+int	parse_voxel_file(const char *color_file, const char *altitude_file, t_map *map);
 
 // DRAW
 int	liangbarsky_clipping(t_point *p0, t_point *p1, int width, int height);

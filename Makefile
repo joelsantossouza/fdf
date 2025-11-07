@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/30 15:41:12 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/07 15:04:52 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/07 16:57:12 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADERS_DIR = includes
 
 UTILS = $(addprefix utils/, map_utils.c draw_utils.c)
 
-PARSERS = $(addprefix parsers/, parse_fdf.c)
+PARSERS = $(addprefix parsers/, parse_fdf_file.c parse_voxel_file.c)
 
 DRAW = $(addprefix draw/, bresenham_drawline.c xiaolinwu_drawline.c liangbarsky_clipping.c)
 
