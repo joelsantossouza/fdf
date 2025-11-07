@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/07 10:07:25 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/07 14:50:19 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,19 @@ typedef struct s_fdf
 	int			spacing;
 }	t_fdf;
 
+typedef struct s_camera
+{
+	t_point	position;
+	int		altitude;
+	int		zfar;
+}	t_camera;
+
+typedef struct s_voxelspace
+{
+	t_map	*map;
+	int		scale;
+}	t_voxelspace;
+
 typedef int (t_linedrawer)(t_image *, t_point, t_point, unsigned int);
 
 // UTILS
@@ -91,5 +104,6 @@ t_point	rotate(t_trig *t, int x, int y, int z);
 
 // RENDER
 void	render_fdf(t_image *image, t_fdf *fdf, t_linedrawer *drawline);
+void	render_voxelspace(t_image *image, t_voxelspace *vox, t_camera *camera);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/30 15:41:12 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/07 11:30:26 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/07 15:04:52 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,11 @@ DRAW = $(addprefix draw/, bresenham_drawline.c xiaolinwu_drawline.c liangbarsky_
 
 TRANSFORMATIONS = $(addprefix transformations/, rotate.c)
 
-RENDERERS = $(addprefix renderers/, render_fdf.c)
+RENDERERS = $(addprefix renderers/, render_fdf.c render_voxelspace.c)
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g -O3 -Ofast -march=native -mtune=native -fopenmp -funroll-loops
-#FLAGS= -Wall -Wextra -Werror -g -O3
+#FLAGS = -Wall -Wextra -Werror -g -O3 -Ofast -march=native -mtune=native -fopenmp -funroll-loops
+FLAGS= -Wall -Wextra -Werror -g
 
 LIBFT = libft/libft.a
 MINILIBX = minilibx-linux/libmlx_Linux.a
