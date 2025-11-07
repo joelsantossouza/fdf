@@ -6,12 +6,11 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:11:03 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/06 19:54:08 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:07:55 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <math.h>
 
 static inline
 void	render_fdf_horizontal_lines(t_image *image, t_fdf *fdf, t_linedrawer *drawline)
@@ -62,19 +61,20 @@ void	transform_fdf_points(t_fdf *fdf)
 	t_point	p;
 	t_point	new;
 	const t_point	end = {
-		fdf->position.x + fdf->map->width * fdf->spacing,
-		fdf->position.y + fdf->map->height * fdf->spacing,
+		fdf->center.x + fdf->map->width * fdf->spacing,
+		fdf->center.y + fdf->map->height * fdf->spacing,
 	};
 
 	i = 0;
-	p.y = fdf->position.y;
+	p.y = fdf->center.y;
 	while (p.y < end.y)
 	{
-		p.x = fdf->position.x;
+		p.x = fdf->center.x;
 		while (p.x < end.x)
 		{
 			new = rotate(&fdf->trig, p.x, p.y, fdf->map->altitude[i]);
-			fdf->transformed[i++] = (t_point){new.x + fdf->center.x, new.y + fdf->center.y};
+			new = (t_point){new.x * fdf->zoom, new.y * fdf->zoom};
+			fdf->transformed[i++] = (t_point){new.x + fdf->position.x, new.y + fdf->position.y};
 			p.x += fdf->spacing;
 		}
 		p.y += fdf->spacing;

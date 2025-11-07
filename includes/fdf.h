@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/06 19:52:59 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:07:25 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ typedef struct s_trig
 typedef struct s_fdf
 {
 	t_map		*map;
-	t_point		position;
 	t_point		center;
+	t_point		position;
 	t_point		*transformed;
 	t_angle		angle;
 	t_trig		trig;

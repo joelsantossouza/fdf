@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/06 20:02:25 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:03:54 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define KEY4 65430
 # define KEY5 65437
 # define KEY6 65432
+# define KEY7 65429
+# define KEY8 65431
 
 void	*mlx;
 void	*window;
@@ -88,6 +90,10 @@ int	render(int keycode)
 		fdf.trig.cosine.z = cos(fdf.angle.z);
 		fdf.trig.sine.z = sin(fdf.angle.z);
 	}
+	else if (keycode == KEY7)
+		fdf.zoom += 0.1;
+	else if (keycode == KEY8)
+		fdf.zoom -= 0.1;
 	render_fdf(&image, &fdf, drawline);
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
 	return (0);
@@ -120,11 +126,12 @@ int	main(int argc, char **argv)
 	}
 	fdf = (t_fdf) {
 		.map = &map,
-		.position.x = -(map.width / 2 * 15),
-		.position.y = -(map.height / 2 * 15),
-		.center.x = WIDTH / 2,
-		.center.y = HEIGHT / 2,
+		.center.x = -(map.width / 2 * 15),
+		.center.y = -(map.height / 2 * 15),
+		.position.x = WIDTH / 2,
+		.position.y = HEIGHT / 2,
 		.spacing = 15,
+		.zoom = 1,
 	};
 	fdf.trig.cosine.x = cos(fdf.angle.x);
 	fdf.trig.sine.x = sin(fdf.angle.x);
