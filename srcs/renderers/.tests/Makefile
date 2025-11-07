@@ -6,12 +6,12 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/02 01:11:47 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/07 09:36:17 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/07 11:24:36 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror -g -O3
 
 NAME = render_fdf_test
 

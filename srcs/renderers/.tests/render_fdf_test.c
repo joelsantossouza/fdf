@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/07 10:41:42 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/07 11:22:34 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ int	render(int keycode)
 		fdf.trig.sine.z = sin(fdf.angle.z);
 	}
 	else if (keycode == KEY7)
-		fdf.zoom += 0.1;
+		fdf.zoom /= 1.1;
 	else if (keycode == KEY8)
-		fdf.zoom -= 0.1;
+		fdf.zoom *= 1.1;
 	render_fdf(&image, &fdf, drawline);
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
 	return (0);
