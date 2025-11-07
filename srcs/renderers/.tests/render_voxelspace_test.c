@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/07 15:25:49 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/07 20:13:04 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	render(int keycode)
 int	main(int argc, char **argv)
 {
 	int	temp;
-	if (argc != 2)
+	if (argc != 3)
 	{
 		ft_fprintf(2, "Usage: %s <map>\n", *argv);
 		return (2);
@@ -78,7 +78,7 @@ int	main(int argc, char **argv)
 	image.width = WIDTH;
 	image.height = HEIGHT;
 	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.linelen, &temp);
-	if (parse_fdf_file(argv[1], &map) < 0)
+	if (parse_voxel_file(argv[1], argv[2], &map) < 0)
 	{
 		ft_fprintf(2, "Fail to load map\n");
 		return (1);
