@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:03:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/08 20:51:04 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/08 21:38:42 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 #include "libft.h"
 
 static inline
-void	draw_column(t_image *image, t_point p, int zfar, t_vox *vox)
+void	draw_column(t_image *image, int x, int y, t_vox *vox)
 {
-	unsigned 	color;
 	const t_map	*map = vox->map;
-	const long	offset = map->width * p.y + p.x;
-	const int	height = ft_max(
-		0,
-		(vox->camera->altitude - map->altitude[offset]) * vox->scale / zfar + image->height / 2
-	);
+	const long	offset = map->width * y + x;
+	unsigned 	color;
+	int			height;
 
+	height = (vox->camera->altitude - map->altitude[offset]) * vox->scale / vox->zfar + image->height / 2.0;
+	if (height < 0)
+		height = 0;
 	if (height < vox->max_height)
 	{
 		color = map->color[offset];
@@ -33,25 +33,31 @@ void	draw_column(t_image *image, t_point p, int zfar, t_vox *vox)
 	}
 }
 
+#   include    <math.h>
 static inline
 void	raymarch_horizontal(t_image *image, t_point p0, t_point p1, t_vox *vox)
 {
 	const t_point	delta = {p1.x - p0.x, p1.y - p0.y};
 	const int		dir = 1 - 2 * (delta.y < 0);
 	const t_point	inc = {delta.x<<1, (delta.y * dir)<<1};
-	const int		start_x = p0.x;
+	double			inc_dist;
 	int				decision;
 
 	decision = inc.y - delta.x;
-	while (p0.x++ <= p1.x)
+	if (!delta.x)
+		inc_dist = 1;
+	else
+		inc_dist = sqrt(1 + (delta.y / (double) delta.x) * (delta.y / (double) delta.x));
+	while (p0.x <= p1.x)
 	{
 		if (decision >= 0)
 		{
 			p0.y += dir;
 			decision -= inc.x;
 		}
-		draw_column(image, p0, p0.x - start_x, vox);
+		draw_column(image, ++p0.x, p0.y, vox);
 		decision += inc.y;
+		vox->zfar += inc_dist;
 	}
 }
 
@@ -61,19 +67,24 @@ void	raymarch_vertical(t_image *image, t_point p0, t_point p1, t_vox *vox)
 	const t_point	delta = {p1.x - p0.x, p1.y - p0.y};
 	const int		dir = 1 - 2 * (delta.x < 0);
 	const t_point	inc = {(delta.x * dir)<<1, delta.y<<1};
-	const int		start_y = p0.y;
+	double			inc_dist;
 	int				decision;
 
 	decision = inc.x - delta.y;
-	while (p0.y++ <= p1.y)
+	if (!delta.y)
+		inc_dist = 1;
+	else
+		inc_dist = sqrt(1 + (delta.x / (double) delta.y) * (delta.x / (double) delta.y));
+	while (p0.y <= p1.y)
 	{
 		if (decision >= 0)
 		{
 			p0.x += dir;
 			decision -= inc.y;
 		}
-		draw_column(image, p0, p0.y - start_y, vox);
+		draw_column(image, p0.x, ++p0.y, vox);
 		decision += inc.x;
+		vox->zfar += inc_dist;
 	}
 }
 
@@ -119,6 +130,7 @@ void	render_voxelspace(t_image *image, t_vox *vox)
 		horizon.x = start.x + step.x * vox->column;
 		horizon.y = start.y + step.y * vox->column;
 		vox->max_height = image->height;
+		vox->zfar = 1;
 		raymarch(image, camera->position, horizon, vox);
 	}
 }

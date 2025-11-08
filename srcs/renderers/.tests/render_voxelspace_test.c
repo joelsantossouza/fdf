@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/08 20:22:37 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/08 21:32:44 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	main(int argc, char **argv)
 		.direction.x = 1,
 		.direction.y = 1,
 		.fov_half = tan(fov / 2.0),
-		.zfar = 30,
+		.zfar = 300,
 		.altitude = 50,
 	};
 	mlx_hook(window, 2, 1L<<0, render, 0);
