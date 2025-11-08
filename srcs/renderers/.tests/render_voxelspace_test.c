@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/07 23:46:28 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/08 13:39:46 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,23 @@ int	render(int keycode)
 int	main(int argc, char **argv)
 {
 	int	temp;
-	if (argc != 3)
+	if (argc == 2)
+	{
+		if (parse_fdf_file(argv[1], &map) < 0)
+		{
+			ft_fprintf(2, "Fail to load map\n");
+			return (1);
+		}
+	}
+	else if (argc == 3)
+	{
+		if (parse_voxel_file(argv[1], argv[2], &map) < 0)
+		{
+			ft_fprintf(2, "Fail to load map\n");
+			return (1);
+		}
+	}
+	else
 	{
 		ft_fprintf(2, "Usage: %s <map>\n", *argv);
 		return (2);
@@ -78,11 +94,6 @@ int	main(int argc, char **argv)
 	image.width = WIDTH;
 	image.height = HEIGHT;
 	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.linelen, &temp);
-	if (parse_voxel_file(argv[1], argv[2], &map) < 0)
-	{
-		ft_fprintf(2, "Fail to load map\n");
-		return (1);
-	}
 	vox = (t_voxelspace) {
 		.map = &map,
 		.scale = 300,
@@ -90,7 +101,7 @@ int	main(int argc, char **argv)
 	camera = (t_camera){
 		.position.x = map.width / 2,
 		.position.y = map.height / 2,
-		.zfar = 200,
+		.zfar = 500,
 		.altitude = 50,
 	};
 	mlx_hook(window, 2, 1L<<0, render, 0);

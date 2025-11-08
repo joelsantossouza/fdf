@@ -6,14 +6,14 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 09:19:53 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/06 16:46:17 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/08 10:56:17 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "libft.h"
 
-static
+static inline
 void	xiaolinwu_drawline_horizontal(t_image *image, t_point p0, t_point p1, unsigned int color)
 {
 	const int	delta_x = p1.x - p0.x;
@@ -35,7 +35,7 @@ void	xiaolinwu_drawline_horizontal(t_image *image, t_point p0, t_point p1, unsig
 	}
 }
 
-static
+static inline
 void	xiaolinwu_drawline_vertical(t_image *image, t_point p0, t_point p1, unsigned int color)
 {
 	const int	delta_y = p1.y - p0.y;

@@ -6,14 +6,14 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:19:01 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/06 16:45:15 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/08 10:56:30 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "libft.h"
 
-static
+static inline
 void	bresenham_drawline_horizontal(t_image *image, t_point p0, t_point p1, unsigned int color)
 {
 	const t_point	delta = {p1.x - p0.x, p1.y - p0.y};
@@ -34,7 +34,7 @@ void	bresenham_drawline_horizontal(t_image *image, t_point p0, t_point p1, unsig
 	}
 }
 
-static
+static inline
 void	bresenham_drawline_vertical(t_image *image, t_point p0, t_point p1, unsigned int color)
 {
 	const t_point	delta = {p1.x - p0.x, p1.y - p0.y};
