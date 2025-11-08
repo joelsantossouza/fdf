@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:11:03 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/07 18:23:24 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/08 19:12:48 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,19 @@
 static inline
 void	render_fdf_horizontal_lines(t_image *image, t_fdf *fdf, t_linedrawer *drawline)
 {
-	t_point	p;
-	t_point	prev;
-	t_point	curr;
+	const t_map	*map = fdf->map;
+	t_point		p;
+	t_point		prev;
+	t_point		curr;
 
 	p.y = -1;
-	while (++p.y < fdf->map->height)
+	while (++p.y < map->height)
 	{
 		p.x = 0;
-		prev = fdf->transformed[fdf->map->width * p.y + p.x];
-		while (++p.x < fdf->map->width)
+		prev = fdf->transformed[map->width * p.y + p.x];
+		while (++p.x < map->width)
 		{
-			curr = fdf->transformed[fdf->map->width * p.y + p.x];
+			curr = fdf->transformed[map->width * p.y + p.x];
 			drawline(image, prev, curr, WHITE);
 			prev = curr;
 		}
@@ -36,18 +37,19 @@ void	render_fdf_horizontal_lines(t_image *image, t_fdf *fdf, t_linedrawer *drawl
 static inline
 void	render_fdf_vertical_lines(t_image *image, t_fdf *fdf, t_linedrawer *drawline)
 {
-	t_point	p;
-	t_point	prev;
-	t_point	curr;
+	const t_map	*map = fdf->map;
+	t_point		p;
+	t_point		prev;
+	t_point		curr;
 
 	p.x = -1;
-	while (++p.x < fdf->map->width)
+	while (++p.x < map->width)
 	{
 		p.y = 0;
-		prev = fdf->transformed[fdf->map->width * p.y + p.x];
-		while (++p.y < fdf->map->height)
+		prev = fdf->transformed[map->width * p.y + p.x];
+		while (++p.y < map->height)
 		{
-			curr = fdf->transformed[fdf->map->width * p.y + p.x];
+			curr = fdf->transformed[map->width * p.y + p.x];
 			drawline(image, prev, curr, WHITE);
 			prev = curr;
 		}
@@ -57,19 +59,20 @@ void	render_fdf_vertical_lines(t_image *image, t_fdf *fdf, t_linedrawer *drawlin
 static inline
 void	transform_fdf_points(t_fdf *fdf)
 {
-	long	i;
-	t_point	p;
-	t_point	new;
+	long			i;
+	t_point			p;
+	t_point			new;
+	const t_point	center = fdf->center;
 	const t_point	end = {
-		fdf->center.x + fdf->map->width * fdf->spacing,
-		fdf->center.y + fdf->map->height * fdf->spacing,
+		center.x + fdf->map->width * fdf->spacing,
+		center.y + fdf->map->height * fdf->spacing,
 	};
 
 	i = 0;
-	p.y = fdf->center.y;
+	p.y = center.y;
 	while (p.y < end.y)
 	{
-		p.x = fdf->center.x;
+		p.x = center.x;
 		while (p.x < end.x)
 		{
 			new = rotate(&fdf->trig, p.x, p.y, fdf->map->altitude[i]);

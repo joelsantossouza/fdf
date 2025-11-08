@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/08 16:59:51 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/08 20:20:19 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,17 @@
 
 # include "fdf.h"
 
-typedef t_point t_vector;
+typedef t_point		t_vector;
+typedef t_dpoint	t_dvector;
 
 typedef struct s_camera
 {
-	t_point	position;
-	int		altitude;
-	int		zfar;
+	t_point		position;
+	t_vector	direction;
+	int			altitude;
+	int			zfar;
+	double		fov;
+	double		fov_half;
 }	t_camera;
 
 typedef struct s_vox

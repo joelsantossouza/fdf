@@ -6,12 +6,13 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/08 13:39:46 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/08 20:22:37 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
 #include "fdf.h"
+#include "voxelspace.h"
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
@@ -21,6 +22,7 @@
 #define WIDTH	1000
 #define HEIGHT	1000
 #define SPEED	1
+#define PI		3.14159265359
 
 # define KEY1 65436
 # define KEY2 65433
@@ -35,7 +37,7 @@ void	*mlx;
 void	*window;
 t_image	image;
 t_map	map;
-t_voxelspace	vox;
+t_vox	vox;
 t_camera	camera;
 
 int	render(int keycode)
@@ -53,7 +55,7 @@ int	render(int keycode)
 		camera.altitude += SPEED;
 	else if (keycode == KEY2)
 		camera.altitude -= SPEED;
-	render_voxelspace(&image, &vox, &camera);
+	render_voxelspace(&image, &vox);
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
 	return (0);
 }
@@ -94,14 +96,19 @@ int	main(int argc, char **argv)
 	image.width = WIDTH;
 	image.height = HEIGHT;
 	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.linelen, &temp);
-	vox = (t_voxelspace) {
+	vox = (t_vox) {
 		.map = &map,
-		.scale = 300,
+		.camera = &camera,
+		.scale = 100,
 	};
+	double	fov = (PI / 180) * 60;
 	camera = (t_camera){
 		.position.x = map.width / 2,
 		.position.y = map.height / 2,
-		.zfar = 500,
+		.direction.x = 1,
+		.direction.y = 1,
+		.fov_half = tan(fov / 2.0),
+		.zfar = 30,
 		.altitude = 50,
 	};
 	mlx_hook(window, 2, 1L<<0, render, 0);
