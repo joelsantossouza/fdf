@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:19:01 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/08 10:56:30 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/08 16:49:58 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 
 static inline
-void	bresenham_drawline_horizontal(t_image *image, t_point p0, t_point p1, unsigned int color)
+void	bresenham_drawline_horizontal(t_image *image, t_point p0, t_point p1, unsigned color)
 {
 	const t_point	delta = {p1.x - p0.x, p1.y - p0.y};
 	const int		dir = 1 - 2 * (delta.y < 0);
@@ -35,7 +35,7 @@ void	bresenham_drawline_horizontal(t_image *image, t_point p0, t_point p1, unsig
 }
 
 static inline
-void	bresenham_drawline_vertical(t_image *image, t_point p0, t_point p1, unsigned int color)
+void	bresenham_drawline_vertical(t_image *image, t_point p0, t_point p1, unsigned color)
 {
 	const t_point	delta = {p1.x - p0.x, p1.y - p0.y};
 	const int		dir = 1 - 2 * (delta.x < 0);
@@ -55,7 +55,7 @@ void	bresenham_drawline_vertical(t_image *image, t_point p0, t_point p1, unsigne
 	}
 }
 
-int	bresenham_drawline(t_image *image, t_point p0, t_point p1, unsigned int color)
+int	bresenham_drawline(t_image *image, t_point p0, t_point p1, unsigned color)
 {
 	if (liangbarsky_clipping(&p0, &p1, image->width - 1, image->height - 1) < 0)
 		return (-1);

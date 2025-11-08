@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/30 15:41:12 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/07 16:57:12 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/08 15:02:36 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ LIBS = $(addprefix $(LIBS_DIR)/, $(LIBFT) $(MINILIBX))
 
 LINKING = -lm
 INCLUDES= $(addprefix -I, $(dir $(LIBS)) includes)
-HEADERS = $(addprefix $(HEADERS_DIR)/, fdf.h)
+HEADERS = $(addprefix $(HEADERS_DIR)/, fdf.h voxelspace.h stb_image.h)
 OBJS = $(addprefix $(SRCS_DIR)/, $(PARSERS:.c=.o) $(UTILS:.c=.o) $(RENDERERS:.c=.o) \
 	$(DRAW:.c=.o) $(TRANSFORMATIONS:.c=.o))
 

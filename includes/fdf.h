@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/08 11:49:03 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/08 16:51:54 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 
 typedef struct s_map
 {
-	int				width;
-	int				height;
-	long			total;
-	unsigned int	*color;	
-	int				*altitude;	
+	int			width;
+	int			height;
+	long		total;
+	unsigned	*color;	
+	int			*altitude;	
 }	t_map;
 
 typedef struct s_image
@@ -70,40 +70,26 @@ typedef struct s_fdf
 	int			spacing;
 }	t_fdf;
 
-typedef struct s_camera
-{
-	t_point	position;
-	int		altitude;
-	int		zfar;
-}	t_camera;
-
-typedef struct s_voxelspace
-{
-	t_map	*map;
-	int		scale;
-}	t_voxelspace;
-
 typedef int (t_linedrawer)(t_image *, t_point, t_point, unsigned int);
 
 // UTILS
-void			free_map(t_map *map, void (*free_struct)(void *));
-void	putpixel(t_image *image, int x, int y, unsigned int color);
-unsigned int	brightness(unsigned int color, double scale);
+void		free_map(t_map *map, void (*free_struct)(void *));
+void		putpixel(t_image *image, int x, int y, unsigned color);
+unsigned	brightness(unsigned color, double scale);
 
 // PARSING
-int		parse_fdf_file(const char *path, t_map *map);
-int	parse_voxel_file(const char *color_file, const char *altitude_file, t_map *map);
+int			parse_fdf_file(const char *path, t_map *map);
+int			parse_voxel_file(const char *color_file, const char *altitude_file, t_map *map);
 
 // DRAW
 int	liangbarsky_clipping(t_point *p0, t_point *p1, int width, int height);
-int	bresenham_drawline(t_image *image, t_point p0, t_point p1, unsigned int color);
-int	xiaolinwu_drawline(t_image *image, t_point p0, t_point p1, unsigned int color);
+int	bresenham_drawline(t_image *image, t_point p0, t_point p1, unsigned color);
+int	xiaolinwu_drawline(t_image *image, t_point p0, t_point p1, unsigned color);
 
 // TRANSFORMATION
 t_point	rotate(t_trig *t, int x, int y, int z);
 
 // RENDER
 void	render_fdf(t_image *image, t_fdf *fdf, t_linedrawer *drawline);
-void	render_voxelspace(t_image *image, t_voxelspace *vox, t_camera *camera);
 
 #endif

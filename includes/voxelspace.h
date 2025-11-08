@@ -1,28 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate.c                                           :+:      :+:    :+:   */
+/*   voxelspace.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/06 11:42:19 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/08 16:48:10 by joesanto         ###   ########.fr       */
+/*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
+/*   Updated: 2025/11/08 16:59:51 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#ifndef VOXELSPACE_H
+# define VOXELSPACE_H
 
-t_point	rotate(t_trig *t, int x, int y, int z)
+# include "fdf.h"
+
+typedef t_point t_vector;
+
+typedef struct s_camera
 {
-	int	tmp_x;
-	int	tmp_y;
-	int	tmp_z;
+	t_point	position;
+	int		altitude;
+	int		zfar;
+}	t_camera;
 
-	tmp_x = x;
-	tmp_y = y * t->cosine.x + z * -t->sine.x;
-	tmp_z = y * t->sine.x +  z * t->cosine.x;
-	x = tmp_x * t->cosine.y + tmp_z * t->sine.y;
-	y = tmp_y;
-	z = tmp_x * -t->sine.y + tmp_z * t->cosine.y;
-	return ((t_point){x * t->cosine.z + y * -t->sine.z, x * t->sine.z + y * t->cosine.z});
-}
+typedef struct s_vox
+{
+	t_map		*map;
+	int			scale;
+	t_camera	*camera;
+	int			max_height;
+	int			column;
+}	t_vox;
+
+// RENDER
+void	render_voxelspace(t_image *image, t_vox *vox);
+
+#endif
