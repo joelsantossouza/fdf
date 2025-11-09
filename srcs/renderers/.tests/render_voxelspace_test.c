@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/09 13:48:41 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/09 17:04:36 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,20 @@ int	render(int keycode)
 	else if (keycode == KEY3)
 	{
 		angle += 0.1;
-		camera.angle.cos = cos(angle);
-		camera.angle.sin = sin(angle);
+		t_trig ang = {sin(angle), cos(angle)};
+		camera.fov.plx = ang.cos * camera.zfar + ang.sin * camera.zfar;
+		camera.fov.ply = ang.sin * camera.zfar - ang.cos * camera.zfar;
+		camera.fov.prx = ang.cos * camera.zfar - ang.sin * camera.zfar;
+		camera.fov.pry = ang.sin * camera.zfar + ang.cos * camera.zfar;
 	}
 	else if (keycode == KEY4)
 	{
 		angle -= 0.1;
-		camera.angle.cos = cos(angle);
-		camera.angle.sin = sin(angle);
+		t_trig ang = {sin(angle), cos(angle)};
+		camera.fov.plx = ang.cos * camera.zfar + ang.sin * camera.zfar;
+		camera.fov.ply = ang.sin * camera.zfar - ang.cos * camera.zfar;
+		camera.fov.prx = ang.cos * camera.zfar - ang.sin * camera.zfar;
+		camera.fov.pry = ang.sin * camera.zfar + ang.cos * camera.zfar;
 	}
 	else if (keycode == KEY5)
 		camera.horizon -= SPEED * 3;
@@ -115,14 +121,17 @@ int	main(int argc, char **argv)
 	camera = (t_camera){
 		.position.x = map.width / 2,
 		.position.y = map.height / 2,
-		.angle.cos = cos(0),
-		.angle.sin = sin(0),
 		.horizon = image.height / 2,
 		.zfar = 250,
 		.altitude = 150,
 		.scale = 200,
 	};
-	mlx_hook(window, 2, 1L<<0, render, 0);
+	t_trig ang = {sin(angle), cos(angle)};
+	camera.fov.plx = ang.cos * camera.zfar + ang.sin * camera.zfar;
+	camera.fov.ply = ang.sin * camera.zfar - ang.cos * camera.zfar;
+	camera.fov.prx = ang.cos * camera.zfar - ang.sin * camera.zfar;
+	camera.fov.pry = ang.sin * camera.zfar + ang.cos * camera.zfar;
+mlx_hook(window, 2, 1L<<0, render, 0);
 	mlx_loop(mlx);
 	mlx_destroy_image(mlx, image.data);
 	mlx_destroy_window(mlx, window);

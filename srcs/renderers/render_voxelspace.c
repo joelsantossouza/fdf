@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:03:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/09 16:45:34 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/09 17:08:13 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	raymarching(t_image *img, t_map *map, t_camera *cam, t_ray *ray)
 	{
 		ray->position.x += ray->direction.x;
 		ray->position.y += ray->direction.y;
+		if (ray->position.x < 0 || ray->position.x >= map->width || ray->position.y < 0 || ray->position.y >= map->height)
+			break ;
 		offset = map->width * (int)ray->position.y + (int)ray->position.x;
 		new_height = (cam->altitude - map->altitude[offset]) * cam->scale / i + cam->horizon;
 		if (new_height < 0)
@@ -45,23 +47,17 @@ void	render_voxelspace(t_image *img, t_map *map, t_camera *cam)
 {
 	t_ray			ray;
 	const int		width = img->width;
-	const t_trig	angle = cam->angle;
-	const t_dpoint	pl = {
-		angle.cos * cam->zfar + angle.sin * cam->zfar,
-		angle.sin * cam->zfar - angle.cos * cam->zfar,
-	};
-	const t_dpoint	pr = {
-		angle.cos * cam->zfar - angle.sin * cam->zfar,
-		angle.sin * cam->zfar + angle.cos * cam->zfar,
-	};
+	const t_fov		fov = cam->fov;
+	const int		zfar = cam->zfar;
+	const t_point	position = cam->position;
 
 	ray.column = -1;
 	while (++ray.column < width)
 	{
-		ray.direction.x = (pl.x + (pr.x - pl.x) / width * ray.column) / cam->zfar;
-		ray.direction.y = (pl.y + (pr.y - pl.y) / width * ray.column) / cam->zfar;
-		ray.position.x = cam->position.x;
-		ray.position.y = cam->position.y;
+		ray.direction.x = (fov.plx + (fov.prx - fov.plx) / width * ray.column) / zfar;
+		ray.direction.y = (fov.ply + (fov.pry - fov.ply) / width * ray.column) / zfar;
+		ray.position.x = position.x;
+		ray.position.y = position.y;
 		raymarching(img, map, cam, &ray);
 	}
 }
