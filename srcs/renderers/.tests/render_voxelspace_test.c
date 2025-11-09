@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/09 17:04:36 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/09 17:36:08 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,10 @@ int	main(int argc, char **argv)
 	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.linelen, &temp);
 	camera = (t_camera){
 		.position.x = map.width / 2,
-		.position.y = map.height / 2,
-		.horizon = image.height / 2,
-		.zfar = 250,
-		.altitude = 150,
+		.position.y = map.height / 5,
+		.horizon = 0,
+		.zfar = 300,
+		.altitude = 100,
 		.scale = 200,
 	};
 	t_trig ang = {sin(angle), cos(angle)};
