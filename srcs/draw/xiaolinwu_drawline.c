@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 09:19:53 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/08 16:50:21 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/09 11:30:31 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 
 static inline
-void	xiaolinwu_drawline_horizontal(t_image *image, t_point p0, t_point p1, unsigned color)
+void	xiaolinwu_drawline_horizontal(t_image *img, t_point p0, t_point p1, unsigned color)
 {
 	const int	delta_x = p1.x - p0.x;
 	double		m;
@@ -29,14 +29,14 @@ void	xiaolinwu_drawline_horizontal(t_image *image, t_point p0, t_point p1, unsig
 	while (p0.x <= p1.x)
 	{
 		dist = y - (int) y;
-		putpixel(image, p0.x, y, brightness(color, 1 - dist));
-		putpixel(image, p0.x++, y + 1, brightness(color, dist));
+		putpixel(img, p0.x, y, brightness(color, 1 - dist));
+		putpixel(img, p0.x++, y + 1, brightness(color, dist));
 		y += m;
 	}
 }
 
 static inline
-void	xiaolinwu_drawline_vertical(t_image *image, t_point p0, t_point p1, unsigned color)
+void	xiaolinwu_drawline_vertical(t_image *img, t_point p0, t_point p1, unsigned color)
 {
 	const int	delta_y = p1.y - p0.y;
 	double		m;
@@ -51,29 +51,29 @@ void	xiaolinwu_drawline_vertical(t_image *image, t_point p0, t_point p1, unsigne
 	while (p0.y <= p1.y)
 	{
 		dist = x - (int) x;
-		putpixel(image, x, p0.y, brightness(color, 1 - dist));
-		putpixel(image, x + 1, p0.y++, brightness(color, dist));
+		putpixel(img, x, p0.y, brightness(color, 1 - dist));
+		putpixel(img, x + 1, p0.y++, brightness(color, dist));
 		x += m;
 	}
 }
 
-int	xiaolinwu_drawline(t_image *image, t_point p0, t_point p1, unsigned color)
+int	xiaolinwu_drawline(t_image *img, t_point p0, t_point p1, unsigned color)
 {
-	if (liangbarsky_clipping(&p0, &p1, image->width - 1, image->height - 1) < 0)
+	if (liangbarsky_clipping(&p0, &p1, img->width - 1, img->height - 1) < 0)
 		return (-1);
 	if (ft_abs(p1.x - p0.x) > ft_abs(p1.y - p0.y))
 	{
 		if (p0.x <= p1.x)
-			xiaolinwu_drawline_horizontal(image, p0, p1, color);
+			xiaolinwu_drawline_horizontal(img, p0, p1, color);
 		else
-			xiaolinwu_drawline_horizontal(image, p1, p0, color);
+			xiaolinwu_drawline_horizontal(img, p1, p0, color);
 	}
 	else
 	{
 		if (p0.y <= p1.y)
-			xiaolinwu_drawline_vertical(image, p0, p1, color);
+			xiaolinwu_drawline_vertical(img, p0, p1, color);
 		else
-			xiaolinwu_drawline_vertical(image, p1, p0, color);
+			xiaolinwu_drawline_vertical(img, p1, p0, color);
 	}
 	return (0);
 }

@@ -6,14 +6,14 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:11:03 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/08 19:12:48 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/09 11:32:09 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 static inline
-void	render_fdf_horizontal_lines(t_image *image, t_fdf *fdf, t_linedrawer *drawline)
+void	render_fdf_horizontal_lines(t_image *img, t_fdf *fdf, t_linedrawer *drawline)
 {
 	const t_map	*map = fdf->map;
 	t_point		p;
@@ -28,14 +28,14 @@ void	render_fdf_horizontal_lines(t_image *image, t_fdf *fdf, t_linedrawer *drawl
 		while (++p.x < map->width)
 		{
 			curr = fdf->transformed[map->width * p.y + p.x];
-			drawline(image, prev, curr, WHITE);
+			drawline(img, prev, curr, WHITE);
 			prev = curr;
 		}
 	}
 }
 
 static inline
-void	render_fdf_vertical_lines(t_image *image, t_fdf *fdf, t_linedrawer *drawline)
+void	render_fdf_vertical_lines(t_image *img, t_fdf *fdf, t_linedrawer *drawline)
 {
 	const t_map	*map = fdf->map;
 	t_point		p;
@@ -50,7 +50,7 @@ void	render_fdf_vertical_lines(t_image *image, t_fdf *fdf, t_linedrawer *drawlin
 		while (++p.y < map->height)
 		{
 			curr = fdf->transformed[map->width * p.y + p.x];
-			drawline(image, prev, curr, WHITE);
+			drawline(img, prev, curr, WHITE);
 			prev = curr;
 		}
 	}
@@ -75,7 +75,7 @@ void	transform_fdf_points(t_fdf *fdf)
 		p.x = center.x;
 		while (p.x < end.x)
 		{
-			new = rotate(&fdf->trig, p.x, p.y, fdf->map->altitude[i]);
+			new = rotate(&fdf->axis, p.x, p.y, fdf->map->altitude[i]);
 			fdf->transformed[i++] = (t_point){new.x + fdf->position.x, new.y + fdf->position.y};
 			p.x += fdf->spacing;
 		}
@@ -83,11 +83,11 @@ void	transform_fdf_points(t_fdf *fdf)
 	}
 }
 
-void	render_fdf(t_image *image, t_fdf *fdf, t_linedrawer *drawline)
+void	render_fdf(t_image *img, t_fdf *fdf, t_linedrawer *drawline)
 {
 	transform_fdf_points(fdf);
 	if (fdf->map->width == 1 && fdf->map->height == 1)
-		return (putpixel(image, fdf->transformed[0].x, fdf->transformed[0].y, WHITE));
-	render_fdf_horizontal_lines(image, fdf, drawline);
-	render_fdf_vertical_lines(image, fdf, drawline);
+		return (putpixel(img, fdf->transformed[0].x, fdf->transformed[0].y, WHITE));
+	render_fdf_horizontal_lines(img, fdf, drawline);
+	render_fdf_vertical_lines(img, fdf, drawline);
 }

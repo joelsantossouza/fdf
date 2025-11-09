@@ -6,15 +6,15 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 18:23:01 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/08 16:48:42 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/09 11:27:34 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	putpixel(t_image *image, int x, int y, unsigned color)
+void	putpixel(t_image *img, int x, int y, unsigned color)
 {
-	*(unsigned *) (image->addr + (image->linelen * y + x * (image->bpp / 8))) = color;
+	*(unsigned *) (img->addr + (img->linelen * y + x * (img->bpp / 8))) = color;
 }
 
 unsigned	brightness(unsigned color, double scale)

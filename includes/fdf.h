@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/09 00:18:11 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/09 11:35:26 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,18 @@ typedef struct s_point
 	int	y;
 }	t_point;
 
-typedef struct s_angle
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_angle;
-
 typedef struct s_trig
 {
-	t_angle	sine;
-	t_angle	cosine;
+	double	sin;
+	double	cos;
 }	t_trig;
+
+typedef struct s_axis
+{
+	t_trig	x;
+	t_trig	y;
+	t_trig	z;
+}	t_axis;
 
 typedef struct s_fdf
 {
@@ -65,8 +65,7 @@ typedef struct s_fdf
 	t_point		center;
 	t_point		position;
 	t_point		*transformed;
-	t_angle		angle;
-	t_trig		trig;
+	t_axis		axis;
 	int			spacing;
 }	t_fdf;
 
@@ -74,7 +73,7 @@ typedef int (t_linedrawer)(t_image *, t_point, t_point, unsigned int);
 
 // UTILS
 void		free_map(t_map *map, void (*free_struct)(void *));
-void		putpixel(t_image *image, int x, int y, unsigned color);
+void		putpixel(t_image *img, int x, int y, unsigned color);
 unsigned	brightness(unsigned color, double scale);
 
 // PARSING
@@ -83,13 +82,13 @@ int			parse_voxel_file(const char *color_file, const char *altitude_file, t_map 
 
 // DRAW
 int	liangbarsky_clipping(t_point *p0, t_point *p1, int width, int height);
-int	bresenham_drawline(t_image *image, t_point p0, t_point p1, unsigned color);
-int	xiaolinwu_drawline(t_image *image, t_point p0, t_point p1, unsigned color);
+int	bresenham_drawline(t_image *img, t_point p0, t_point p1, unsigned color);
+int	xiaolinwu_drawline(t_image *img, t_point p0, t_point p1, unsigned color);
 
 // TRANSFORMATION
-t_point	rotate(t_trig *t, int x, int y, int z);
+t_point	rotate(t_axis *a, int x, int y, int z);
 
 // RENDER
-void	render_fdf(t_image *image, t_fdf *fdf, t_linedrawer *drawline);
+void	render_fdf(t_image *img, t_fdf *fdf, t_linedrawer *drawline);
 
 #endif
