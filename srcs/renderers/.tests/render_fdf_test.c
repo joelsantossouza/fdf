@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/09 12:51:51 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/09 15:59:45 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ void	*window;
 t_image	image;
 t_map	map;
 t_fdf	fdf;
+double anglex = 0;
+double angley = 0;
+double anglez = 0;
 
 t_linedrawer *drawline = bresenham_drawline;
 
@@ -54,42 +57,42 @@ int	render(int keycode)
 		fdf.position.y += SPEED;
 	else if (keycode == 100)
 		fdf.position.x += SPEED;
-	//else if (keycode == KEY1)
-	//{
-	//	fdf.x.anglex += 0.1;
-	//	fdf.trig.cosine.x = cos(fdf.angle.x);
-	//	fdf.trig.sine.x = sin(fdf.angle.x);
-	//}
-	//else if (keycode == KEY2)
-	//{
-	//	fdf.angle.x -= 0.1;
-	//	fdf.trig.cosine.x = cos(fdf.angle.x);
-	//	fdf.trig.sine.x = sin(fdf.angle.x);
-	//}
-	//else if (keycode == KEY3)
-	//{
-	//	fdf.angle.y += 0.1;
-	//	fdf.trig.cosine.y = cos(fdf.angle.y);
-	//	fdf.trig.sine.y = sin(fdf.angle.y);
-	//}
-	//else if (keycode == KEY4)
-	//{
-	//	fdf.angle.y -= 0.1;
-	//	fdf.trig.cosine.y = cos(fdf.angle.y);
-	//	fdf.trig.sine.y = sin(fdf.angle.y);
-	//}
-	//else if (keycode == KEY5)
-	//{
-	//	fdf.angle.z += 0.1;
-	//	fdf.trig.cosine.z = cos(fdf.angle.z);
-	//	fdf.trig.sine.z = sin(fdf.angle.z);
-	//}
-	//else if (keycode == KEY6)
-	//{
-	//	fdf.angle.z -= 0.1;
-	//	fdf.trig.cosine.z = cos(fdf.angle.z);
-	//	fdf.trig.sine.z = sin(fdf.angle.z);
-	//}
+	else if (keycode == KEY1)
+	{
+		anglex += 0.1;
+		fdf.axis.x.cos = cos(anglex);
+		fdf.axis.x.sin = sin(anglex);
+	}
+	else if (keycode == KEY2)
+	{
+		anglex -= 0.1;
+		fdf.axis.x.cos = cos(anglex);
+		fdf.axis.x.sin = sin(anglex);
+	}
+	else if (keycode == KEY3)
+	{
+		angley -= 0.1;
+		fdf.axis.y.cos = cos(angley);
+		fdf.axis.y.sin = sin(angley);
+	}
+	else if (keycode == KEY4)
+	{
+		angley += 0.1;
+		fdf.axis.y.cos = cos(angley);
+		fdf.axis.y.sin = sin(angley);
+	}
+	else if (keycode == KEY5)
+	{
+		anglez -= 0.1;
+		fdf.axis.z.cos = cos(anglez);
+		fdf.axis.z.sin = sin(anglez);
+	}
+	else if (keycode == KEY6)
+	{
+		anglez += 0.1;
+		fdf.axis.z.cos = cos(anglez);
+		fdf.axis.z.sin = sin(anglez);
+	}
 	else if (keycode == KEY7)
 		fdf.spacing -= 1;
 	else if (keycode == KEY8)
@@ -148,13 +151,13 @@ int	main(int argc, char **argv)
 		.spacing = 15,
 		//.zoom = 1,
 	};
-	//fdf.trig.cosine.x = cos(fdf.angle.x);
-	//fdf.trig.sine.x = sin(fdf.angle.x);
-	//fdf.trig.cosine.y = cos(fdf.angle.y);
-	//fdf.trig.sine.y = sin(fdf.angle.y);
-	//fdf.trig.cosine.z = cos(fdf.angle.z);
-	//fdf.trig.sine.z = sin(fdf.angle.z);
-	//fdf.transformed = malloc(sizeof(t_point) * fdf.map->total);
+	fdf.axis.x.cos = cos(0);
+	fdf.axis.x.sin = sin(0);
+	fdf.axis.y.cos = cos(0);
+	fdf.axis.y.sin = sin(0);
+	fdf.axis.z.cos = cos(0);
+	fdf.axis.z.sin = sin(0);
+	fdf.transformed = malloc(sizeof(t_point) * map.total);
 	if (!fdf.transformed)
 		return (3);
 	mlx_hook(window, 2, 1L<<0, render, 0);

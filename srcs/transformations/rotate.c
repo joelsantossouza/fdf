@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 11:42:19 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/09 11:19:11 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/09 15:52:24 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ t_point	rotate(t_axis *a, int x, int y, int z)
 	int	tmp_z;
 
 	tmp_x = x;
-	tmp_y = y * a->x.cosine + z * -a->x.sine;
-	tmp_z = y * a->x.sine +  z * a->x.cosine;
-	x = tmp_x * a->y.cosine + tmp_z * a->y.sine;
+	tmp_y = y * a->x.cos + z * -a->x.sin;
+	tmp_z = y * a->x.sin +  z * a->x.cos;
+	x = tmp_x * a->y.cos + tmp_z * a->y.sin;
 	y = tmp_y;
-	z = tmp_x * -a->y.sine + tmp_z * a->y.cosine;
-	return ((t_point){x * a->z.cosine + y * -a->z.sine, x * a->z.sine+ y * a->z.cosine});
+	z = tmp_x * -a->y.sin + tmp_z * a->y.cos;
+	return ((t_point){x * a->z.cos + y * -a->z.sin, x * a->z.sin + y * a->z.cos});
 }

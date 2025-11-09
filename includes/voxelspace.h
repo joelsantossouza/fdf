@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/09 12:29:23 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/09 16:23:27 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ typedef struct s_dpoint
 }	t_dpoint;
 
 typedef t_dpoint	t_vector;
+
+typedef struct s_ray
+{
+	t_dpoint	position;
+	t_vector	direction;
+	int			column;
+}	t_ray;
 
 typedef struct s_camera
 {
