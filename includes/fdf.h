@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/08 20:20:03 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/09 00:18:11 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,6 @@ typedef struct s_point
 	int	x;
 	int	y;
 }	t_point;
-
-typedef struct s_dpoint
-{
-	double	x;
-	double	y;
-}	t_dpoint;
 
 typedef struct s_angle
 {

@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/08 21:32:44 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/09 00:19:38 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,14 @@ int	main(int argc, char **argv)
 	vox = (t_vox) {
 		.map = &map,
 		.camera = &camera,
-		.scale = 100,
+		.scale = 300,
 	};
 	double	fov = (PI / 180) * 60;
 	camera = (t_camera){
 		.position.x = map.width / 2,
 		.position.y = map.height / 2,
 		.direction.x = 1,
-		.direction.y = 1,
+		.direction.y = 0,
 		.fov_half = tan(fov / 2.0),
 		.zfar = 300,
 		.altitude = 50,
