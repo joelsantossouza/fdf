@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/09 11:35:26 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/10 15:34:10 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,13 @@ typedef struct s_axis
 
 typedef struct s_fdf
 {
-	t_map		*map;
-	t_point		center;
-	t_point		position;
-	t_point		*transformed;
-	t_axis		axis;
-	int			spacing;
+	t_map	*map;
+	t_point	center;
+	t_point	position;
+	t_point	*transformed;
+	t_axis	axis;
+	int		spacing;
+	double	zoom;
 }	t_fdf;
 
 typedef int (t_linedrawer)(t_image *, t_point, t_point, unsigned int);

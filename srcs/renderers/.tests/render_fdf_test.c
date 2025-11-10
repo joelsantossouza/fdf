@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/09 15:59:45 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/10 15:35:00 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,9 @@ int	render(int keycode)
 		fdf.axis.z.sin = sin(anglez);
 	}
 	else if (keycode == KEY7)
-		fdf.spacing -= 1;
+		fdf.zoom /= 1.1;
 	else if (keycode == KEY8)
-		fdf.spacing += 1;
-//	else if (keycode == KEY7)
-//		fdf.zoom /= 1.1;
-//	else if (keycode == KEY8)
-//		fdf.zoom *= 1.1;
+		fdf.zoom *= 1.1;
 	render_fdf(&image, &fdf, drawline);
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
 	return (0);
@@ -149,7 +145,7 @@ int	main(int argc, char **argv)
 		.position.x = WIDTH / 2,
 		.position.y = HEIGHT / 2,
 		.spacing = 15,
-		//.zoom = 1,
+		.zoom = 1,
 	};
 	fdf.axis.x.cos = cos(0);
 	fdf.axis.x.sin = sin(0);
