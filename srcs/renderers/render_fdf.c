@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:11:03 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/09 11:32:09 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/10 15:26:57 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static inline
 void	render_fdf_horizontal_lines(t_image *img, t_fdf *fdf, t_linedrawer *drawline)
 {
 	const t_map	*map = fdf->map;
+	size_t		offset;
 	t_point		p;
 	t_point		prev;
 	t_point		curr;
@@ -27,8 +28,9 @@ void	render_fdf_horizontal_lines(t_image *img, t_fdf *fdf, t_linedrawer *drawlin
 		prev = fdf->transformed[map->width * p.y + p.x];
 		while (++p.x < map->width)
 		{
-			curr = fdf->transformed[map->width * p.y + p.x];
-			drawline(img, prev, curr, WHITE);
+			offset = map->width * p.y + p.x;
+			curr = fdf->transformed[offset];
+			drawline(img, prev, curr, map->color[offset]);
 			prev = curr;
 		}
 	}
@@ -38,6 +40,7 @@ static inline
 void	render_fdf_vertical_lines(t_image *img, t_fdf *fdf, t_linedrawer *drawline)
 {
 	const t_map	*map = fdf->map;
+	size_t		offset;
 	t_point		p;
 	t_point		prev;
 	t_point		curr;
@@ -49,8 +52,9 @@ void	render_fdf_vertical_lines(t_image *img, t_fdf *fdf, t_linedrawer *drawline)
 		prev = fdf->transformed[map->width * p.y + p.x];
 		while (++p.y < map->height)
 		{
-			curr = fdf->transformed[map->width * p.y + p.x];
-			drawline(img, prev, curr, WHITE);
+			offset = map->width * p.y + p.x;
+			curr = fdf->transformed[offset];
+			drawline(img, prev, curr, map->color[offset]);
 			prev = curr;
 		}
 	}
