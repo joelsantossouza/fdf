@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/10 11:12:30 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/10 15:06:41 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 #define WIDTH	1500
 #define HEIGHT	1000
-#define SPEED	1
+#define SPEED	10
 #define PI		3.14159265359
 
 # define KEY1 65436
@@ -121,9 +121,9 @@ int	main(int argc, char **argv)
 	camera = (t_camera){
 		.position.x = map.width / 2,
 		.position.y = map.height / 5,
-		.horizon = image.height /2,
-		.zfar = 300,
-		.altitude = 100,
+		.horizon = 0,
+		.zfar = 3000,
+		.altitude = 3000,
 		.scale = 200,
 	};
 	t_trig ang = {sin(angle), cos(angle)};

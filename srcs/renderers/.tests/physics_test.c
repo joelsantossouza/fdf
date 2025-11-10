@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/10 11:43:30 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/10 14:26:37 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@
 
 #define WIDTH	1500
 #define HEIGHT	1000
-#define SPEED	5
+#define SPEED_JUMP 15
+#define SPEED	4
 #define PI		3.14159265359
-#define GRAVITY	1.10
+#define GRAVITY	1.008
 #define MAX_HEIGHT_TO_WALK 8
 
 # define KEY1 65436
@@ -43,10 +44,10 @@ t_camera	camera;
 double angle = 0;
 int	player_height = 20;
 double speed = 1;
+double force;
 
-int	render(int keycode)
+int	get_keys(int keycode)
 {
-	ft_bzero(image.addr, WIDTH * HEIGHT * (image.bpp / 8));
 	if (keycode == 119)
 	{
 		t_trig	ang = {sin(angle), cos(angle)};
@@ -76,7 +77,7 @@ int	render(int keycode)
 		}
 	}
 	else if (keycode == KEY1)
-		camera.altitude += SPEED;
+		force = SPEED_JUMP;
 	else if (keycode == KEY2)
 		camera.altitude -= SPEED;
 	else if (keycode == 100)
@@ -101,9 +102,24 @@ int	render(int keycode)
 		camera.horizon -= SPEED * 3;
 	else if (keycode == KEY6)
 		camera.horizon += SPEED * 3;
+	return (0);
+}
+
+int	render()
+{
+	static int once = 1;
 	int	heightonmap = map.altitude[map.width * camera.position.y + camera.position.x] + player_height;
-	if (camera.altitude >  heightonmap)
+	if (force > 0)
 	{
+		speed *= GRAVITY;
+		camera.altitude += force;
+		force -= speed;
+		once = 1;
+	}
+	else if (force <= 0 && camera.altitude >  heightonmap)
+	{
+		if (once)
+			speed = 1;
 		speed *= GRAVITY;
 		if (camera.altitude - speed < heightonmap)
 		{
@@ -112,10 +128,10 @@ int	render(int keycode)
 		}
 		else
 			camera.altitude -= speed;
+		once = 0;
 	}
-	else
-		speed = 1;
 	printf("%f\n", speed);
+	ft_bzero(image.addr, WIDTH * HEIGHT * (image.bpp / 8));
 	render_voxelspace(&image, &map, &camera);
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
 	return (0);
@@ -170,7 +186,8 @@ int	main(int argc, char **argv)
 	camera.fov.ply = ang.sin * camera.zfar - ang.cos * camera.zfar;
 	camera.fov.prx = ang.cos * camera.zfar - ang.sin * camera.zfar;
 	camera.fov.pry = ang.sin * camera.zfar + ang.cos * camera.zfar;
-	mlx_hook(window, 2, 1L<<0, render, 0);
+	mlx_hook(window, 2, 1L<<0, get_keys, 0);
+	mlx_loop_hook(mlx, render, 0);
 	mlx_loop(mlx);
 	mlx_destroy_image(mlx, image.data);
 	mlx_destroy_window(mlx, window);
