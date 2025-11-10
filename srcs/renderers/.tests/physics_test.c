@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/10 11:37:50 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/10 11:43:30 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,11 @@ int	render(int keycode)
 		t_trig	ang = {sin(angle), cos(angle)};
 		int heightonmap = map.altitude[map.width * (int)(camera.position.y + ang.sin *SPEED) + (int)(camera.position.x + ang.cos * SPEED)] + player_height;
 		int	myheight = camera.altitude;
-		if (heightonmap - myheight <= MAX_HEIGHT_TO_WALK)
+		int diff = heightonmap - myheight;
+		if (diff <= MAX_HEIGHT_TO_WALK)
 		{
-			camera.altitude = heightonmap;
+			if (diff > 0)
+				camera.altitude = heightonmap;
 			camera.position.x += ang.cos * SPEED;
 			camera.position.y += ang.sin * SPEED;
 		}
@@ -64,9 +66,11 @@ int	render(int keycode)
 		t_trig	ang = {sin(angle), cos(angle)};
 		int heightonmap = map.altitude[map.width * (int)(camera.position.y - ang.sin *SPEED) + (int)(camera.position.x - ang.cos * SPEED)] + player_height;
 		int	myheight = camera.altitude;
-		if (heightonmap - myheight <= MAX_HEIGHT_TO_WALK)
+		int diff = heightonmap - myheight;
+		if (diff <= MAX_HEIGHT_TO_WALK)
 		{
-			camera.altitude = heightonmap;
+			if (diff > 0)
+				camera.altitude = heightonmap;
 			camera.position.x -= ang.cos * SPEED;
 			camera.position.y -= ang.sin * SPEED;
 		}
