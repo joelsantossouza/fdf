@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/10 21:06:15 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/10 21:41:22 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ t_camera	camera;
 double angle = 0;
 int	last_ph = PLAYER_HEIGHT / 2;
 int	player_height = PLAYER_HEIGHT;
-double speed = 1;
+double	old_speed = SPEED / 3.0;
+double speed = SPEED;
 double force = 0;
 
 int	get_keys(int keycode)
@@ -53,37 +54,41 @@ int	get_keys(int keycode)
 	if (keycode == 119)
 	{
 		t_trig	ang = {sin(angle), cos(angle)};
-		int heightonmap = map.altitude[map.width * (int)(camera.position.y + ang.sin *SPEED) + (int)(camera.position.x + ang.cos * SPEED)] + player_height;
+		int heightonmap = map.altitude[map.width * (int)(camera.position.y + ang.sin *speed) + (int)(camera.position.x + ang.cos * speed)] + player_height;
 		int	myheight = camera.altitude;
 		int diff = heightonmap - myheight;
 		if (diff <= MAX_HEIGHT_TO_WALK)
 		{
 			if (diff > 0)
 				camera.altitude = heightonmap;
-			camera.position.x += ang.cos * SPEED;
-			camera.position.y += ang.sin * SPEED;
+			camera.position.x += ang.cos * speed;
+			camera.position.y += ang.sin * speed;
 		}
 	}
 	else if (keycode == 115)
 	{
 		t_trig	ang = {sin(angle), cos(angle)};
-		int heightonmap = map.altitude[map.width * (int)(camera.position.y - ang.sin *SPEED) + (int)(camera.position.x - ang.cos * SPEED)] + player_height;
+		int heightonmap = map.altitude[map.width * (int)(camera.position.y - ang.sin *speed) + (int)(camera.position.x - ang.cos * speed)] + player_height;
 		int	myheight = camera.altitude;
 		int diff = heightonmap - myheight;
 		if (diff <= MAX_HEIGHT_TO_WALK)
 		{
 			if (diff > 0)
 				camera.altitude = heightonmap;
-			camera.position.x -= ang.cos * SPEED;
-			camera.position.y -= ang.sin * SPEED;
+			camera.position.x -= ang.cos * speed;
+			camera.position.y -= ang.sin * speed;
 		}
 	}
 	else if (keycode == KEY1 && camera.altitude == height)
 		force = SPEED_JUMP;
 	else if (keycode == KEY2)
 	{
+		int	tmp = player_height;
 		player_height = last_ph;
-		last_ph = player_height;
+		last_ph = tmp;
+		double tmp1 = speed;
+		speed = old_speed;
+		old_speed = tmp1;
 		camera.altitude -= last_ph - player_height;
 	}
 	else if (keycode == 100)
@@ -105,9 +110,9 @@ int	get_keys(int keycode)
 		camera.fov.pry = ang.sin * camera.zfar + ang.cos * camera.zfar;
 	}
 	else if (keycode == KEY5)
-		camera.horizon -= SPEED * 3;
+		camera.horizon -= speed * 3;
 	else if (keycode == KEY6)
-		camera.horizon += SPEED * 3;
+		camera.horizon += speed * 3;
 	return (0);
 }
 
