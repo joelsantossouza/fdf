@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_voxelspace_test.c                           :+:      :+:    :+:   */
+/*   physics_test.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/10 11:12:30 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/10 11:37:50 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@
 
 #define WIDTH	1500
 #define HEIGHT	1000
-#define SPEED	1
+#define SPEED	5
 #define PI		3.14159265359
+#define GRAVITY	1.10
+#define MAX_HEIGHT_TO_WALK 8
 
 # define KEY1 65436
 # define KEY2 65433
@@ -39,23 +41,41 @@ t_image	image;
 t_map	map;
 t_camera	camera;
 double angle = 0;
+int	player_height = 20;
+double speed = 1;
 
 int	render(int keycode)
 {
 	ft_bzero(image.addr, WIDTH * HEIGHT * (image.bpp / 8));
 	if (keycode == 119)
-		camera.position.y -= SPEED;
-	else if (keycode == 97)
-		camera.position.x -= SPEED;
+	{
+		t_trig	ang = {sin(angle), cos(angle)};
+		int heightonmap = map.altitude[map.width * (int)(camera.position.y + ang.sin *SPEED) + (int)(camera.position.x + ang.cos * SPEED)] + player_height;
+		int	myheight = camera.altitude;
+		if (heightonmap - myheight <= MAX_HEIGHT_TO_WALK)
+		{
+			camera.altitude = heightonmap;
+			camera.position.x += ang.cos * SPEED;
+			camera.position.y += ang.sin * SPEED;
+		}
+	}
 	else if (keycode == 115)
-		camera.position.y += SPEED;
-	else if (keycode == 100)
-		camera.position.x += SPEED;
+	{
+		t_trig	ang = {sin(angle), cos(angle)};
+		int heightonmap = map.altitude[map.width * (int)(camera.position.y - ang.sin *SPEED) + (int)(camera.position.x - ang.cos * SPEED)] + player_height;
+		int	myheight = camera.altitude;
+		if (heightonmap - myheight <= MAX_HEIGHT_TO_WALK)
+		{
+			camera.altitude = heightonmap;
+			camera.position.x -= ang.cos * SPEED;
+			camera.position.y -= ang.sin * SPEED;
+		}
+	}
 	else if (keycode == KEY1)
 		camera.altitude += SPEED;
 	else if (keycode == KEY2)
 		camera.altitude -= SPEED;
-	else if (keycode == KEY3)
+	else if (keycode == 100)
 	{
 		angle += 0.1;
 		t_trig ang = {sin(angle), cos(angle)};
@@ -64,7 +84,7 @@ int	render(int keycode)
 		camera.fov.prx = ang.cos * camera.zfar - ang.sin * camera.zfar;
 		camera.fov.pry = ang.sin * camera.zfar + ang.cos * camera.zfar;
 	}
-	else if (keycode == KEY4)
+	else if (keycode == 97)
 	{
 		angle -= 0.1;
 		t_trig ang = {sin(angle), cos(angle)};
@@ -77,6 +97,21 @@ int	render(int keycode)
 		camera.horizon -= SPEED * 3;
 	else if (keycode == KEY6)
 		camera.horizon += SPEED * 3;
+	int	heightonmap = map.altitude[map.width * camera.position.y + camera.position.x] + player_height;
+	if (camera.altitude >  heightonmap)
+	{
+		speed *= GRAVITY;
+		if (camera.altitude - speed < heightonmap)
+		{
+			camera.altitude = heightonmap;
+			speed = 1;
+		}
+		else
+			camera.altitude -= speed;
+	}
+	else
+		speed = 1;
+	printf("%f\n", speed);
 	render_voxelspace(&image, &map, &camera);
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
 	return (0);
@@ -121,17 +156,17 @@ int	main(int argc, char **argv)
 	camera = (t_camera){
 		.position.x = map.width / 2,
 		.position.y = map.height / 5,
-		.horizon = image.height /2,
+		.horizon = image.height / 2,
 		.zfar = 300,
-		.altitude = 100,
-		.scale = 200,
+		.altitude = 300,
+		.scale = 300,
 	};
 	t_trig ang = {sin(angle), cos(angle)};
 	camera.fov.plx = ang.cos * camera.zfar + ang.sin * camera.zfar;
 	camera.fov.ply = ang.sin * camera.zfar - ang.cos * camera.zfar;
 	camera.fov.prx = ang.cos * camera.zfar - ang.sin * camera.zfar;
 	camera.fov.pry = ang.sin * camera.zfar + ang.cos * camera.zfar;
-mlx_hook(window, 2, 1L<<0, render, 0);
+	mlx_hook(window, 2, 1L<<0, render, 0);
 	mlx_loop(mlx);
 	mlx_destroy_image(mlx, image.data);
 	mlx_destroy_window(mlx, window);
