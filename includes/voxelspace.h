@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/09 16:58:57 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/10 20:41:47 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define VOXELSPACE_H
 
 # include "fdf.h"
+
+# define GRAVITY	0.54
 
 typedef struct s_dpoint
 {
@@ -40,13 +42,16 @@ typedef struct s_fov
 
 typedef struct s_camera
 {
-	t_point		position;
+	t_dpoint	position;
 	t_fov		fov;
+	double		altitude;
 	int			horizon;
-	int			altitude;
 	int			zfar;
 	int			scale;
 }	t_camera;
+
+// PHYSICS
+void	gravity(double *height, double *zforce, int floor);
 
 // RENDER
 void	render_voxelspace(t_image *img, t_map *map, t_camera *cam);

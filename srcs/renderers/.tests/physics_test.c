@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/10 14:26:37 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/10 21:06:15 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
 
 #define WIDTH	1500
 #define HEIGHT	1000
-#define SPEED_JUMP 15
-#define SPEED	4
+#define SPEED_JUMP 4
+#define SPEED	1
 #define PI		3.14159265359
-#define GRAVITY	1.008
-#define MAX_HEIGHT_TO_WALK 8
+#define MAX_HEIGHT_TO_WALK 2
+#define PLAYER_HEIGHT 5
 
 # define KEY1 65436
 # define KEY2 65433
@@ -42,12 +42,14 @@ t_image	image;
 t_map	map;
 t_camera	camera;
 double angle = 0;
-int	player_height = 20;
+int	last_ph = PLAYER_HEIGHT / 2;
+int	player_height = PLAYER_HEIGHT;
 double speed = 1;
-double force;
+double force = 0;
 
 int	get_keys(int keycode)
 {
+	int height = map.altitude[map.width * (int)camera.position.y + (int)camera.position.x] + player_height;
 	if (keycode == 119)
 	{
 		t_trig	ang = {sin(angle), cos(angle)};
@@ -76,10 +78,14 @@ int	get_keys(int keycode)
 			camera.position.y -= ang.sin * SPEED;
 		}
 	}
-	else if (keycode == KEY1)
+	else if (keycode == KEY1 && camera.altitude == height)
 		force = SPEED_JUMP;
 	else if (keycode == KEY2)
-		camera.altitude -= SPEED;
+	{
+		player_height = last_ph;
+		last_ph = player_height;
+		camera.altitude -= last_ph - player_height;
+	}
 	else if (keycode == 100)
 	{
 		angle += 0.1;
@@ -107,30 +113,8 @@ int	get_keys(int keycode)
 
 int	render()
 {
-	static int once = 1;
-	int	heightonmap = map.altitude[map.width * camera.position.y + camera.position.x] + player_height;
-	if (force > 0)
-	{
-		speed *= GRAVITY;
-		camera.altitude += force;
-		force -= speed;
-		once = 1;
-	}
-	else if (force <= 0 && camera.altitude >  heightonmap)
-	{
-		if (once)
-			speed = 1;
-		speed *= GRAVITY;
-		if (camera.altitude - speed < heightonmap)
-		{
-			camera.altitude = heightonmap;
-			speed = 1;
-		}
-		else
-			camera.altitude -= speed;
-		once = 0;
-	}
-	printf("%f\n", speed);
+	gravity(&camera.altitude, &force, map.altitude[map.width * (int)camera.position.y + (int)camera.position.x] + player_height);
+	printf("Force: %f\n", force);
 	ft_bzero(image.addr, WIDTH * HEIGHT * (image.bpp / 8));
 	render_voxelspace(&image, &map, &camera);
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);

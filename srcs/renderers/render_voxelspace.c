@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:03:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/09 17:08:13 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/10 20:30:53 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	render_voxelspace(t_image *img, t_map *map, t_camera *cam)
 	const int		width = img->width;
 	const t_fov		fov = cam->fov;
 	const int		zfar = cam->zfar;
-	const t_point	position = cam->position;
+	const t_dpoint	position = cam->position;
 
 	ray.column = -1;
 	while (++ray.column < width)
