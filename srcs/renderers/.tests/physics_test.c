@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/11 17:30:23 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/11 17:43:03 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 #define SPEED	1
 #define SENSIBILITY	0.05
 #define PI		3.14159265359
-#define PLAYER_HEIGHT 7 * 200
+#define PLAYER_HEIGHT 20 * 200
 #define MAX_HEIGHT_TO_WALK PLAYER_HEIGHT
 
 # define KEY1 65436
@@ -82,7 +82,7 @@ int	get_keys(int keycode)
 	}
 	int height = map.altitude[map.width * (int)camera.position.y + (int)camera.position.x] + player_height;
 	if (jump && camera.position.z == height)
-		force = SPEED_JUMP;
+		player.zforce = SPEED_JUMP;
 	else if (keycode == KEY2)
 	{
 		int	tmp = player_height;
@@ -116,9 +116,9 @@ int	get_keys(int keycode)
 		camera.fov.pry = ang.sin * camera.zfar + ang.cos * camera.zfar;
 	}
 	else if (keycode == KEY5)
-		camera.horizon -= speed * 3;
+		camera.horizon -= speed * 100;
 	else if (keycode == KEY6)
-		camera.horizon += speed * 3;
+		camera.horizon += speed * 100;
 	return (0);
 }
 
@@ -168,7 +168,7 @@ int release(int keycode)
 int	render()
 {
 	get_keys(0);
-	gravity(&camera.position.z, &force, map.altitude[map.width * (int)camera.position.y + (int)camera.position.x] + player_height);
+	gravity(&camera.position.z, &player.zforce, map.altitude[map.width * (int)camera.position.y + (int)camera.position.x] + player_height);
 	printf("Force: %f\n", force);
 	ft_bzero(image.addr, WIDTH * HEIGHT * (image.bpp / 8));
 	render_voxelspace(&image, &map, &camera);
@@ -189,7 +189,7 @@ int	main(int argc, char **argv)
 	}
 	else if (argc == 3)
 	{
-		if (parse_voxel_file(argv[1], argv[2], &map, 1000) < 0)
+		if (parse_voxel_file(argv[1], argv[2], &map, 300) < 0)
 		{
 			ft_fprintf(2, "Fail to load map\n");
 			return (1);
@@ -220,7 +220,7 @@ int	main(int argc, char **argv)
 		.zfar = 10000,
 	};
 	t_trig ang = {sin(angle), cos(angle)};
-	player = (t_player){&camera.position, player_height, speed, MAX_HEIGHT_TO_WALK};
+	player = (t_player){&camera.position, player_height, speed, 0, MAX_HEIGHT_TO_WALK};
 	camera.fov.plx = ang.cos * camera.zfar + ang.sin * camera.zfar;
 	camera.fov.ply = ang.sin * camera.zfar - ang.cos * camera.zfar;
 	camera.fov.prx = ang.cos * camera.zfar - ang.sin * camera.zfar;

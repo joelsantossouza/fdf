@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/11 17:23:32 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/11 17:38:01 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_player
 	t_dpoint	*position;
 	double		height;
 	double		speed;
+	double		zforce;
 	double		climb_max;
 }	t_player;
 
