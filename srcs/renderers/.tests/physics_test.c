@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/11 17:43:03 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/11 23:00:42 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ int	main(int argc, char **argv)
 	}
 	else if (argc == 3)
 	{
-		if (parse_voxel_file(argv[1], argv[2], &map, 300) < 0)
+		if (parse_voxel_file(argv[1], argv[2], &map, 800) < 0)
 		{
 			ft_fprintf(2, "Fail to load map\n");
 			return (1);
@@ -217,7 +217,7 @@ int	main(int argc, char **argv)
 		.position.y = map.height / 5.0,
 		.position.z = 300 * 200,
 		.horizon = image.height / 2,
-		.zfar = 10000,
+		.zfar = 400,
 	};
 	t_trig ang = {sin(angle), cos(angle)};
 	player = (t_player){&camera.position, player_height, speed, 0, MAX_HEIGHT_TO_WALK};
