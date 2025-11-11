@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/30 15:41:12 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/11 17:29:09 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/11 23:32:53 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ LINKING = -lm
 INCLUDES= $(addprefix -I, $(dir $(LIBS)) includes)
 HEADERS = $(addprefix $(HEADERS_DIR)/, fdf.h voxelspace.h stb_image.h)
 OBJS = $(addprefix $(SRCS_DIR)/, $(PARSERS:.c=.o) $(UTILS:.c=.o) $(RENDERERS:.c=.o) \
-	$(DRAW:.c=.o) $(TRANSFORMATIONS:.c=.o))
+	$(DRAW:.c=.o) $(MOTIONS:.c=.o))
 
 all: $(NAME)
 
