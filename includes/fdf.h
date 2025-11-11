@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/11 10:47:49 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/11 14:12:33 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ typedef struct s_fdf
 	t_point	position;
 	t_point	*transformed;
 	t_axis	axis;
-	int		spacing;
 	double	zoom;
+	int		spacing;
 }	t_fdf;
 
 typedef int (t_linedrawer)(t_image *, t_point, t_point, unsigned int);

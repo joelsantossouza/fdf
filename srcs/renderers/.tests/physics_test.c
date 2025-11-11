@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/11 12:41:19 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/11 16:55:09 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 #define SENSIBILITY	0.05
 #define PI		3.14159265359
 #define PLAYER_HEIGHT 7 * 200
-#define MAX_HEIGHT_TO_WALK PLAYER_HEIGHT / 2
+#define MAX_HEIGHT_TO_WALK PLAYER_HEIGHT
 
 # define KEY1 65436
 # define KEY2 65433
@@ -52,40 +52,36 @@ int	up = 0;
 int down = 0;
 int left = 0;
 int right = 0;
+int direita = 0;
+int esquerda = 0;
 int jump = 0;
+t_motion motion;
+int run;
 
 int	get_keys(int keycode)
 {
 	if (up)
 	{
-		t_trig	ang = {sin(angle), cos(angle)};
-		int heightonmap = map.altitude[map.width * (int)(camera.position.y + ang.sin *speed) + (int)(camera.position.x + ang.cos * speed)] + player_height;
-		int	myheight = camera.altitude;
-		int diff = heightonmap - myheight;
-		if (diff <= MAX_HEIGHT_TO_WALK)
-		{
-			if (diff > 0)
-				camera.altitude = heightonmap;
-			camera.position.x += ang.cos * speed;
-			camera.position.y += ang.sin * speed;
-		}
+		motion.angle = (t_trig){sin(angle), cos(angle)};
+		move(&camera.position, &motion, player_height, &map);
+	}
+	if (direita)
+	{
+		motion.angle = (t_trig){sin(angle + PI / 2), cos(angle + PI / 2)};
+		move(&camera.position, &motion, player_height, &map);
+	}
+	if (esquerda)
+	{
+		motion.angle = (t_trig){sin(angle - PI / 2), cos(angle - PI / 2)};
+		move(&camera.position, &motion, player_height, &map);
 	}
 	if (down)
 	{
-		t_trig	ang = {sin(angle), cos(angle)};
-		int heightonmap = map.altitude[map.width * (int)(camera.position.y - ang.sin *speed) + (int)(camera.position.x - ang.cos * speed)] + player_height;
-		int	myheight = camera.altitude;
-		int diff = heightonmap - myheight;
-		if (diff <= MAX_HEIGHT_TO_WALK)
-		{
-			if (diff > 0)
-				camera.altitude = heightonmap;
-			camera.position.x -= ang.cos * speed;
-			camera.position.y -= ang.sin * speed;
-		}
+		motion.angle = (t_trig){-sin(angle), -cos(angle)};
+		move(&camera.position, &motion, player_height, &map);
 	}
 	int height = map.altitude[map.width * (int)camera.position.y + (int)camera.position.x] + player_height;
-	if (jump && camera.altitude == height)
+	if (jump && camera.position.z == height)
 		force = SPEED_JUMP;
 	else if (keycode == KEY2)
 	{
@@ -95,8 +91,12 @@ int	get_keys(int keycode)
 		double tmp1 = speed;
 		speed = old_speed;
 		old_speed = tmp1;
-		camera.altitude -= last_ph - player_height;
+		camera.position.z -= last_ph - player_height;
 	}
+	if (run)
+		motion.speed = speed * 2;
+	else
+		motion.speed = speed;
 	if (right)
 	{
 		angle += SENSIBILITY;
@@ -128,12 +128,18 @@ int press(int keycode)
 		up = 1;
 	else if (keycode == 115)
 		down = 1;
+	else if (keycode == KEY6)
+		direita = 1;
+	else if (keycode == KEY4)
+		esquerda = 1;
 	else if (keycode == KEY1)
 		jump = 1;
 	else if (keycode == 100)
 		right = 1;
 	else if (keycode == 97)
 		left = 1;
+	else if (keycode == 65505)
+		run = 1;
 	return (0);
 }
 
@@ -143,12 +149,18 @@ int release(int keycode)
 		up = 0;
 	else if (keycode == 115)
 		down = 0;
+	else if (keycode == KEY6)
+		direita = 0;
+	else if (keycode == KEY4)
+		esquerda = 0;
 	else if (keycode == KEY1)
 		jump = 0;
 	else if (keycode == 100)
 		right = 0;
 	else if (keycode == 97)
 		left = 0;
+	else if (keycode == 65505)
+		run = 0;
 	return (0);
 }
 
@@ -156,9 +168,8 @@ int release(int keycode)
 int	render()
 {
 	get_keys(0);
-	gravity(&camera.altitude, &force, map.altitude[map.width * (int)camera.position.y + (int)camera.position.x] + player_height);
+	gravity(&camera.position.z, &force, map.altitude[map.width * (int)camera.position.y + (int)camera.position.x] + player_height);
 	printf("Force: %f\n", force);
-	usleep(1100);
 	ft_bzero(image.addr, WIDTH * HEIGHT * (image.bpp / 8));
 	render_voxelspace(&image, &map, &camera);
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
@@ -204,11 +215,12 @@ int	main(int argc, char **argv)
 	camera = (t_camera){
 		.position.x = map.width / 2.0,
 		.position.y = map.height / 5.0,
+		.position.z = 300 * 200,
 		.horizon = image.height / 2,
 		.zfar = 10000,
-		.altitude = 300 * 200,
 	};
 	t_trig ang = {sin(angle), cos(angle)};
+	motion = (t_motion){SPEED, MAX_HEIGHT_TO_WALK, ang};
 	camera.fov.plx = ang.cos * camera.zfar + ang.sin * camera.zfar;
 	camera.fov.ply = ang.sin * camera.zfar - ang.cos * camera.zfar;
 	camera.fov.prx = ang.cos * camera.zfar - ang.sin * camera.zfar;

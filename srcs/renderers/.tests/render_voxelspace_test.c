@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/11 10:55:16 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/11 15:01:27 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int	render(int keycode)
 	else if (keycode == 100)
 		camera.position.x += SPEED;
 	else if (keycode == KEY1)
-		camera.altitude += SPEED;
+		camera.position.z += SPEED;
 	else if (keycode == KEY2)
-		camera.altitude -= SPEED;
+		camera.position.z -= SPEED;
 	else if (keycode == KEY3)
 	{
 		angle += 0.1;
@@ -121,9 +121,9 @@ int	main(int argc, char **argv)
 	camera = (t_camera){
 		.position.x = map.width / 2.0,
 		.position.y = map.height / 5.0,
+		.position.z = 3000 * 200,
 		.horizon = 0,
 		.zfar = 3000,
-		.altitude = 3000 * 200,
 	};
 	t_trig ang = {sin(angle), cos(angle)};
 	camera.fov.plx = ang.cos * camera.zfar + ang.sin * camera.zfar;

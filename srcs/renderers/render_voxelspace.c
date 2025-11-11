@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:03:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/11 10:50:30 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/11 16:38:00 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	raymarching(t_image *img, t_map *map, t_camera *cam, t_ray *ray)
 	max_height = img->height;
 	while (++i < cam->zfar)
 	{
-		ray->position.x += ray->direction.x;
-		ray->position.y += ray->direction.y;
-		if (ray->position.x < 0 || ray->position.x >= map->width || ray->position.y < 0 || ray->position.y >= map->height)
+		ray->x += ray->dx;
+		ray->y += ray->dy;
+		if (ray->x < 0 || ray->x >= map->width || ray->y < 0 || ray->y >= map->height)
 			break ;
-		offset = map->width * (int)ray->position.y + (int)ray->position.x;
-		new_height = (cam->altitude - map->altitude[offset]) / i + cam->horizon;
+		offset = map->width * (int)ray->y + (int)ray->x;
+		new_height = (cam->position.z - map->altitude[offset]) / i + cam->horizon;
 		if (new_height < 0)
 			new_height = 0;
 		if (new_height < max_height)
@@ -54,10 +54,10 @@ void	render_voxelspace(t_image *img, t_map *map, t_camera *cam)
 	ray.column = -1;
 	while (++ray.column < width)
 	{
-		ray.direction.x = (fov.plx + (fov.prx - fov.plx) / width * ray.column) / zfar;
-		ray.direction.y = (fov.ply + (fov.pry - fov.ply) / width * ray.column) / zfar;
-		ray.position.x = position.x;
-		ray.position.y = position.y;
+		ray.dx = (fov.plx + (fov.prx - fov.plx) / width * ray.column) / zfar;
+		ray.dy = (fov.ply + (fov.pry - fov.ply) / width * ray.column) / zfar;
+		ray.x = position.x;
+		ray.y = position.y;
 		raymarching(img, map, cam, &ray);
 	}
 }
