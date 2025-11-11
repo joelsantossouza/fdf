@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/10 15:34:10 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/11 10:47:49 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ unsigned	brightness(unsigned color, double scale);
 
 // PARSING
 int			parse_fdf_file(const char *path, t_map *map);
-int			parse_voxel_file(const char *color_file, const char *altitude_file, t_map *map);
 
 // DRAW
 int	liangbarsky_clipping(t_point *p0, t_point *p1, int width, int height);

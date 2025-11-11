@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/10 21:41:22 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/11 10:58:34 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
 
 #define WIDTH	1500
 #define HEIGHT	1000
-#define SPEED_JUMP 4
-#define SPEED	1
+#define SPEED_JUMP 8
+#define SPEED	3
 #define PI		3.14159265359
-#define MAX_HEIGHT_TO_WALK 2
-#define PLAYER_HEIGHT 5
+#define MAX_HEIGHT_TO_WALK 5
+#define PLAYER_HEIGHT 20
 
 # define KEY1 65436
 # define KEY2 65433
@@ -139,7 +139,7 @@ int	main(int argc, char **argv)
 	}
 	else if (argc == 3)
 	{
-		if (parse_voxel_file(argv[1], argv[2], &map) < 0)
+		if (parse_voxel_file(argv[1], argv[2], &map, 200) < 0)
 		{
 			ft_fprintf(2, "Fail to load map\n");
 			return (1);
@@ -163,12 +163,11 @@ int	main(int argc, char **argv)
 	image.height = HEIGHT;
 	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.linelen, &temp);
 	camera = (t_camera){
-		.position.x = map.width / 2,
-		.position.y = map.height / 5,
+		.position.x = map.width / 2.0,
+		.position.y = map.height / 5.0,
 		.horizon = image.height / 2,
 		.zfar = 300,
-		.altitude = 300,
-		.scale = 300,
+		.altitude = 300 * 200,
 	};
 	t_trig ang = {sin(angle), cos(angle)};
 	camera.fov.plx = ang.cos * camera.zfar + ang.sin * camera.zfar;

@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:29 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/07 23:07:50 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/11 10:47:17 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #define RGB		3
 #define	GRAYSCALE	1
 
-int	parse_voxel_file(const char *color_file, const char *altitude_file, t_map *map)
+int	parse_voxel_file(const char *color_file, const char *altitude_file, t_map *map, int heightscale)
 {
 	t_point			dimension;
 	unsigned char	*color;
@@ -42,7 +42,7 @@ int	parse_voxel_file(const char *color_file, const char *altitude_file, t_map *m
 	while (++i < map->total)
 	{
 		map->color[i] = color[i * 3] << 16 | color[i * 3 + 1] << 8 | color[i * 3 + 2];
-		map->altitude[i] = altitude[i];
+		map->altitude[i] = altitude[i] * heightscale;
 	}
 	return (stbi_image_free(color), stbi_image_free(altitude), SUCCESS);
 }

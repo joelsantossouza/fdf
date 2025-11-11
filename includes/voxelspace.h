@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/10 20:41:47 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/11 10:51:42 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,10 @@ typedef struct s_camera
 	double		altitude;
 	int			horizon;
 	int			zfar;
-	int			scale;
 }	t_camera;
+
+// PARSERS
+int		parse_voxel_file(const char *color_file, const char *altitude_file, t_map *map, int heightscale);
 
 // PHYSICS
 void	gravity(double *height, double *zforce, int floor);

@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/10 15:06:41 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/11 10:55:16 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	main(int argc, char **argv)
 	}
 	else if (argc == 3)
 	{
-		if (parse_voxel_file(argv[1], argv[2], &map) < 0)
+		if (parse_voxel_file(argv[1], argv[2], &map, 200) < 0)
 		{
 			ft_fprintf(2, "Fail to load map\n");
 			return (1);
@@ -119,19 +119,18 @@ int	main(int argc, char **argv)
 	image.height = HEIGHT;
 	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.linelen, &temp);
 	camera = (t_camera){
-		.position.x = map.width / 2,
-		.position.y = map.height / 5,
+		.position.x = map.width / 2.0,
+		.position.y = map.height / 5.0,
 		.horizon = 0,
 		.zfar = 3000,
-		.altitude = 3000,
-		.scale = 200,
+		.altitude = 3000 * 200,
 	};
 	t_trig ang = {sin(angle), cos(angle)};
 	camera.fov.plx = ang.cos * camera.zfar + ang.sin * camera.zfar;
 	camera.fov.ply = ang.sin * camera.zfar - ang.cos * camera.zfar;
 	camera.fov.prx = ang.cos * camera.zfar - ang.sin * camera.zfar;
 	camera.fov.pry = ang.sin * camera.zfar + ang.cos * camera.zfar;
-mlx_hook(window, 2, 1L<<0, render, 0);
+	mlx_hook(window, 2, 1L<<0, render, 0);
 	mlx_loop(mlx);
 	mlx_destroy_image(mlx, image.data);
 	mlx_destroy_window(mlx, window);
