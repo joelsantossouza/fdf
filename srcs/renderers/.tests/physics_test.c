@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/11 11:15:09 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/11 12:41:19 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@
 
 #define WIDTH	1500
 #define HEIGHT	1000
-#define SPEED_JUMP 2 * 200
+#define SPEED_JUMP 3 * 1000
 #define SPEED	1
+#define SENSIBILITY	0.05
 #define PI		3.14159265359
 #define PLAYER_HEIGHT 7 * 200
 #define MAX_HEIGHT_TO_WALK PLAYER_HEIGHT / 2
@@ -47,11 +48,15 @@ int	player_height = PLAYER_HEIGHT;
 double	old_speed = SPEED / 3.0;
 double speed = SPEED;
 double force = 0;
+int	up = 0;
+int down = 0;
+int left = 0;
+int right = 0;
+int jump = 0;
 
 int	get_keys(int keycode)
 {
-	int height = map.altitude[map.width * (int)camera.position.y + (int)camera.position.x] + player_height;
-	if (keycode == 119)
+	if (up)
 	{
 		t_trig	ang = {sin(angle), cos(angle)};
 		int heightonmap = map.altitude[map.width * (int)(camera.position.y + ang.sin *speed) + (int)(camera.position.x + ang.cos * speed)] + player_height;
@@ -65,7 +70,7 @@ int	get_keys(int keycode)
 			camera.position.y += ang.sin * speed;
 		}
 	}
-	else if (keycode == 115)
+	if (down)
 	{
 		t_trig	ang = {sin(angle), cos(angle)};
 		int heightonmap = map.altitude[map.width * (int)(camera.position.y - ang.sin *speed) + (int)(camera.position.x - ang.cos * speed)] + player_height;
@@ -79,7 +84,8 @@ int	get_keys(int keycode)
 			camera.position.y -= ang.sin * speed;
 		}
 	}
-	else if (keycode == KEY1 && camera.altitude == height)
+	int height = map.altitude[map.width * (int)camera.position.y + (int)camera.position.x] + player_height;
+	if (jump && camera.altitude == height)
 		force = SPEED_JUMP;
 	else if (keycode == KEY2)
 	{
@@ -91,18 +97,18 @@ int	get_keys(int keycode)
 		old_speed = tmp1;
 		camera.altitude -= last_ph - player_height;
 	}
-	else if (keycode == 100)
+	if (right)
 	{
-		angle += 0.1;
+		angle += SENSIBILITY;
 		t_trig ang = {sin(angle), cos(angle)};
 		camera.fov.plx = ang.cos * camera.zfar + ang.sin * camera.zfar;
 		camera.fov.ply = ang.sin * camera.zfar - ang.cos * camera.zfar;
 		camera.fov.prx = ang.cos * camera.zfar - ang.sin * camera.zfar;
 		camera.fov.pry = ang.sin * camera.zfar + ang.cos * camera.zfar;
 	}
-	else if (keycode == 97)
+	if (left)
 	{
-		angle -= 0.1;
+		angle -= SENSIBILITY;
 		t_trig ang = {sin(angle), cos(angle)};
 		camera.fov.plx = ang.cos * camera.zfar + ang.sin * camera.zfar;
 		camera.fov.ply = ang.sin * camera.zfar - ang.cos * camera.zfar;
@@ -116,10 +122,43 @@ int	get_keys(int keycode)
 	return (0);
 }
 
+int press(int keycode)
+{
+	if (keycode == 119)
+		up = 1;
+	else if (keycode == 115)
+		down = 1;
+	else if (keycode == KEY1)
+		jump = 1;
+	else if (keycode == 100)
+		right = 1;
+	else if (keycode == 97)
+		left = 1;
+	return (0);
+}
+
+int release(int keycode)
+{
+	if (keycode == 119)
+		up = 0;
+	else if (keycode == 115)
+		down = 0;
+	else if (keycode == KEY1)
+		jump = 0;
+	else if (keycode == 100)
+		right = 0;
+	else if (keycode == 97)
+		left = 0;
+	return (0);
+}
+
+
 int	render()
 {
+	get_keys(0);
 	gravity(&camera.altitude, &force, map.altitude[map.width * (int)camera.position.y + (int)camera.position.x] + player_height);
 	printf("Force: %f\n", force);
+	usleep(1100);
 	ft_bzero(image.addr, WIDTH * HEIGHT * (image.bpp / 8));
 	render_voxelspace(&image, &map, &camera);
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
@@ -139,7 +178,7 @@ int	main(int argc, char **argv)
 	}
 	else if (argc == 3)
 	{
-		if (parse_voxel_file(argv[1], argv[2], &map, 200) < 0)
+		if (parse_voxel_file(argv[1], argv[2], &map, 1000) < 0)
 		{
 			ft_fprintf(2, "Fail to load map\n");
 			return (1);
@@ -166,7 +205,7 @@ int	main(int argc, char **argv)
 		.position.x = map.width / 2.0,
 		.position.y = map.height / 5.0,
 		.horizon = image.height / 2,
-		.zfar = 1000,
+		.zfar = 10000,
 		.altitude = 300 * 200,
 	};
 	t_trig ang = {sin(angle), cos(angle)};
@@ -174,7 +213,8 @@ int	main(int argc, char **argv)
 	camera.fov.ply = ang.sin * camera.zfar - ang.cos * camera.zfar;
 	camera.fov.prx = ang.cos * camera.zfar - ang.sin * camera.zfar;
 	camera.fov.pry = ang.sin * camera.zfar + ang.cos * camera.zfar;
-	mlx_hook(window, 2, 1L<<0, get_keys, 0);
+	mlx_hook(window, 2, 1L<<0, press, 0);
+	mlx_hook(window, 3, 1L<<1, release, 0);
 	mlx_loop_hook(mlx, render, 0);
 	mlx_loop(mlx);
 	mlx_destroy_image(mlx, image.data);
