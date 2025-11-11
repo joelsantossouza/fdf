@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/11 10:58:34 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/11 11:15:09 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
 
 #define WIDTH	1500
 #define HEIGHT	1000
-#define SPEED_JUMP 8
-#define SPEED	3
+#define SPEED_JUMP 2 * 200
+#define SPEED	1
 #define PI		3.14159265359
-#define MAX_HEIGHT_TO_WALK 5
-#define PLAYER_HEIGHT 20
+#define PLAYER_HEIGHT 7 * 200
+#define MAX_HEIGHT_TO_WALK PLAYER_HEIGHT / 2
 
 # define KEY1 65436
 # define KEY2 65433
@@ -166,7 +166,7 @@ int	main(int argc, char **argv)
 		.position.x = map.width / 2.0,
 		.position.y = map.height / 5.0,
 		.horizon = image.height / 2,
-		.zfar = 300,
+		.zfar = 1000,
 		.altitude = 300 * 200,
 	};
 	t_trig ang = {sin(angle), cos(angle)};

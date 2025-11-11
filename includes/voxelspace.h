@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/11 10:51:42 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/11 11:13:42 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "fdf.h"
 
-# define GRAVITY	0.54
+# define GRAVITY	2
 
 typedef struct s_dpoint
 {
