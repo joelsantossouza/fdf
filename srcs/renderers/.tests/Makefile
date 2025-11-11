@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/02 01:11:47 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/11 15:01:40 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/11 17:29:18 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ INCLUDES = $(addprefix -I, ../../../includes/ ../../../libs/libft ../../../libs/
 LIBS = ../../../libs/libft/libft.a ../../../libs/minilibx-linux/libmlx_Linux.a
 SRCS = ../../draw/bresenham_drawline.c ../../utils/draw_utils.c ../../draw/xiaolinwu_drawline.c ../render_fdf.c \
 ../../parsers/parse_fdf_file.c ../../utils/map_utils.c ../../draw/liangbarsky_clipping.c ../../motions/rotate.c \
-../render_voxelspace.c ../../parsers/parse_voxel_file.c ../../physics/gravity.c ../../motions/move.c
+../render_voxelspace.c ../../parsers/parse_voxel_file.c ../../physics/gravity.c ../../motions/move_player.c
 
 all: $(NAME)
 

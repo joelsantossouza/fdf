@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/11 16:55:09 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/11 17:30:23 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,30 +55,30 @@ int right = 0;
 int direita = 0;
 int esquerda = 0;
 int jump = 0;
-t_motion motion;
+t_player player;
 int run;
 
 int	get_keys(int keycode)
 {
 	if (up)
 	{
-		motion.angle = (t_trig){sin(angle), cos(angle)};
-		move(&camera.position, &motion, player_height, &map);
+		t_trig ang = {sin(angle), cos(angle)};
+		move_player(&player, &ang, &map);
 	}
 	if (direita)
 	{
-		motion.angle = (t_trig){sin(angle + PI / 2), cos(angle + PI / 2)};
-		move(&camera.position, &motion, player_height, &map);
+		t_trig ang = {sin(angle + PI / 2), cos(angle + PI / 2)};
+		move_player(&player, &ang, &map);
 	}
 	if (esquerda)
 	{
-		motion.angle = (t_trig){sin(angle - PI / 2), cos(angle - PI / 2)};
-		move(&camera.position, &motion, player_height, &map);
+		t_trig ang = {sin(angle - PI / 2), cos(angle - PI / 2)};
+		move_player(&player, &ang, &map);
 	}
 	if (down)
 	{
-		motion.angle = (t_trig){-sin(angle), -cos(angle)};
-		move(&camera.position, &motion, player_height, &map);
+		t_trig ang = {-sin(angle), -cos(angle)};
+		move_player(&player, &ang, &map);
 	}
 	int height = map.altitude[map.width * (int)camera.position.y + (int)camera.position.x] + player_height;
 	if (jump && camera.position.z == height)
@@ -94,9 +94,9 @@ int	get_keys(int keycode)
 		camera.position.z -= last_ph - player_height;
 	}
 	if (run)
-		motion.speed = speed * 2;
+		player.speed = speed * 2;
 	else
-		motion.speed = speed;
+		player.speed = speed;
 	if (right)
 	{
 		angle += SENSIBILITY;
@@ -220,7 +220,7 @@ int	main(int argc, char **argv)
 		.zfar = 10000,
 	};
 	t_trig ang = {sin(angle), cos(angle)};
-	motion = (t_motion){SPEED, MAX_HEIGHT_TO_WALK, ang};
+	player = (t_player){&camera.position, player_height, speed, MAX_HEIGHT_TO_WALK};
 	camera.fov.plx = ang.cos * camera.zfar + ang.sin * camera.zfar;
 	camera.fov.ply = ang.sin * camera.zfar - ang.cos * camera.zfar;
 	camera.fov.prx = ang.cos * camera.zfar - ang.sin * camera.zfar;

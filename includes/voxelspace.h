@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/11 16:37:34 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/11 17:23:32 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,13 @@ typedef struct s_camera
 	int			zfar;
 }	t_camera;
 
-typedef struct s_motion
+typedef struct s_player
 {
-	double	speed;
-	double	climb_max;
-	t_trig	angle;
-}	t_motion;
+	t_dpoint	*position;
+	double		height;
+	double		speed;
+	double		climb_max;
+}	t_player;
 
 // PARSERS
 int		parse_voxel_file(const char *color_file, const char *altitude_file, t_map *map, int heightscale);
@@ -63,7 +64,7 @@ int		parse_voxel_file(const char *color_file, const char *altitude_file, t_map *
 void	gravity(double *height, double *zforce, int floor);
 
 // MOTIONS
-void move(t_dpoint *position, t_motion *motion, int myheight, t_map *map);
+void move_player(t_player *player, t_trig *angle, t_map *map);
 
 // RENDER
 void	render_voxelspace(t_image *img, t_map *map, t_camera *cam);

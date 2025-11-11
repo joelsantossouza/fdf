@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/30 15:41:12 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/11 15:00:29 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/11 17:29:09 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ PARSERS = $(addprefix parsers/, parse_fdf_file.c parse_voxel_file.c)
 
 DRAW = $(addprefix draw/, bresenham_drawline.c xiaolinwu_drawline.c liangbarsky_clipping.c)
 
-MOTIONS = $(addprefix motions/, rotate.c)
+MOTIONS = $(addprefix motions/, rotate.c move_player.c)
 
 RENDERERS = $(addprefix renderers/, render_fdf.c render_voxelspace.c)
 
