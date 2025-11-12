@@ -6,13 +6,11 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 19:19:20 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/11 11:07:17 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 16:17:09 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "voxelspace.h"
-
-void	gravity(double *height, double *zforce, int floor)
+void	gravity(double *height, double *zforce, int floor, double gravity)
 {
 	const double	next_height = *height + *zforce;
 	static int		acceleration;
@@ -27,6 +25,6 @@ void	gravity(double *height, double *zforce, int floor)
 	{
 		acceleration++;
 		*height = next_height;
-		*zforce -= GRAVITY * acceleration;
+		*zforce -= gravity * acceleration;
 	}
 }

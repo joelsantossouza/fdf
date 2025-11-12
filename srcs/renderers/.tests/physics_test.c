@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 15:00:17 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 16:26:49 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #define HEIGHT	1000
 #define SPEED_JUMP 3 * 1000
 #define SPEED	1
-#define SENSIBILITY	0.05
+#define SENSIBILITY	0.03
 #define PI		3.14159265359
 #define PLAYER_HEIGHT 20 * 200
 #define MAX_HEIGHT_TO_WALK PLAYER_HEIGHT
@@ -43,9 +43,10 @@ int	render(t_vox *vox)
 	t_player *player = vox->player;
 	t_map	*map = vox->map;
 	t_image	*image = vox->img;
+	t_physic	*world = vox->world;
 
 	player_motions(vox);
-	gravity(&camera->position.z, &player->zforce, map->altitude[map->width * (int)camera->position.y + (int)camera->position.x] + player->height);
+	gravity(&camera->position.z, &player->zforce, player->floor, world->gravity);
 	printf("Force: %f\n", player->zforce);
 	ft_bzero(image->addr, WIDTH * HEIGHT * (image->bpp / 8));
 	render_voxelspace(image, map, camera);
@@ -62,6 +63,7 @@ int	main(int argc, char **argv)
 	t_image	image;
 	t_camera	camera;
 	t_player	player;
+	t_physic world = {1, 200};
 
 	if (argc == 2)
 	{
@@ -73,7 +75,7 @@ int	main(int argc, char **argv)
 	}
 	else if (argc == 3)
 	{
-		if (parse_voxel_file(argv[1], argv[2], &map, 200) < 0)
+		if (parse_voxel_file(argv[1], argv[2], &map, world.unity) < 0)
 		{
 			ft_fprintf(2, "Fail to load map\n");
 			return (1);
@@ -97,27 +99,29 @@ int	main(int argc, char **argv)
 	image.height = HEIGHT;
 	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.linelen, &temp);
 	camera = (t_camera){
-		.position.x = map.width >> 1,
-		.position.y = map.height >> 1,
+		.position.x = map.width / 2.0,
+		.position.y = map.height / 5.0,
 		.position.z = 300 * 200,
 		.horizon = image.height >> 1,
-		.zfar = 400,
+		.zfar = 100,
 	};
 	player = (t_player){
 		.position = &camera.position,
 		.cam = &camera,
-		.height = 10 * 200,
+		.height = 80 * 200,
 		.speed = 1,
 		.climb_max = 10 * 200,
-		.sensibility = 0.01,
+		.sensibility = 0.05,
 	};
+	player.floor = map.altitude[map.width * (int)player.position->y + (int)player.position->x] + player.height;
 	t_vox vox = {
 		.mlx = mlx,
 		.window = window,
 		.img = &image,
 		.player = &player,
 		.map = &map,
-		.keyboard = 0
+		.keyboard = 0,
+		.world = &world,
 	};
 	rotate_player(&player, 0);
 	mlx_hook(window, 2, 1L<<0, press_key, &vox.keyboard);

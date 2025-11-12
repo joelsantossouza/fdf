@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 15:14:15 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 16:17:14 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ typedef struct s_player
 	double		sensibility;
 }	t_player;
 
+typedef struct s_physic
+{
+	double	gravity;
+	int		unity;
+}	t_physic;
+
 typedef struct s_vox
 {
 	void		*mlx;
@@ -72,6 +78,7 @@ typedef struct s_vox
 	t_image		*img;
 	t_player	*player;
 	t_map		*map;
+	t_physic	*world;
 	int			keyboard;
 }	t_vox;
 
@@ -79,7 +86,7 @@ typedef struct s_vox
 int		parse_voxel_file(const char *color_file, const char *altitude_file, t_map *map, int heightscale);
 
 // PHYSICS
-void	gravity(double *height, double *zforce, int floor);
+void	gravity(double *height, double *zforce, int floor, double gravity);
 
 // MOTIONS
 void	move_player(t_player *player, double cosine, double sine, t_map *map);

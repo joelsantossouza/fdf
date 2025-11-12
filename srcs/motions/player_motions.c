@@ -6,14 +6,14 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 13:56:54 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 15:15:47 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 16:17:34 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "voxelspace.h"
 #include <math.h>
 
-void	move_player(t_player *player, double cosine, double sine, t_map *map)
+void	move_player(t_player *player, double sine, double cosine, t_map *map)
 {
 	const int	width = map->width;
 	const int	height = map->height;
@@ -42,20 +42,22 @@ void	rotate_player(t_player *player, double rotation)
 {
 	const int	zfar = player->cam->zfar;
 	double		angle;
-	t_trig		axis_y;
+	double		fx;
+	double		fy;
 	t_fov		*fov;
 
 	player->angle += rotation * player->sensibility;
 	angle = player->angle;
-	player->axis_y = (t_trig){cos(angle), sin(angle)};
-	angle -= QUADRANT;
-	player->axis_x = (t_trig){cos(angle), sin(angle)};
-	axis_y = player->axis_y;
+	player->axis_y = (t_trig){sin(angle), cos(angle)};
+	angle += QUADRANT;
+	player->axis_x = (t_trig){sin(angle), cos(angle)};
 	fov = &player->cam->fov;
-	fov->plx = axis_y.cos * zfar + axis_y.sin * zfar;
-	fov->ply = axis_y.sin * zfar - axis_y.cos * zfar;
-	fov->prx = axis_y.cos * zfar - axis_y.sin * zfar;
-	fov->pry = axis_y.sin * zfar + axis_y.cos * zfar;
+	fx = player->axis_y.cos * zfar;
+	fy = player->axis_y.sin * zfar;
+	fov->plx = fx + fy;
+	fov->ply = fy - fx;
+	fov->prx = fx - fy;
+	fov->pry = fy + fx;
 }
 
 int	player_motions(t_vox *vox)
@@ -69,18 +71,18 @@ int	player_motions(t_vox *vox)
 	player = vox->player;
 	map = vox->map;
 	if (keyboard & KEY_W)
-		move_player(player, axis_y.cos, axis_y.sin, map);
+		move_player(player, axis_y.sin, axis_y.cos, map);
 	if (keyboard & KEY_S)
-		move_player(player, -axis_y.cos, -axis_y.sin, map);
+		move_player(player, -axis_y.sin, -axis_y.cos, map);
 	if (keyboard & KEY_D)
-		move_player(player, axis_x.cos, axis_x.sin, map);
+		move_player(player, axis_x.sin, axis_x.cos, map);
 	if (keyboard & KEY_A)
-		move_player(player, -axis_x.cos, -axis_x.sin, map);
+		move_player(player, -axis_x.sin, -axis_x.cos, map);
 	if (keyboard & ARROW_RIGHT)
-		rotate_player(player, -1);
-	if (keyboard & ARROW_LEFT)
 		rotate_player(player, 1);
+	if (keyboard & ARROW_LEFT)
+		rotate_player(player, -1);
 	if (player->floor == player->position->z && keyboard & SPACE)
-		player->zforce = (int)player->height << 1;
+		player->zforce = vox->world->unity;
 	return (0);
 }
