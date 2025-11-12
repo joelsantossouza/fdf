@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/11 15:01:27 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 00:34:59 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	main(int argc, char **argv)
 	camera = (t_camera){
 		.position.x = map.width / 2.0,
 		.position.y = map.height / 5.0,
-		.position.z = 3000 * 200,
+		.position.z = 300 * 200,
 		.horizon = 0,
 		.zfar = 3000,
 	};
