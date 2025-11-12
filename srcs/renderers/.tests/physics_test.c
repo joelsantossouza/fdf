@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 17:38:00 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 18:37:06 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@ int	render(t_vox *vox)
 	t_image	*image = vox->img;
 	t_physic	*world = vox->world;
 
+	//printf("min:%d\tcurr:%d\tmax:%d\n", camera->min_horizon, camera->horizon, camera->max_horizon);
 	player_motions(vox);
 	gravity(&camera->position.z, &player->zforce, player->floor, world->gravity);
-	printf("Force: %f\n", player->zforce);
+	//printf("Force: %f\n", player->zforce);
 	ft_bzero(image->addr, WIDTH * HEIGHT * (image->bpp / 8));
 	render_voxelspace(image, map, camera);
 	mlx_put_image_to_window(vox->mlx, vox->window, image->data, 0, 0);
@@ -63,7 +64,7 @@ int	main(int argc, char **argv)
 	t_image	image;
 	t_camera	camera;
 	t_player	player;
-	t_physic world = {1, 1000};
+	t_physic world = {1, 1000, -HEIGHT + (HEIGHT / 1.5), HEIGHT + (HEIGHT >>1)};
 
 	if (argc == 2)
 	{

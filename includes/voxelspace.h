@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 17:36:06 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 18:33:07 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ typedef struct s_physic
 {
 	double	gravity;
 	int		unity;
+	int		min_horizon;
+	int		max_horizon;
 }	t_physic;
 
 typedef struct s_vox

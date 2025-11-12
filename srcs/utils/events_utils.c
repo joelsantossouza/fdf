@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:36:21 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 17:36:01 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 18:34:45 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,15 @@ int	player_mouse(int x, int y, t_vox *vox)
 {
 	const t_point	center = vox->img->center;
 	const t_point	delta = {x - center.x, y - center.y};
+	const t_physic	*world = vox->world;
+	t_camera		*cam;
+	int				next_horizon;
 
 	rotate_player(vox->player, delta.x);
+	cam = vox->player->cam;
+	next_horizon = cam->horizon - delta.y;
+	if (next_horizon >= world->min_horizon && next_horizon <= world->max_horizon)
+		cam->horizon = next_horizon;
 	mlx_mouse_move(vox->mlx, vox->window, center.x, center.y);
 	return (0);
 }
