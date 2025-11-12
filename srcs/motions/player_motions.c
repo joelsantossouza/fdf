@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 13:56:54 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 13:34:17 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 15:15:47 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	move_player(t_player *player, double cosine, double sine, t_map *map)
 			position->z = next.z;
 		position->x = next.x;
 		position->y = next.y;
+		player->floor = next.z;
 	}
 }
 
@@ -44,18 +45,17 @@ void	rotate_player(t_player *player, double rotation)
 	t_trig		axis_y;
 	t_fov		*fov;
 
-
 	player->angle += rotation * player->sensibility;
 	angle = player->angle;
 	player->axis_y = (t_trig){cos(angle), sin(angle)};
-	angle += QUADRANT;
+	angle -= QUADRANT;
 	player->axis_x = (t_trig){cos(angle), sin(angle)};
 	axis_y = player->axis_y;
 	fov = &player->cam->fov;
 	fov->plx = axis_y.cos * zfar + axis_y.sin * zfar;
 	fov->ply = axis_y.sin * zfar - axis_y.cos * zfar;
-	fov->plx = axis_y.cos * zfar - axis_y.sin * zfar;
-	fov->ply = axis_y.sin * zfar + axis_y.cos * zfar;
+	fov->prx = axis_y.cos * zfar - axis_y.sin * zfar;
+	fov->pry = axis_y.sin * zfar + axis_y.cos * zfar;
 }
 
 int	player_motions(t_vox *vox)
@@ -77,8 +77,10 @@ int	player_motions(t_vox *vox)
 	if (keyboard & KEY_A)
 		move_player(player, -axis_x.cos, -axis_x.sin, map);
 	if (keyboard & ARROW_RIGHT)
-		rotate_player(player, 1);
-	if (keyboard & ARROW_LEFT)
 		rotate_player(player, -1);
+	if (keyboard & ARROW_LEFT)
+		rotate_player(player, 1);
+	if (player->floor == player->position->z && keyboard & SPACE)
+		player->zforce = (int)player->height << 1;
 	return (0);
 }

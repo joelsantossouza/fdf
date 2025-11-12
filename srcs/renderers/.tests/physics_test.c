@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 14:11:51 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 15:00:17 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	main(int argc, char **argv)
 	}
 	else if (argc == 3)
 	{
-		if (parse_voxel_file(argv[1], argv[2], &map, 300) < 0)
+		if (parse_voxel_file(argv[1], argv[2], &map, 200) < 0)
 		{
 			ft_fprintf(2, "Fail to load map\n");
 			return (1);
@@ -97,27 +97,27 @@ int	main(int argc, char **argv)
 	image.height = HEIGHT;
 	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.linelen, &temp);
 	camera = (t_camera){
-		.position.x = map.width / 2.0,
-		.position.y = map.height / 5.0,
+		.position.x = map.width >> 1,
+		.position.y = map.height >> 1,
 		.position.z = 300 * 200,
-		.horizon = image.height / 2,
+		.horizon = image.height >> 1,
 		.zfar = 400,
 	};
 	player = (t_player){
 		.position = &camera.position,
 		.cam = &camera,
-		.height = 100,
-		.speed = 3,
-		.climb_max = 100,
-		.sensibility = 10,
+		.height = 10 * 200,
+		.speed = 1,
+		.climb_max = 10 * 200,
+		.sensibility = 0.01,
 	};
 	t_vox vox = {
-		mlx,
-		window,
-		&image,
-		&player,
-		&map,
-		0
+		.mlx = mlx,
+		.window = window,
+		.img = &image,
+		.player = &player,
+		.map = &map,
+		.keyboard = 0
 	};
 	rotate_player(&player, 0);
 	mlx_hook(window, 2, 1L<<0, press_key, &vox.keyboard);

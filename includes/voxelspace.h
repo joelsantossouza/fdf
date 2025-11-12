@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 13:58:48 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 15:14:15 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_player
 	t_camera	*cam;
 	t_trig		axis_y;
 	t_trig		axis_x;
+	int			floor;
 	double		angle;
 	double		height;
 	double		speed;

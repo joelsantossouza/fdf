@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 13:44:25 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 15:03:46 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@
 # define KEY_S			2
 # define KEY_D			4
 # define KEY_A			8
-# define ARROW_RIGHT	16
-# define ARROW_LEFT		32
+# define SPACE			16
+# define ARROW_RIGHT	32
+# define ARROW_LEFT		64
 
 
 typedef struct s_map
