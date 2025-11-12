@@ -6,11 +6,13 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:36:21 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 15:06:09 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 17:36:01 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "voxelspace.h"
+#include "mlx.h"
 
 int	press_key(int keycode, int *keyboard)
 {
@@ -47,5 +49,15 @@ int	release_key(int keycode, int *keyboard)
 		*keyboard &= ~(ARROW_LEFT);
 	else if (keycode == 32)
 		*keyboard &= ~(SPACE);
+	return (0);
+}
+
+int	player_mouse(int x, int y, t_vox *vox)
+{
+	const t_point	center = vox->img->center;
+	const t_point	delta = {x - center.x, y - center.y};
+
+	rotate_player(vox->player, delta.x);
+	mlx_mouse_move(vox->mlx, vox->window, center.x, center.y);
 	return (0);
 }

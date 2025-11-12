@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 13:56:54 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 16:17:34 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 16:38:14 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,6 @@ int	player_motions(t_vox *vox)
 	if (keyboard & ARROW_LEFT)
 		rotate_player(player, -1);
 	if (player->floor == player->position->z && keyboard & SPACE)
-		player->zforce = vox->world->unity;
+		player->zforce = vox->world->unity * 10;
 	return (0);
 }

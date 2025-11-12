@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 16:17:14 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 17:36:06 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ typedef struct s_vox
 	t_physic	*world;
 	int			keyboard;
 }	t_vox;
+
+// UTILS
+int	player_mouse(int x, int y, t_vox *vox);
 
 // PARSERS
 int		parse_voxel_file(const char *color_file, const char *altitude_file, t_map *map, int heightscale);

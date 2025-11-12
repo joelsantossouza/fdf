@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 16:26:49 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 17:38:00 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	main(int argc, char **argv)
 	t_image	image;
 	t_camera	camera;
 	t_player	player;
-	t_physic world = {1, 200};
+	t_physic world = {1, 1000};
 
 	if (argc == 2)
 	{
@@ -97,13 +97,14 @@ int	main(int argc, char **argv)
 		return (3);
 	image.width = WIDTH;
 	image.height = HEIGHT;
+	image.center = (t_point){WIDTH >> 1, HEIGHT >> 1};
 	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.linelen, &temp);
 	camera = (t_camera){
 		.position.x = map.width / 2.0,
 		.position.y = map.height / 5.0,
 		.position.z = 300 * 200,
 		.horizon = image.height >> 1,
-		.zfar = 100,
+		.zfar = 1000,
 	};
 	player = (t_player){
 		.position = &camera.position,
@@ -111,7 +112,7 @@ int	main(int argc, char **argv)
 		.height = 80 * 200,
 		.speed = 1,
 		.climb_max = 10 * 200,
-		.sensibility = 0.05,
+		.sensibility = 0.001,
 	};
 	player.floor = map.altitude[map.width * (int)player.position->y + (int)player.position->x] + player.height;
 	t_vox vox = {
@@ -124,8 +125,10 @@ int	main(int argc, char **argv)
 		.world = &world,
 	};
 	rotate_player(&player, 0);
+	mlx_mouse_hide(mlx, window);
 	mlx_hook(window, 2, 1L<<0, press_key, &vox.keyboard);
 	mlx_hook(window, 3, 1L<<1, release_key, &vox.keyboard);
+	mlx_hook(window, 6, 1L<<6, player_mouse, &vox);
 	mlx_loop_hook(mlx, render, &vox);
 	mlx_loop(mlx);
 	mlx_destroy_image(mlx, image.data);

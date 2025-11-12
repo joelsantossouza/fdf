@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 15:03:46 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 17:28:31 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ typedef struct s_map
 	int			*altitude;	
 }	t_map;
 
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}	t_point;
+
 typedef struct s_image
 {
 	void	*data;
@@ -47,13 +53,8 @@ typedef struct s_image
 	int		linelen;
 	int		width;
 	int		height;
+	t_point	center;
 }	t_image;
-
-typedef struct s_point
-{
-	int	x;
-	int	y;
-}	t_point;
 
 typedef struct s_trig
 {
