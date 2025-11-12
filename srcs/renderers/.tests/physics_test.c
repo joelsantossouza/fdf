@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 00:47:34 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 14:11:51 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,148 +37,32 @@
 # define KEY7 65429
 # define KEY8 65431
 
-void	*mlx;
-void	*window;
-t_image	image;
-t_map	map;
-t_camera	camera;
-double angle = 0;
-int	last_ph = PLAYER_HEIGHT / 2;
-int	player_height = PLAYER_HEIGHT;
-double	old_speed = SPEED / 3.0;
-double speed = SPEED;
-double force = 0;
-int	up = 0;
-int down = 0;
-int left = 0;
-int right = 0;
-int direita = 0;
-int esquerda = 0;
-int jump = 0;
-t_player player;
-int run;
-
-int	get_keys(int keycode)
+int	render(t_vox *vox)
 {
-	if (up)
-	{
-		t_trig ang = {sin(angle), cos(angle)};
-		move_player(&player, &ang, &map);
-	}
-	if (direita)
-	{
-		t_trig ang = {sin(angle + PI / 2), cos(angle + PI / 2)};
-		move_player(&player, &ang, &map);
-	}
-	if (esquerda)
-	{
-		t_trig ang = {sin(angle - PI / 2), cos(angle - PI / 2)};
-		move_player(&player, &ang, &map);
-	}
-	if (down)
-	{
-		t_trig ang = {-sin(angle), -cos(angle)};
-		move_player(&player, &ang, &map);
-	}
-	int height = map.altitude[map.width * (int)camera.position.y + (int)camera.position.x] + player_height;
-	if (jump && camera.position.z == height)
-		player.zforce = SPEED_JUMP;
-	else if (keycode == KEY2)
-	{
-		int	tmp = player_height;
-		player_height = last_ph;
-		last_ph = tmp;
-		double tmp1 = speed;
-		speed = old_speed;
-		old_speed = tmp1;
-		camera.position.z -= last_ph - player_height;
-	}
-	if (run)
-		player.speed = speed * 2;
-	else
-		player.speed = speed;
-	if (right)
-	{
-		angle += SENSIBILITY;
-		t_trig ang = {sin(angle), cos(angle)};
-		camera.fov.plx = ang.cos * camera.zfar + ang.sin * camera.zfar;
-		camera.fov.ply = ang.sin * camera.zfar - ang.cos * camera.zfar;
-		camera.fov.prx = ang.cos * camera.zfar - ang.sin * camera.zfar;
-		camera.fov.pry = ang.sin * camera.zfar + ang.cos * camera.zfar;
-	}
-	if (left)
-	{
-		angle -= SENSIBILITY;
-		t_trig ang = {sin(angle), cos(angle)};
-		camera.fov.plx = ang.cos * camera.zfar + ang.sin * camera.zfar;
-		camera.fov.ply = ang.sin * camera.zfar - ang.cos * camera.zfar;
-		camera.fov.prx = ang.cos * camera.zfar - ang.sin * camera.zfar;
-		camera.fov.pry = ang.sin * camera.zfar + ang.cos * camera.zfar;
-	}
-	else if (keycode == KEY5)
-		camera.horizon -= speed * 100;
-	else if (keycode == KEY6)
-		camera.horizon += speed * 100;
-	return (0);
-}
+	t_camera *camera = vox->player->cam;
+	t_player *player = vox->player;
+	t_map	*map = vox->map;
+	t_image	*image = vox->img;
 
-int press(int keycode)
-{
-	if (keycode == 119)
-		up = 1;
-	else if (keycode == 115)
-		down = 1;
-	else if (keycode == KEY6)
-		direita = 1;
-	else if (keycode == KEY4)
-		esquerda = 1;
-	else if (keycode == KEY1)
-		jump = 1;
-	else if (keycode == 100)
-		right = 1;
-	else if (keycode == 97)
-		left = 1;
-	else if (keycode == 65505)
-		run = 1;
-	return (0);
-}
-
-int release(int keycode)
-{
-	if (keycode == 119)
-		up = 0;
-	else if (keycode == 115)
-		down = 0;
-	else if (keycode == KEY6)
-		direita = 0;
-	else if (keycode == KEY4)
-		esquerda = 0;
-	else if (keycode == KEY1)
-		jump = 0;
-	else if (keycode == 100)
-		right = 0;
-	else if (keycode == 97)
-		left = 0;
-	else if (keycode == 65505)
-		run = 0;
-	return (0);
-}
-
-
-int	render()
-{
-	get_keys(0);
-	gravity(&camera.position.z, &player.zforce, map.altitude[map.width * (int)camera.position.y + (int)camera.position.x] + player_height);
-	printf("Force: %f\n", force);
-	ft_bzero(image.addr, WIDTH * HEIGHT * (image.bpp / 8));
-	render_voxelspace(&image, &map, &camera);
-	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
+	player_motions(vox);
+	gravity(&camera->position.z, &player->zforce, map->altitude[map->width * (int)camera->position.y + (int)camera->position.x] + player->height);
+	printf("Force: %f\n", player->zforce);
+	ft_bzero(image->addr, WIDTH * HEIGHT * (image->bpp / 8));
+	render_voxelspace(image, map, camera);
+	mlx_put_image_to_window(vox->mlx, vox->window, image->data, 0, 0);
 	return (0);
 }
 
 int	main(int argc, char **argv)
 {
 	int	temp;
+	t_map	map;
+	void	*mlx;
+	void	*window;
+	t_image	image;
+	t_camera	camera;
+	t_player	player;
+
 	if (argc == 2)
 	{
 		if (parse_fdf_file(argv[1], &map) < 0)
@@ -219,15 +103,26 @@ int	main(int argc, char **argv)
 		.horizon = image.height / 2,
 		.zfar = 400,
 	};
-	t_trig ang = {sin(angle), cos(angle)};
-	player = (t_player){&camera.position, player_height, speed, 0, MAX_HEIGHT_TO_WALK};
-	camera.fov.plx = ang.cos * camera.zfar + ang.sin * camera.zfar;
-	camera.fov.ply = ang.sin * camera.zfar - ang.cos * camera.zfar;
-	camera.fov.prx = ang.cos * camera.zfar - ang.sin * camera.zfar;
-	camera.fov.pry = ang.sin * camera.zfar + ang.cos * camera.zfar;
-	mlx_hook(window, 2, 1L<<0, press, 0);
-	mlx_hook(window, 3, 1L<<1, release, 0);
-	mlx_loop_hook(mlx, render, 0);
+	player = (t_player){
+		.position = &camera.position,
+		.cam = &camera,
+		.height = 100,
+		.speed = 3,
+		.climb_max = 100,
+		.sensibility = 10,
+	};
+	t_vox vox = {
+		mlx,
+		window,
+		&image,
+		&player,
+		&map,
+		0
+	};
+	rotate_player(&player, 0);
+	mlx_hook(window, 2, 1L<<0, press_key, &vox.keyboard);
+	mlx_hook(window, 3, 1L<<1, release_key, &vox.keyboard);
+	mlx_loop_hook(mlx, render, &vox);
 	mlx_loop(mlx);
 	mlx_destroy_image(mlx, image.data);
 	mlx_destroy_window(mlx, window);

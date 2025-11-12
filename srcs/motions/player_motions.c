@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 13:56:54 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 12:33:15 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 13:34:17 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,25 @@ void	rotate_player(t_player *player, double rotation)
 
 int	player_motions(t_vox *vox)
 {
-	const t_player	*player = vox->player;
-	const t_trig	axis_y = player->axis_y;
-	const t_trig	axis_x = player->axis_x;
+	const t_trig	axis_y = vox->player->axis_y;
+	const t_trig	axis_x = vox->player->axis_x;
 	const int		keyboard = vox->keyboard;
+	t_player		*player;
+	t_map			*map;
 
+	player = vox->player;
+	map = vox->map;
 	if (keyboard & KEY_W)
-		move_player(&player, axis_y.cos, axis_y.sin, &map);
+		move_player(player, axis_y.cos, axis_y.sin, map);
 	if (keyboard & KEY_S)
-		move_player(&player, -axis_y.cos, -axis_y.sin, &map);
+		move_player(player, -axis_y.cos, -axis_y.sin, map);
 	if (keyboard & KEY_D)
-		move_player(&player, axis_x.cos, axis_x.sin, &map);
+		move_player(player, axis_x.cos, axis_x.sin, map);
 	if (keyboard & KEY_A)
-		move_player(&player, -axis_x.cos, -axis_x.sin, &map);
+		move_player(player, -axis_x.cos, -axis_x.sin, map);
 	if (keyboard & ARROW_RIGHT)
-		rotate_player(&player, 1);
+		rotate_player(player, 1);
 	if (keyboard & ARROW_LEFT)
-		rotate_player(&player, -1);
+		rotate_player(player, -1);
+	return (0);
 }

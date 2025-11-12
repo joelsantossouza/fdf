@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 12:34:59 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/12 13:58:48 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@
 
 # define QUADRANT	1.5707963267948966
 # define GRAVITY	2
-
-# define KEY_W			1
-# define KEY_S			2
-# define KEY_D			4
-# define KEY_A			8
-# define ARROW_RIGHT	8
 
 typedef struct s_dpoint
 {
@@ -72,6 +66,9 @@ typedef struct s_player
 
 typedef struct s_vox
 {
+	void		*mlx;
+	void		*window;
+	t_image		*img;
 	t_player	*player;
 	t_map		*map;
 	int			keyboard;
@@ -84,7 +81,9 @@ int		parse_voxel_file(const char *color_file, const char *altitude_file, t_map *
 void	gravity(double *height, double *zforce, int floor);
 
 // MOTIONS
-void	move_player(t_player *player, t_trig *angle, t_map *map);
+void	move_player(t_player *player, double cosine, double sine, t_map *map);
+void	rotate_player(t_player *player, double rotation);
+int		player_motions(t_vox *vox);
 
 // RENDER
 void	render_voxelspace(t_image *img, t_map *map, t_camera *cam);
