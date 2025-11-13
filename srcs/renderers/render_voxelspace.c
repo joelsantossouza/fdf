@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:03:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/13 12:41:47 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/13 13:26:18 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,17 @@ void	put_background(t_image *img, t_ray *ray, t_camera *cam, t_pic *sky)
 	const int	horizon = cam->horizon;
 	const int	max_height = ray->max_height;
 	t_point		texture;
-	double		angle_y;
+	t_dpoint	angle;
 	int			i;
 
-	angle_y = atan2(ray->dy, ray->dx);
-	angle_y = fmod(angle_y + CIRCLE, CIRCLE);
-	texture.x = (int)(angle_y / CIRCLE * sky->width);
+	angle.x = atan2(ray->dy, ray->dx);
+	angle.x = fmod(angle.x + CIRCLE, CIRCLE);
+	texture.x = (int)(angle.x / CIRCLE * sky->width);
 	i = -1;
 	while (++i < max_height)
 	{
-		angle_y = (double)i / (double)horizon;
-		texture.x = (int)(angle_y * sky->height);
+		angle.y = (atan2(horizon - i, cam->zfar) + QUADRANT) / PI;
+		texture.y = (int)(angle.y * sky->height);
 		putpixel(img, ray->column, i, sky->data[sky->width * texture.y + texture.x]);
 	}
 }
