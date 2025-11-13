@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/13 11:30:28 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/13 12:27:05 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ typedef struct s_vox
 
 // UTILS
 int				player_mouse(int x, int y, t_vox *vox);
-unsigned int	sky_sphere(t_pic *sky, double h_angle, double v_angle);
 
 // PARSERS
 int		parse_voxel_file(const char *color_file, const char *altitude_file, t_map *map, int heightscale);
