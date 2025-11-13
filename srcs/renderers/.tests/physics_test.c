@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/13 11:35:50 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/13 12:12:46 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	main(int argc, char **argv)
 			ft_fprintf(2, "Fail to load map\n");
 			return (1);
 		}
-		if (parse_picture(argv[2], &sky.data, &sky.width, &sky.height) < 0)
+		if (parse_picture(argv[3], &sky.data, &sky.width, &sky.height) < 0)
 		{
 			ft_fprintf(2, "Fail to load sky\n");
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/13 09:27:14 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/13 11:56:34 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 #include <unistd.h>
 #include "libft.h"
 
-#define WIDTH	1024
-#define HEIGHT	1024
 #define SPEED	1
 
 # define KEY1 65436
@@ -36,6 +34,9 @@ void	*mlx;
 void	*window;
 t_image	image;
 t_map	map;
+
+int	WIDTH;
+int	HEIGHT;
 
 void	test_image(t_image image, t_map map)
 {
@@ -79,6 +80,8 @@ int	main(int argc, char **argv)
 		ft_fprintf(2, "Usage: %s <map>\n", *argv);
 		return (2);
 	}
+	WIDTH = map.width;
+	HEIGHT = map.height;
 	mlx = mlx_init();
 	if (!mlx)
 		return (1);

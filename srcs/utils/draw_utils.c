@@ -6,12 +6,13 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 18:23:01 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/13 11:26:58 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/13 12:04:49 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "voxelspace.h"
+#include <math.h>
 
 void	putpixel(t_image *img, int x, int y, unsigned color)
 {
@@ -41,8 +42,9 @@ unsigned int	sky_sphere(t_pic *sky, double h_angle, double v_angle)
 	int	x;
 	int	y;
 
-	x = (int)((h_angle / CIRCLE) * width) % width;
-	y = (int)((v_angle + QUADRANT) / PI) * height;
+	h_angle = fmod(h_angle + CIRCLE, CIRCLE);
+	x = (int)(h_angle / CIRCLE * width);
+	y = (int)(((v_angle + QUADRANT) / PI) * height);
 	if (y < 0)
 		y = 0;
 	else if (y >= height)
