@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 18:37:06 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/13 11:29:37 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	render(t_vox *vox)
 	gravity(&camera->position.z, &player->zforce, player->floor, world->gravity);
 	//printf("Force: %f\n", player->zforce);
 	ft_bzero(image->addr, WIDTH * HEIGHT * (image->bpp / 8));
-	render_voxelspace(image, map, camera);
+	render_voxelspace(image, map, camera, vox->sky);
 	mlx_put_image_to_window(vox->mlx, vox->window, image->data, 0, 0);
 	return (0);
 }

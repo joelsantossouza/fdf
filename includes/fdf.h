@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/13 09:33:49 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/13 10:53:49 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@
 # define ARROW_RIGHT	32
 # define ARROW_LEFT		64
 
+typedef struct s_pic
+{
+	int				width;
+	int				height;
+	unsigned int	*data;
+}	t_pic;
 
 typedef struct s_map
 {

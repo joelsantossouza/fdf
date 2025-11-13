@@ -6,12 +6,13 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:03:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/11 16:38:00 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/13 11:29:01 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "voxelspace.h"
+#include <math.h>
 
 static inline
 void	raymarching(t_image *img, t_map *map, t_camera *cam, t_ray *ray)
@@ -19,11 +20,9 @@ void	raymarching(t_image *img, t_map *map, t_camera *cam, t_ray *ray)
 	size_t		offset;
 	unsigned	color;
 	int			new_height;
-	int			max_height;
 	int			i;
 
 	i = 0;
-	max_height = img->height;
 	while (++i < cam->zfar)
 	{
 		ray->x += ray->dx;
@@ -34,16 +33,35 @@ void	raymarching(t_image *img, t_map *map, t_camera *cam, t_ray *ray)
 		new_height = (cam->position.z - map->altitude[offset]) / i + cam->horizon;
 		if (new_height < 0)
 			new_height = 0;
-		if (new_height < max_height)
+		if (new_height < ray->max_height)
 		{
 			color = map->color[offset];
-			while (max_height > new_height)
-				putpixel(img, ray->column, --max_height, color);
+			while (ray->max_height > new_height)
+				putpixel(img, ray->column, --ray->max_height, color);
 		}
 	}
 }
 
-void	render_voxelspace(t_image *img, t_map *map, t_camera *cam)
+static inline
+void	put_background(t_image *img, t_ray *ray, t_camera *cam, t_pic *sky)
+{
+	const int	horizon = cam->horizon;
+	const int	zfar = cam->zfar;
+	const int	max_height = ray->max_height;
+	double		h_angle;
+	double		v_angle;
+	int			i;
+
+	i = -1;
+	h_angle = atan2(ray->dy, ray->dx);
+	while (++i < max_height)
+	{
+		v_angle = atan2(horizon - i, zfar);
+		putpixel(img, ray->column, i, sky_sphere(sky, h_angle, v_angle));
+	}
+}
+
+void	render_voxelspace(t_image *img, t_map *map, t_camera *cam, t_pic *sky)
 {
 	t_ray			ray;
 	const int		width = img->width;
@@ -54,10 +72,12 @@ void	render_voxelspace(t_image *img, t_map *map, t_camera *cam)
 	ray.column = -1;
 	while (++ray.column < width)
 	{
-		ray.dx = (fov.plx + (fov.prx - fov.plx) / width * ray.column) / zfar;
-		ray.dy = (fov.ply + (fov.pry - fov.ply) / width * ray.column) / zfar;
 		ray.x = position.x;
 		ray.y = position.y;
+		ray.dx = (fov.plx + (fov.prx - fov.plx) / width * ray.column) / zfar;
+		ray.dy = (fov.ply + (fov.pry - fov.ply) / width * ray.column) / zfar;
+		ray.max_height = img->height;
 		raymarching(img, map, cam, &ray);
+		put_background(img, &ray, cam, sky);
 	}
 }
