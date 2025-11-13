@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/13 11:29:12 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/13 11:30:28 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_vox
 	t_image		*img;
 	t_player	*player;
 	t_map		*map;
+	t_pic		*sky;
 	t_physic	*world;
 	int			keyboard;
 }	t_vox;

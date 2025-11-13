@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 00:34:59 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/13 11:35:40 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 #define WIDTH	1500
 #define HEIGHT	1000
 #define SPEED	10
-#define PI		3.14159265359
 
 # define KEY1 65436
 # define KEY2 65433
@@ -77,7 +76,7 @@ int	render(int keycode)
 		camera.horizon -= SPEED * 3;
 	else if (keycode == KEY6)
 		camera.horizon += SPEED * 3;
-	render_voxelspace(&image, &map, &camera);
+	render_voxelspace(&image, &map, &camera, 0); // ERROR HERE FOR WHILE
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
 	return (0);
 }

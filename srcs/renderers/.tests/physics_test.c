@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/13 11:29:37 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/13 11:35:50 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 #define SPEED_JUMP 3 * 1000
 #define SPEED	1
 #define SENSIBILITY	0.03
-#define PI		3.14159265359
 #define PLAYER_HEIGHT 20 * 200
 #define MAX_HEIGHT_TO_WALK PLAYER_HEIGHT
 
@@ -65,26 +64,37 @@ int	main(int argc, char **argv)
 	t_camera	camera;
 	t_player	player;
 	t_physic world = {1, 1000, -HEIGHT + (HEIGHT / 1.5), HEIGHT + (HEIGHT >>1)};
+	t_pic sky;
 
-	if (argc == 2)
+	if (argc == 3)
 	{
 		if (parse_fdf_file(argv[1], &map) < 0)
 		{
 			ft_fprintf(2, "Fail to load map\n");
 			return (1);
 		}
+		if (parse_picture(argv[2], &sky.data, &sky.width, &sky.height) < 0)
+		{
+			ft_fprintf(2, "Fail to load sky\n");
+			return (1);
+		}
 	}
-	else if (argc == 3)
+	else if (argc == 4)
 	{
 		if (parse_voxel_file(argv[1], argv[2], &map, world.unity) < 0)
 		{
 			ft_fprintf(2, "Fail to load map\n");
 			return (1);
 		}
+		if (parse_picture(argv[2], &sky.data, &sky.width, &sky.height) < 0)
+		{
+			ft_fprintf(2, "Fail to load sky\n");
+			return (1);
+		}
 	}
 	else
 	{
-		ft_fprintf(2, "Usage: %s <map>\n", *argv);
+		ft_fprintf(2, "Usage: %s <map> <sky>\n", *argv);
 		return (2);
 	}
 	mlx = mlx_init();
@@ -124,6 +134,7 @@ int	main(int argc, char **argv)
 		.map = &map,
 		.keyboard = 0,
 		.world = &world,
+		.sky = &sky,
 	};
 	rotate_player(&player, 0);
 	mlx_mouse_hide(mlx, window);
