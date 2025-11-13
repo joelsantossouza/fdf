@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/13 12:12:46 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/13 14:21:02 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	main(int argc, char **argv)
 	t_image	image;
 	t_camera	camera;
 	t_player	player;
-	t_physic world = {1, 1000, -HEIGHT + (HEIGHT / 1.5), HEIGHT + (HEIGHT >>1)};
+	t_physic world = {1, 200, -HEIGHT + (HEIGHT / 1.5), HEIGHT + (HEIGHT >>1)};
 	t_pic sky;
 
 	if (argc == 3)

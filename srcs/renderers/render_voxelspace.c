@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:03:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/13 13:26:18 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/13 14:22:16 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	put_background(t_image *img, t_ray *ray, t_camera *cam, t_pic *sky)
 	int			i;
 
 	angle.x = atan2(ray->dy, ray->dx);
-	angle.x = fmod(angle.x + CIRCLE, CIRCLE);
 	texture.x = (int)(angle.x / CIRCLE * sky->width);
 	i = -1;
 	while (++i < max_height)
