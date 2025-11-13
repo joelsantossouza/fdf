@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:29 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/13 09:37:12 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/13 09:39:34 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	parse_picture(const char *path, unsigned int **pic, int *width, int *height)
 	if (!color)
 		return (ERROR);
 	total = *width * *height;
-	pic = malloc(sizeof(unsigned int) * total);
-	if (!pic)
+	*pic = malloc(sizeof(unsigned int) * total);
+	if (!*pic)
 	{
 		*width = 0;
 		*height = 0;
