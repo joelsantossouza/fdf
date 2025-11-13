@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/07 23:02:19 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/13 09:27:14 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include "voxelspace.h"
 #include <unistd.h>
 #include "libft.h"
 
@@ -57,7 +58,23 @@ void	test_image(t_image image, t_map map)
 int	main(int argc, char **argv)
 {
 	int	temp;
-	if (argc != 3)
+	if (argc == 2)
+	{
+		if (parse_picture(argv[1], &map.color, &map.width, &map.height) < 0)
+		{
+			ft_fprintf(2, "Fail to load map\n");
+			return (1);
+		}
+	}
+	else if (argc == 3)
+	{
+		if (parse_voxel_file(argv[1], argv[2], &map, 1) < 0)
+		{
+			ft_fprintf(2, "Fail to load map\n");
+			return (1);
+		}
+	}
+	else
 	{
 		ft_fprintf(2, "Usage: %s <map>\n", *argv);
 		return (2);
@@ -74,11 +91,6 @@ int	main(int argc, char **argv)
 	image.width = WIDTH;
 	image.height = HEIGHT;
 	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.linelen, &temp);
-	if (parse_voxel_file(argv[1], argv[2], &map) < 0)
-	{
-		ft_fprintf(2, "Fail to load map\n");
-		return (1);
-	}
 	test_image(image, map);
 	mlx_loop(mlx);
 	mlx_destroy_image(mlx, image.data);

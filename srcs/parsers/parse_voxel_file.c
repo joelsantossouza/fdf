@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:29 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/11 10:47:17 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/13 09:36:09 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ int	parse_voxel_file(const char *color_file, const char *altitude_file, t_map *m
 	color = stbi_load(color_file, &dimension.x, &dimension.y, 0, RGB);
 	altitude = stbi_load(altitude_file, &map->width, &map->height, 0, GRAYSCALE);
 	if (!color || !altitude || map->width != dimension.x || map->height != dimension.y)
-		return (ft_bzero(map, sizeof(*map)), free(color), free(altitude), ERROR);
+		return (ft_bzero(map, sizeof(*map)), stbi_image_free(color), stbi_image_free(altitude), ERROR);
 	map->total = map->width * map->height;
 	map->color = malloc(sizeof(*map->color) * map->total);
 	map->altitude = malloc(sizeof(*map->altitude) * map->total);
 	if (!map->color || !map->altitude)
 	{
 		free_map(map, NULL);
-		return (ft_bzero(map, sizeof(*map)), free(color), free(altitude), ERROR);
+		return (ft_bzero(map, sizeof(*map)), stbi_image_free(color), stbi_image_free(altitude), ERROR);
 	}
 	i = -1;
 	while (++i < map->total)

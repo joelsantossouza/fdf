@@ -6,13 +6,14 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 01:07:08 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/07 17:31:13 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/13 09:27:34 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "libft.h"
 #include <stdlib.h>
+#include "voxelspace.h"
 
 void	print_map(t_map map)
 {
@@ -53,7 +54,7 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 		returnval = parse_fdf_file(argv[1], map);
 	else if (argc == 3)
-		returnval = parse_voxel_file(argv[1], argv[2], map);
+		returnval = parse_voxel_file(argv[1], argv[2], map, 1);
 	if (returnval != ERROR)
 	{
 		ft_printf("map->width: %u\n", map->width);

@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 17:28:31 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/13 09:33:49 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int			release_key(int keycode, int *keyboard);
 
 // PARSING
 int			parse_fdf_file(const char *path, t_map *map);
+int			parse_picture(const char *path, unsigned int **pic, int *width, int *height);
 
 // DRAW
 int	liangbarsky_clipping(t_point *p0, t_point *p1, int width, int height);
