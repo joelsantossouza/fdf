@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:03:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 10:38:11 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 12:05:14 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,20 @@
 static inline
 void	raymarching(t_image *img, t_map *map, t_camera *cam, t_ray *ray)
 {
-	size_t		offset;
-	unsigned	color;
-	int			new_height;
-	int			i;
+	const int		width = map->width;
+	size_t			offset;
+	unsigned int	color;
+	int				new_height;
+	int				i;
 
 	i = 0;
 	while (++i < cam->zfar)
 	{
 		ray->x += ray->dx;
 		ray->y += ray->dy;
-		if (ray->x < 0 || ray->x >= map->width || ray->y < 0 || ray->y >= map->height)
+		if (ray->x < 0 || ray->x >= width || ray->y < 0 || ray->y >= map->height)
 			break ;
-		offset = map->width * (int)ray->y + (int)ray->x;
+		offset = width * (int)ray->y + (int)ray->x;
 		new_height = (cam->pos.z - map->altitude[offset]) / i + cam->horizon;
 		if (new_height < 0)
 			new_height = 0;
@@ -52,7 +53,7 @@ void	put_background(t_image *img, t_ray *ray, t_camera *cam, t_pic *sky)
 	int			i;
 
 	angle.x = atan2(ray->dy, ray->dx);
-	texture.x = (int)(angle.x / CIRCLE * sky->width);
+	texture.x = (int)(angle.x / CIRCLE * sky->width) % sky->width;
 	i = -1;
 	while (++i < max_height)
 	{
@@ -62,23 +63,43 @@ void	put_background(t_image *img, t_ray *ray, t_camera *cam, t_pic *sky)
 	}
 }
 
+static inline
+void	fill_black_column(t_image *img, int x, int y)
+{
+	const int		linelen = img->linelen / sizeof(int);
+	unsigned int	*ptr;
+
+	ptr = (unsigned int *)(img->bpp / 8 * x + img->linelen * y + img->addr);
+	while (y-- > 0)
+	{
+		*ptr = BLACK;
+		ptr += linelen;
+	}
+}
+
 void	render_voxelspace(t_image *img, t_map *map, t_camera *cam, t_pic *sky)
 {
 	t_ray			ray;
-	const int		width = img->width;
-	const t_fov		fov = cam->fov;
-	const int		zfar = cam->zfar;
-	const t_dpoint	pos = cam->pos;
+	const int		has_sky = sky != 0 && sky->data != 0;
+	const t_fov		*fov = &cam->fov;
+	const double	zfar = 1.0 / cam->zfar;
+	const t_vec2	fov_delta = {
+		(fov->prx - fov->plx) / img->width,
+		(fov->pry - fov->ply) / img->width,
+	};
 
 	ray.column = -1;
-	while (++ray.column < width)
+	while (++ray.column < img->width)
 	{
-		ray.x = pos.x;
-		ray.y = pos.y;
-		ray.dx = (fov.plx + (fov.prx - fov.plx) / width * ray.column) / zfar;
-		ray.dy = (fov.ply + (fov.pry - fov.ply) / width * ray.column) / zfar;
+		ray.x = cam->pos.x;
+		ray.y = cam->pos.y;
+		ray.dx = (fov->plx + fov_delta.x * ray.column) * zfar;
+		ray.dy = (fov->ply + fov_delta.y * ray.column) * zfar;
 		ray.max_height = img->height;
 		raymarching(img, map, cam, &ray);
-		put_background(img, &ray, cam, sky);
+		if (has_sky)
+			put_background(img, &ray, cam, sky);
+		else
+			fill_black_column(img, ray.column, ray.max_height);
 	}
 }

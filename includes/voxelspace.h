@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 10:13:39 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 11:28:45 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # define CIRCLE		6.283185307179586476925286766559
 # define PI			3.14159265358979323846264338327950288419716939937510
 # define GRAVITY	2
+
+typedef struct s_vec2
+{
+	double	x;
+	double	y;
+}	t_vec2;
 
 typedef struct s_dpoint
 {
