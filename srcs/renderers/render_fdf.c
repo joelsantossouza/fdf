@@ -6,14 +6,15 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:11:03 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/10 15:32:37 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 10:12:09 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 static inline
-void	render_fdf_horizontal_lines(t_image *img, t_fdf *fdf, t_linedrawer *drawline)
+void	render_fdf_horizontal_lines(t_image *img, t_fdf *fdf,
+			t_linedrawer *drawline)
 {
 	const t_map	*map = fdf->map;
 	size_t		offset;
@@ -37,7 +38,8 @@ void	render_fdf_horizontal_lines(t_image *img, t_fdf *fdf, t_linedrawer *drawlin
 }
 
 static inline
-void	render_fdf_vertical_lines(t_image *img, t_fdf *fdf, t_linedrawer *drawline)
+void	render_fdf_vertical_lines(t_image *img, t_fdf *fdf,
+			t_linedrawer *drawline)
 {
 	const t_map	*map = fdf->map;
 	size_t		offset;

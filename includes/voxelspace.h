@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/13 12:27:05 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 10:13:39 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_fov
 
 typedef struct s_camera
 {
-	t_dpoint	position;
+	t_dpoint	pos;
 	t_fov		fov;
 	int			horizon;
 	int			zfar;
@@ -55,7 +55,7 @@ typedef struct s_camera
 
 typedef struct s_player
 {
-	t_dpoint	*position;
+	t_dpoint	*pos;
 	t_camera	*cam;
 	t_trig		axis_y;
 	t_trig		axis_x;
