@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 22:11:15 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 23:25:01 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	main(int argc, char **argv)
 		.speed = 1,
 		.climb_max = 10 * 200,
 		.sensibility = 0.001,
+		.move = player_walk,
 	};
 	player.floor = map.altitude[map.width * (int)player.pos->y + (int)player.pos->x] + player.height;
 	t_vox vox = {

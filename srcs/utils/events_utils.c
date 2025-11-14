@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:36:21 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 21:06:19 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 23:23:52 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	press_key(int keycode, int *keyboard)
 		*keyboard |= KEY_A;
 	else if (keycode == 32)
 		*keyboard |= SPACE;
-	#include <stdio.h>
-	printf("%d\n", keycode);
+	else if (keycode == 65507)
+		*keyboard |= CTRL;
 	return (0);
 }
 
@@ -43,6 +43,8 @@ int	release_key(int keycode, int *keyboard)
 		*keyboard &= ~(KEY_A);
 	else if (keycode == 32)
 		*keyboard &= ~(SPACE);
+	else if (keycode == 65507)
+		*keyboard &= ~(CTRL);
 	return (0);
 }
 
