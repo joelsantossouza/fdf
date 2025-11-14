@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 18:23:01 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 10:10:28 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 12:09:32 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	putpixel(t_image *img, int x, int y, unsigned int color)
 {
-	*(unsigned int *)(img->bpp / 8 * x + img->linelen * y + img->addr) = color;
+	*(unsigned int *)((img->bpp >> 3) * x + img->linelen * y + img->addr) = color;
 }
 
 unsigned int	brightness(unsigned int color, double scale)
