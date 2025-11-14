@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 12:14:43 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 20:21:13 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	render(t_vox *vox)
 	t_physic	*world = vox->world;
 
 	//printf("min:%d\tcurr:%d\tmax:%d\n", camera->min_horizon, camera->horizon, camera->max_horizon);
-	player_motions(vox);
+	player_motions(vox, player_walk);
 	gravity(&camera->pos.z, &player->zforce, player->floor, world->gravity);
 	//printf("Force: %f\n", player->zforce);
 	//ft_bzero(image->addr, WIDTH * HEIGHT * (image->bpp / 8));

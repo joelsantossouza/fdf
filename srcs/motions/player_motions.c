@@ -6,19 +6,19 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 13:56:54 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 10:39:04 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 20:20:29 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "voxelspace.h"
 #include <math.h>
 
-void	move_player(t_player *player, double sine, double cosine, t_map *map)
+void	player_walk(t_player *player, double sine, double cosine, t_map *map)
 {
 	const int	width = map->width;
 	const int	height = map->height;
-	t_dpoint	*pos;
-	t_dpoint	next;
+	t_dpoint3	*pos;
+	t_dpoint3	next;
 	double		height_difference;
 
 	pos = player->pos;
@@ -35,6 +35,21 @@ void	move_player(t_player *player, double sine, double cosine, t_map *map)
 		pos->x = next.x;
 		pos->y = next.y;
 		player->floor = next.z;
+	}
+}
+
+void	player_fly(t_player *player, double sine, double cosine, t_map *map)
+{
+	t_dpoint3	*pos;
+	t_dpoint2	next;
+	
+	pos = player->pos;
+	next.x = pos->x + cosine * player->speed;
+	next.y = pos->y + sine * player->speed;
+	if (next.x >= 0 && next.x < map->width && next.y >= 0 && next.y < map->height)
+	{
+		pos->x = next.x;
+		pos->y = next.y;
 	}
 }
 
@@ -60,7 +75,7 @@ void	rotate_player(t_player *player, double rotation)
 	fov->pry = fy + fx;
 }
 
-int	player_motions(t_vox *vox)
+int	player_motions(t_vox *vox, void (*move_func)())
 {
 	const t_trig	axis_y = vox->player->axis_y;
 	const t_trig	axis_x = vox->player->axis_x;
@@ -71,17 +86,14 @@ int	player_motions(t_vox *vox)
 	player = vox->player;
 	map = vox->map;
 	if (keyboard & KEY_W)
-		move_player(player, axis_y.sin, axis_y.cos, map);
+		move_func(player, axis_y.sin, axis_y.cos, map);
 	if (keyboard & KEY_S)
-		move_player(player, -axis_y.sin, -axis_y.cos, map);
+		move_func(player, -axis_y.sin, -axis_y.cos, map);
 	if (keyboard & KEY_D)
-		move_player(player, axis_x.sin, axis_x.cos, map);
+		move_func(player, axis_x.sin, axis_x.cos, map);
 	if (keyboard & KEY_A)
-		move_player(player, -axis_x.sin, -axis_x.cos, map);
-	if (keyboard & ARROW_RIGHT)
-		rotate_player(player, 1);
-	if (keyboard & ARROW_LEFT)
-		rotate_player(player, -1);
+		move_func(player, -axis_x.sin, -axis_x.cos, map);
+	// RESPONSIBLE VALUES HERE!
 	if (player->floor == player->pos->z && keyboard & SPACE)
 		player->zforce = vox->world->unity * 10;
 	return (0);

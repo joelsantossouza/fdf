@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 11:28:45 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 20:18:41 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@
 # define PI			3.14159265358979323846264338327950288419716939937510
 # define GRAVITY	2
 
-typedef struct s_vec2
+typedef struct s_dpoint2
 {
 	double	x;
 	double	y;
-}	t_vec2;
+}	t_dpoint2;
 
-typedef struct s_dpoint
+typedef struct s_dpoint3
 {
 	double	x;
 	double	y;
 	double	z;
-}	t_dpoint;
+}	t_dpoint3;
 
 typedef struct s_ray
 {
@@ -53,7 +53,7 @@ typedef struct s_fov
 
 typedef struct s_camera
 {
-	t_dpoint	pos;
+	t_dpoint3	pos;
 	t_fov		fov;
 	int			horizon;
 	int			zfar;
@@ -61,7 +61,7 @@ typedef struct s_camera
 
 typedef struct s_player
 {
-	t_dpoint	*pos;
+	t_dpoint3	*pos;
 	t_camera	*cam;
 	t_trig		axis_y;
 	t_trig		axis_x;
@@ -104,9 +104,10 @@ int		parse_voxel_file(const char *color_file, const char *altitude_file, t_map *
 void	gravity(double *height, double *zforce, int floor, double gravity);
 
 // MOTIONS
-void	move_player(t_player *player, double cosine, double sine, t_map *map);
+void	player_walk(t_player *player, double sine, double cosine, t_map *map);
+void	player_fly(t_player *player, double sine, double cosine, t_map *map);
 void	rotate_player(t_player *player, double rotation);
-int		player_motions(t_vox *vox);
+int		player_motions(t_vox *vox, void (*move_func)());
 
 // RENDER
 void	render_voxelspace(t_image *img, t_map *map, t_camera *cam, t_pic *sky);

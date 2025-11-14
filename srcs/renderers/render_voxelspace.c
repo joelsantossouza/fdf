@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:03:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 16:50:42 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 20:23:21 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	put_background(t_image *img, t_ray *ray, t_camera *cam, t_pic *sky)
 {
 	const int	horizon = cam->horizon;
 	const int	max_height = ray->max_height;
+	t_dpoint2	angle;
 	t_point		texture;
-	t_dpoint	angle;
 	int			i;
 
 	angle.x = atan2(ray->dy, ray->dx);
@@ -83,7 +83,7 @@ void	render_voxelspace(t_image *img, t_map *map, t_camera *cam, t_pic *sky)
 	const int		has_sky = sky != 0 && sky->data != 0;
 	const t_fov		*fov = &cam->fov;
 	const double	zfar = 1.0 / cam->zfar;
-	const t_vec2	fov_delta = {
+	const t_dpoint2	fov_delta = {
 		(fov->prx - fov->plx) / img->width,
 		(fov->pry - fov->ply) / img->width,
 	};

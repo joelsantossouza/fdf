@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 11:50:21 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 20:06:14 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@
 # define KEY_D			4
 # define KEY_A			8
 # define SPACE			16
-# define ARROW_RIGHT	32
-# define ARROW_LEFT		64
 
 typedef struct s_pic
 {
