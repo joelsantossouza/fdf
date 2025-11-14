@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/13 14:21:02 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 10:40:41 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	render(t_vox *vox)
 
 	//printf("min:%d\tcurr:%d\tmax:%d\n", camera->min_horizon, camera->horizon, camera->max_horizon);
 	player_motions(vox);
-	gravity(&camera->position.z, &player->zforce, player->floor, world->gravity);
+	gravity(&camera->pos.z, &player->zforce, player->floor, world->gravity);
 	//printf("Force: %f\n", player->zforce);
 	ft_bzero(image->addr, WIDTH * HEIGHT * (image->bpp / 8));
 	render_voxelspace(image, map, camera, vox->sky);
@@ -111,21 +111,21 @@ int	main(int argc, char **argv)
 	image.center = (t_point){WIDTH >> 1, HEIGHT >> 1};
 	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.linelen, &temp);
 	camera = (t_camera){
-		.position.x = map.width / 2.0,
-		.position.y = map.height / 5.0,
-		.position.z = 300 * 200,
+		.pos.x = map.width / 2.0,
+		.pos.y = map.height / 5.0,
+		.pos.z = 300 * 200,
 		.horizon = image.height >> 1,
 		.zfar = 1000,
 	};
 	player = (t_player){
-		.position = &camera.position,
+		.pos = &camera.pos,
 		.cam = &camera,
 		.height = 80 * 200,
 		.speed = 1,
 		.climb_max = 10 * 200,
 		.sensibility = 0.001,
 	};
-	player.floor = map.altitude[map.width * (int)player.position->y + (int)player.position->x] + player.height;
+	player.floor = map.altitude[map.width * (int)player.pos->y + (int)player.pos->x] + player.height;
 	t_vox vox = {
 		.mlx = mlx,
 		.window = window,

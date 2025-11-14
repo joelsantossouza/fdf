@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/11 10:52:32 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 10:40:10 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ int	render(int keycode)
 	else if (keycode == 101)
 		drawline = xiaolinwu_drawline;
 	else if (keycode == 119)
-		fdf.position.y -= SPEED;
+		fdf.pos.y -= SPEED;
 	else if (keycode == 97)
-		fdf.position.x -= SPEED;
+		fdf.pos.x -= SPEED;
 	else if (keycode == 115)
-		fdf.position.y += SPEED;
+		fdf.pos.y += SPEED;
 	else if (keycode == 100)
-		fdf.position.x += SPEED;
+		fdf.pos.x += SPEED;
 	else if (keycode == KEY1)
 	{
 		anglex += 0.1;
@@ -143,8 +143,8 @@ int	main(int argc, char **argv)
 		.map = &map,
 		.center.x = -(map.width / 2 * 15),
 		.center.y = -(map.height / 2 * 15),
-		.position.x = WIDTH / 2,
-		.position.y = HEIGHT / 2,
+		.pos.x = WIDTH / 2,
+		.pos.y = HEIGHT / 2,
 		.spacing = 15,
 		.zoom = 1,
 	};

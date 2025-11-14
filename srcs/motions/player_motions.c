@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 13:56:54 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/12 16:38:14 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 10:39:04 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,23 @@ void	move_player(t_player *player, double sine, double cosine, t_map *map)
 {
 	const int	width = map->width;
 	const int	height = map->height;
-	t_dpoint	*position;
+	t_dpoint	*pos;
 	t_dpoint	next;
 	double		height_difference;
 
-	position = player->position;
-	next.x = position->x + cosine * player->speed;
-	next.y = position->y + sine * player->speed;
+	pos = player->pos;
+	next.x = pos->x + cosine * player->speed;
+	next.y = pos->y + sine * player->speed;
 	if (next.x < 0 || next.x >= width || next.y < 0 || next.y >= height)
 		return ;
 	next.z = map->altitude[width * (int)next.y + (int)next.x] + player->height;
-	height_difference = next.z - position->z;
+	height_difference = next.z - pos->z;
 	if (height_difference <= player->climb_max)
 	{
 		if (height_difference > 0)
-			position->z = next.z;
-		position->x = next.x;
-		position->y = next.y;
+			pos->z = next.z;
+		pos->x = next.x;
+		pos->y = next.y;
 		player->floor = next.z;
 	}
 }
@@ -82,7 +82,7 @@ int	player_motions(t_vox *vox)
 		rotate_player(player, 1);
 	if (keyboard & ARROW_LEFT)
 		rotate_player(player, -1);
-	if (player->floor == player->position->z && keyboard & SPACE)
+	if (player->floor == player->pos->z && keyboard & SPACE)
 		player->zforce = vox->world->unity * 10;
 	return (0);
 }
