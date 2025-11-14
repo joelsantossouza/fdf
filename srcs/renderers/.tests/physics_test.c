@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 21:06:48 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 21:09:43 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	main(int argc, char **argv)
 		.pos.y = map.height / 5.0,
 		.pos.z = 300 * 200,
 		.horizon = image.height >> 1,
-		.zfar = 100,
+		.zfar = 1000,
 	};
 	player = (t_player){
 		.pos = &camera.pos,

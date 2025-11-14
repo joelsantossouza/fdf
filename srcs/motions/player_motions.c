@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 13:56:54 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 20:43:28 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 21:16:06 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	player_motions(t_vox *vox, void (*move_func)())
 	if (keyboard & KEY_A)
 		move_func(player, -axis_x.sin, -axis_x.cos, map);
 	// RESPONSIBLE VALUES HERE!
-	if (player->floor == player->pos->z && (keyboard & SPACE))
+	if ((player->floor == player->pos->z || move_func == player_fly) && (keyboard & SPACE))
 		player->zforce = vox->world->unity * 10;
 	return (0);
 }
