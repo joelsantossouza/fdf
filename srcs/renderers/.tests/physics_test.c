@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 21:09:43 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 22:11:15 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int	main(int argc, char **argv)
 	mlx_hook(window, 2, 1L<<0, press_key, &vox.keyboard);
 	mlx_hook(window, 3, 1L<<1, release_key, &vox.keyboard);
 	mlx_hook(window, 6, 1L<<6, player_mouse, &vox);
-	mlx_loop_hook(mlx, voxelspace_walk_loop, &vox);
+	mlx_loop_hook(mlx, voxelspace_loop, &vox);
 	mlx_loop(mlx);
 	mlx_destroy_image(mlx, image.data);
 	mlx_destroy_window(mlx, window);

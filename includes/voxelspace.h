@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 20:36:13 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 22:10:46 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,15 @@ typedef struct s_camera
 	int			zfar;
 }	t_camera;
 
+typedef void (t_move_func)();
+
 typedef struct s_player
 {
 	t_dpoint3	*pos;
 	t_camera	*cam;
 	t_trig		axis_y;
 	t_trig		axis_x;
+	t_move_func	*move;
 	int			floor;
 	double		angle;
 	double		height;
@@ -107,12 +110,12 @@ void	gravity(double *height, double *zforce, int floor, double gravity);
 void	player_walk(t_player *player, double sine, double cosine, t_map *map);
 void	player_fly(t_player *player, double sine, double cosine, t_map *map);
 void	rotate_player(t_player *player, double rotation);
-int		player_motions(t_vox *vox, void (*move_func)());
+int		player_motions(t_vox *vox);
 
 // RENDER
 void	render_voxelspace(t_image *img, t_map *map, t_camera *cam, t_pic *sky);
 
 // LOOPS
-int	voxelspace_walk_loop(t_vox *vox);
+int	voxelspace_loop(t_vox *vox);
 
 #endif
