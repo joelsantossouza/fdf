@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 20:18:41 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 20:36:13 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,8 @@ int		player_motions(t_vox *vox, void (*move_func)());
 
 // RENDER
 void	render_voxelspace(t_image *img, t_map *map, t_camera *cam, t_pic *sky);
+
+// LOOPS
+int	voxelspace_walk_loop(t_vox *vox);
 
 #endif

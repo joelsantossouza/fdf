@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 20:21:13 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 21:06:48 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,6 @@
 # define KEY6 65432
 # define KEY7 65429
 # define KEY8 65431
-
-int	render(t_vox *vox)
-{
-	t_camera *camera = vox->player->cam;
-	t_player *player = vox->player;
-	t_map	*map = vox->map;
-	t_image	*image = vox->img;
-	t_physic	*world = vox->world;
-
-	//printf("min:%d\tcurr:%d\tmax:%d\n", camera->min_horizon, camera->horizon, camera->max_horizon);
-	player_motions(vox, player_walk);
-	gravity(&camera->pos.z, &player->zforce, player->floor, world->gravity);
-	//printf("Force: %f\n", player->zforce);
-	//ft_bzero(image->addr, WIDTH * HEIGHT * (image->bpp / 8));
-	render_voxelspace(image, map, camera, vox->sky);
-	mlx_put_image_to_window(vox->mlx, vox->window, image->data, 0, 0);
-	return (0);
-}
 
 int	main(int argc, char **argv)
 {
@@ -115,7 +97,7 @@ int	main(int argc, char **argv)
 		.pos.y = map.height / 5.0,
 		.pos.z = 300 * 200,
 		.horizon = image.height >> 1,
-		.zfar = 1000,
+		.zfar = 100,
 	};
 	player = (t_player){
 		.pos = &camera.pos,
@@ -136,12 +118,13 @@ int	main(int argc, char **argv)
 		.world = &world,
 		.sky = &sky,
 	};
+	vox.sky = 0;
 	rotate_player(&player, 0);
 	mlx_mouse_hide(mlx, window);
 	mlx_hook(window, 2, 1L<<0, press_key, &vox.keyboard);
 	mlx_hook(window, 3, 1L<<1, release_key, &vox.keyboard);
 	mlx_hook(window, 6, 1L<<6, player_mouse, &vox);
-	mlx_loop_hook(mlx, render, &vox);
+	mlx_loop_hook(mlx, voxelspace_walk_loop, &vox);
 	mlx_loop(mlx);
 	mlx_destroy_image(mlx, image.data);
 	mlx_destroy_window(mlx, window);
