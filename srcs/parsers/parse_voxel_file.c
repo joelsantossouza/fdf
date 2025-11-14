@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:29 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/13 09:36:09 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 09:56:52 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,33 +16,33 @@
 #include "fdf.h"
 #include <stdlib.h>
 
-#define RGB		3
+#define RGB			3
 #define	GRAYSCALE	1
 
-int	parse_voxel_file(const char *color_file, const char *altitude_file, t_map *map, int heightscale)
+int	parse_voxel_file(const char *color_file, const char *height_file, t_map *map, int heightscale)
 {
-	t_point			dimension;
+	t_point			size;
 	unsigned char	*color;
-	unsigned char	*altitude;
+	unsigned char	*height;
 	long			i;
 
-	color = stbi_load(color_file, &dimension.x, &dimension.y, 0, RGB);
-	altitude = stbi_load(altitude_file, &map->width, &map->height, 0, GRAYSCALE);
-	if (!color || !altitude || map->width != dimension.x || map->height != dimension.y)
-		return (ft_bzero(map, sizeof(*map)), stbi_image_free(color), stbi_image_free(altitude), ERROR);
+	color = stbi_load(color_file, &size.x, &size.y, 0, RGB);
+	height = stbi_load(height_file, &map->width, &map->height, 0, GRAYSCALE);
+	if (!color || !height || map->width != size.x || map->height != size.y)
+		return (ft_bzero(map, sizeof(*map)), stbi_image_free(color), stbi_image_free(height), ERROR);
 	map->total = map->width * map->height;
 	map->color = malloc(sizeof(*map->color) * map->total);
 	map->altitude = malloc(sizeof(*map->altitude) * map->total);
 	if (!map->color || !map->altitude)
 	{
 		free_map(map, NULL);
-		return (ft_bzero(map, sizeof(*map)), stbi_image_free(color), stbi_image_free(altitude), ERROR);
+		return (ft_bzero(map, sizeof(*map)), stbi_image_free(color), stbi_image_free(height), ERROR);
 	}
 	i = -1;
 	while (++i < map->total)
 	{
 		map->color[i] = color[i * 3] << 16 | color[i * 3 + 1] << 8 | color[i * 3 + 2];
-		map->altitude[i] = altitude[i] * heightscale;
+		map->altitude[i] = height[i] * heightscale;
 	}
-	return (stbi_image_free(color), stbi_image_free(altitude), SUCCESS);
+	return (stbi_image_free(color), stbi_image_free(height), SUCCESS);
 }
