@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:03:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 12:12:40 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/14 16:50:42 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	raymarching(t_image *img, t_map *map, t_camera *cam, t_ray *ray)
 	int				i;
 
 	i = 0;
-	while (++i < cam->zfar)
+	while (++i < cam->zfar && ray->max_height > 0)
 	{
 		ray->x += ray->dx;
 		ray->y += ray->dy;
