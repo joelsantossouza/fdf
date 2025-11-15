@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 12:58:18 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 17:36:44 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 17:47:16 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,25 @@ int	player_mouse(int x, int y, t_vox *vox)
 }
 
 static inline
-void	handle_space_event(t_player *player)
+void	handle_space_event(int keyboard, t_player *player)
 {
-	if (is_double_click(SPACE))
+	static int	was_released;
+
+	if (keyboard & SPACE)
 	{
-		if (player->move == player_walk)
-			player->move = player_fly;
-		else
-			player->move = player_walk;
+		if (was_released && is_double_click(SPACE))
+		{
+			if (player->move == player_walk)
+				player->move = player_fly;
+			else
+				player->move = player_walk;
+		}
+		else if (player->move == player_fly || player->floor == player->pos->z)
+			player->zforce = player->stats->jump_force;
+		was_released = 0;
 	}
-	else if (player->move == player_fly || player->floor == player->pos->z)
-		player->zforce = player->stats->jump_force;
+	else
+		was_released = 1;
 }
 
 int	player_events(t_vox *vox)
@@ -55,6 +63,7 @@ int	player_events(t_vox *vox)
 
 	player = vox->player;
 	map = vox->map;
+	handle_space_event(keyboard, player);
 	if (keyboard & KEY_W)
 		player->move(player, axis_y.sin, axis_y.cos, map);
 	if (keyboard & KEY_S)
@@ -63,8 +72,6 @@ int	player_events(t_vox *vox)
 		player->move(player, axis_x.sin, axis_x.cos, map);
 	if (keyboard & KEY_A)
 		player->move(player, -axis_x.sin, -axis_x.cos, map);
-	if (keyboard & SPACE)
-		handle_space_event(player);
 	if (keyboard & CTRL)
 		player->zforce -= player->stats->dive_force;
 	if (keyboard & SHIFT)
