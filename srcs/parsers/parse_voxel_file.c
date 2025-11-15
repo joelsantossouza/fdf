@@ -6,18 +6,15 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:29 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 09:56:52 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 13:31:34 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #include "libft.h"
 #include "fdf.h"
+#include "parsers.h"
 #include <stdlib.h>
-
-#define RGB			3
-#define	GRAYSCALE	1
 
 int	parse_voxel_file(const char *color_file, const char *height_file, t_map *map, int heightscale)
 {

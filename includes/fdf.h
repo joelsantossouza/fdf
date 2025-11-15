@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 11:21:46 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 13:28:01 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,8 @@
 
 # include <stddef.h>
 
-# define ERROR		-1
-# define SUCCESS	0
-# define DEC_BASE	"0123456789"
-
-# define WHITE		0xFFFFFFFF
-# define BLACK		0x00000000
-
-# define KEY_W		1
-# define KEY_S		2
-# define KEY_D		4
-# define KEY_A		8
-# define SPACE		16
-# define CTRL		32
-# define SHIFT		64
+# define WHITE	0xFFFFFFFF
+# define BLACK	0x00000000
 
 typedef struct s_pic
 {
@@ -93,8 +81,6 @@ typedef int (t_linedrawer)(t_image *, t_point, t_point, unsigned int);
 void		free_map(t_map *map, void (*free_struct)(void *));
 void		putpixel(t_image *img, int x, int y, unsigned color);
 unsigned	brightness(unsigned color, double scale);
-int			press_key(int keycode, int *keyboard);
-int			release_key(int keycode, int *keyboard);
 
 // PARSING
 int			parse_fdf_file(const char *path, t_map *map);
@@ -110,5 +96,9 @@ t_point	rotate(t_axis *a, int x, int y, int z);
 
 // RENDER
 void	render_fdf(t_image *img, t_fdf *fdf, t_linedrawer *drawline);
+
+// EVENTS
+int	press_key(int keycode, int *keyboard);
+int	release_key(int keycode, int *keyboard);
 
 #endif

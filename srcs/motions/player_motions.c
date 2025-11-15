@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 13:56:54 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 11:41:14 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 13:03:35 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,33 +73,4 @@ void	rotate_player(t_player *player, double rotation)
 	fov->ply = fy - fx;
 	fov->prx = fx - fy;
 	fov->pry = fy + fx;
-}
-
-int	player_motions(t_vox *vox)
-{
-	const t_trig	axis_y = vox->player->axis_y;
-	const t_trig	axis_x = vox->player->axis_x;
-	const int		keyboard = vox->keyboard;
-	t_player		*player;
-	t_map			*map;
-
-	player = vox->player;
-	map = vox->map;
-	if (keyboard & KEY_W)
-		player->move(player, axis_y.sin, axis_y.cos, map);
-	if (keyboard & KEY_S)
-		player->move(player, -axis_y.sin, -axis_y.cos, map);
-	if (keyboard & KEY_D)
-		player->move(player, axis_x.sin, axis_x.cos, map);
-	if (keyboard & KEY_A)
-		player->move(player, -axis_x.sin, -axis_x.cos, map);
-	if ((keyboard & SPACE) && (player->floor == player->pos->z || player->move == player_fly))
-		player->zforce = player->stats->jump_force;
-	if (keyboard & CTRL)
-		player->zforce -= player->stats->dive_force;
-	if (keyboard & SHIFT)
-		player->speed = player->stats->run_speed_max;
-	else
-		player->speed = player->stats->speed_max;
-	return (0);
 }

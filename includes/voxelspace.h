@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 11:40:37 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 13:22:59 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # define QUADRANT	1.5707963267948966
 # define CIRCLE		6.283185307179586476925286766559
 # define PI			3.14159265358979323846264338327950288419716939937510
-# define GRAVITY	2
 
 typedef struct s_dpoint2
 {
@@ -106,9 +105,6 @@ typedef struct s_vox
 	int			keyboard;
 }	t_vox;
 
-// UTILS
-int				player_mouse(int x, int y, t_vox *vox);
-
 // PARSERS
 int		parse_voxel_file(const char *color_file, const char *altitude_file, t_map *map, int heightscale);
 
@@ -119,10 +115,13 @@ void	gravity(double *height, double *zforce, int floor, double gravity);
 void	player_walk(t_player *player, double sine, double cosine, t_map *map);
 void	player_fly(t_player *player, double sine, double cosine, t_map *map);
 void	rotate_player(t_player *player, double rotation);
-int		player_motions(t_vox *vox);
 
 // RENDER
 void	render_voxelspace(t_image *img, t_map *map, t_camera *cam, t_pic *sky);
+
+// EVENTS
+int		player_mouse(int x, int y, t_vox *vox);
+int		player_events(t_vox *vox);
 
 // LOOPS
 int	voxelspace_loop(t_vox *vox);

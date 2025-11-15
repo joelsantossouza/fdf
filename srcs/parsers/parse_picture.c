@@ -6,14 +6,12 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:29 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 09:52:02 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 13:29:51 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stb_image.h"
-#include "fdf.h"
-
-#define RGB	3
+#include "parsers.h"
 
 int	parse_picture(const char *path, unsigned int **pic, int *width, int *height)
 {
