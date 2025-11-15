@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 00:06:01 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 11:40:37 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,13 @@ typedef void (t_move_func)();
 
 typedef struct s_player_stats
 {
-	double		height;
-	double		speed_max;
-	double		run_speed_max;
-	double		climb_max;
-	double		jump_force;
-	double		sensibility;
+	double	height;
+	double	speed_max;
+	double	run_speed_max;
+	double	climb_max;
+	double	jump_force;
+	double	dive_force;
+	double	sensibility;
 }	t_player_stats;
 
 typedef struct s_player
