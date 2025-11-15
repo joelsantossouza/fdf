@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 16:19:12 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 18:34:30 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,13 @@ int	main(int argc, char **argv)
 	image.height = HEIGHT;
 	image.center = (t_point){WIDTH >> 1, HEIGHT >> 1};
 	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.linelen, &temp);
+	image.bpp = image.bpp >> 3;
 	camera = (t_camera){
 		.pos.x = map.width / 2.0,
 		.pos.y = map.height / 5.0,
 		.pos.z = 300 * 200,
 		.horizon = image.height >> 1,
-		.zfar = 1000,
+		.zfar = 11000,
 	};
 	t_player_stats	stats = {
 		.climb_max = 10 * 200,
