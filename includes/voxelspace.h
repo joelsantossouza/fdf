@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 23:29:24 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 00:06:01 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,28 @@ typedef struct s_camera
 
 typedef void (t_move_func)();
 
+typedef struct s_player_stats
+{
+	double		height;
+	double		speed_max;
+	double		run_speed_max;
+	double		climb_max;
+	double		jump_force;
+	double		sensibility;
+}	t_player_stats;
+
 typedef struct s_player
 {
-	t_dpoint3	*pos;
-	t_camera	*cam;
-	t_trig		axis_y;
-	t_trig		axis_x;
-	t_move_func	*move;
-	int			floor;
-	double		angle;
-	double		height;
-	double		speed;
-	double		zforce;
-	double		climb_max;
-	double		sensibility;
+	t_dpoint3		*pos;
+	t_camera		*cam;
+	t_trig			axis_y;
+	t_trig			axis_x;
+	double			angle;
+	t_move_func		*move;
+	int				floor;
+	double			speed;
+	double			zforce;
+	t_player_stats	*stats;
 }	t_player;
 
 typedef struct s_physic

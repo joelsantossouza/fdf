@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 13:56:54 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 23:31:49 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 00:08:42 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 
 void	player_walk(t_player *player, double sine, double cosine, t_map *map)
 {
-	const int	width = map->width;
-	const int	height = map->height;
-	t_dpoint3	*pos;
-	t_dpoint3	next;
-	double		height_difference;
+	const int				width = map->width;
+	const t_player_stats	*stats = player->stats;
+	t_dpoint3				*pos;
+	t_dpoint3				next;
+	double					height_difference;
 
 	pos = player->pos;
 	next.x = pos->x + cosine * player->speed;
 	next.y = pos->y + sine * player->speed;
-	if (next.x < 0 || next.x >= width || next.y < 0 || next.y >= height)
+	if (next.x < 0 || next.x >= width || next.y < 0 || next.y >= map->height)
 		return ;
-	next.z = map->altitude[width * (int)next.y + (int)next.x] + player->height;
+	next.z = map->altitude[width * (int)next.y + (int)next.x] + stats->height;
 	height_difference = next.z - pos->z;
-	if (height_difference <= player->climb_max)
+	if (height_difference <= stats->climb_max)
 	{
 		if (height_difference > 0)
 			pos->z = next.z;
@@ -61,7 +61,7 @@ void	rotate_player(t_player *player, double rotation)
 	double		fy;
 	t_fov		*fov;
 
-	player->angle += rotation * player->sensibility;
+	player->angle += rotation * player->stats->sensibility;
 	angle = player->angle;
 	player->axis_y = (t_trig){sin(angle), cos(angle)};
 	angle += QUADRANT;
@@ -94,11 +94,14 @@ int	player_motions(t_vox *vox)
 	if (keyboard & KEY_A)
 		player->move(player, -axis_x.sin, -axis_x.cos, map);
 	// RESPONSIBLE VALUES HERE!
-	if (keyboard & SHIFT)
 	if ((keyboard & SPACE) && (player->floor == player->pos->z || player->move == player_fly))
-		player->zforce = vox->world->unity * 10;
+		player->zforce = player->stats->jump_force;
 	if (keyboard & CTRL)
-		player->zforce -= vox->world->unity * 10;
+		player->zforce -= player->stats->jump_force;
+	if (keyboard & SHIFT)
+		player->speed = player->stats->run_speed_max;
+	else
+		player->speed = player->stats->speed_max;
 	// HERE TOO
 	return (0);
 }

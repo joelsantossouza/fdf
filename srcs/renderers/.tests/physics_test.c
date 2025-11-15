@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 23:25:01 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 00:13:43 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,22 @@ int	main(int argc, char **argv)
 		.horizon = image.height >> 1,
 		.zfar = 1000,
 	};
+	t_player_stats	stats = {
+		.climb_max = 10 * 200,
+		.sensibility = 0.001,
+		.height = 80 * 200,
+		.jump_force = 3 * 200,
+		.speed_max = 1,
+		.run_speed_max = 2,
+	};
 	player = (t_player){
 		.pos = &camera.pos,
 		.cam = &camera,
-		.height = 80 * 200,
 		.speed = 1,
-		.climb_max = 10 * 200,
-		.sensibility = 0.001,
 		.move = player_walk,
+		.stats = &stats,
 	};
-	player.floor = map.altitude[map.width * (int)player.pos->y + (int)player.pos->x] + player.height;
+	player.floor = map.altitude[map.width * (int)player.pos->y + (int)player.pos->x] + player.stats->height;
 	t_vox vox = {
 		.mlx = mlx,
 		.window = window,
