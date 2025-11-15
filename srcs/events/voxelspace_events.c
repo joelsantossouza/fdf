@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 12:58:18 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 14:38:15 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 15:59:42 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	player_events(t_vox *vox)
 
 	player = vox->player;
 	map = vox->map;
+	if (is_double_click(keyboard, SPACE))
+		toggle_gamemode(&player->move);
 	if (keyboard & KEY_W)
 		player->move(player, axis_y.sin, axis_y.cos, map);
 	if (keyboard & KEY_S)

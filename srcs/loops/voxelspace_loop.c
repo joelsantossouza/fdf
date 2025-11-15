@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 21:56:36 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 14:58:27 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 15:56:02 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ int	voxelspace_loop(t_vox *vox)
 	player = vox->player;
 	img = vox->img;
 	player_events(vox);
-	if (is_double_click(vox->keyboard, SPACE))
-		toggle_gamemode(&player->move);
 	if (player->move == player_walk)
 		gravity(&player->pos->z, &player->zforce, player->floor, vox->world->gravity);
 	else if (player->zforce != 0)
