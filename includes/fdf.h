@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 14:54:11 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 17:36:18 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef int (t_linedrawer)(t_image *, t_point, t_point, unsigned int);
 void		free_map(t_map *map, void (*free_struct)(void *));
 void		putpixel(t_image *img, int x, int y, unsigned color);
 unsigned	brightness(unsigned color, double scale);
-int			is_double_click(int keyboard, int keys);
+int			is_double_click(int keys);
 
 // PARSING
 int			parse_fdf_file(const char *path, t_map *map);

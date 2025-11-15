@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 12:58:18 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 15:59:42 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 17:36:44 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,20 @@ int	player_mouse(int x, int y, t_vox *vox)
 	return (0);
 }
 
+static inline
+void	handle_space_event(t_player *player)
+{
+	if (is_double_click(SPACE))
+	{
+		if (player->move == player_walk)
+			player->move = player_fly;
+		else
+			player->move = player_walk;
+	}
+	else if (player->move == player_fly || player->floor == player->pos->z)
+		player->zforce = player->stats->jump_force;
+}
+
 int	player_events(t_vox *vox)
 {
 	const t_trig	axis_y = vox->player->axis_y;
@@ -41,8 +55,6 @@ int	player_events(t_vox *vox)
 
 	player = vox->player;
 	map = vox->map;
-	if (is_double_click(keyboard, SPACE))
-		toggle_gamemode(&player->move);
 	if (keyboard & KEY_W)
 		player->move(player, axis_y.sin, axis_y.cos, map);
 	if (keyboard & KEY_S)
@@ -51,8 +63,8 @@ int	player_events(t_vox *vox)
 		player->move(player, axis_x.sin, axis_x.cos, map);
 	if (keyboard & KEY_A)
 		player->move(player, -axis_x.sin, -axis_x.cos, map);
-	if ((keyboard & SPACE) && (player->floor == player->pos->z || player->move == player_fly))
-		player->zforce = player->stats->jump_force;
+	if (keyboard & SPACE)
+		handle_space_event(player);
 	if (keyboard & CTRL)
 		player->zforce -= player->stats->dive_force;
 	if (keyboard & SHIFT)

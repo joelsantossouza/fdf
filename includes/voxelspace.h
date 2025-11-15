@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 13:49:18 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 17:13:15 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ void	gravity(double *height, double *zforce, int floor, double gravity);
 // MOTIONS
 void	player_walk(t_player *player, double sine, double cosine, t_map *map);
 void	player_fly(t_player *player, double sine, double cosine, t_map *map);
-void	toggle_gamemode(t_move_func **move);
 void	rotate_player(t_player *player, double rotation);
 
 // RENDER

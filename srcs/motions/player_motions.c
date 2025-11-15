@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 13:56:54 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 13:49:04 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 17:13:03 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,6 @@ void	player_fly(t_player *player, double sine, double cosine, t_map *map)
 		pos->x = next.x;
 		pos->y = next.y;
 	}
-}
-
-void	toggle_gamemode(t_move_func **move)
-{
-	if (*move == player_walk)
-		*move = player_fly;
-	else
-		*move = player_walk;
 }
 
 void	rotate_player(t_player *player, double rotation)

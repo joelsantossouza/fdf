@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 11:40:56 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 16:19:12 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(int argc, char **argv)
 	t_image	image;
 	t_camera	camera;
 	t_player	player;
-	t_physic world = {1, 1000, -HEIGHT + (HEIGHT / 1.5), HEIGHT + (HEIGHT >>1)};
+	t_physic world = {3, 1000, -HEIGHT + (HEIGHT / 1.5), HEIGHT + (HEIGHT >>1)};
 	t_pic sky;
 
 	if (argc == 3)
@@ -103,7 +103,7 @@ int	main(int argc, char **argv)
 		.climb_max = 10 * 200,
 		.sensibility = 0.001,
 		.height = 80 * 200,
-		.jump_force = 3 * 200,
+		.jump_force = 15 * 200,
 		.dive_force = 2 * 200,
 		.speed_max = 5,
 		.run_speed_max = 9,
@@ -126,6 +126,7 @@ int	main(int argc, char **argv)
 		.world = &world,
 		.sky = &sky,
 	};
+	vox.sky = 0;
 	rotate_player(&player, 0);
 	mlx_mouse_hide(mlx, window);
 	mlx_hook(window, 2, 1L<<0, press_key, &vox.keyboard);

@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 13:21:15 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 15:36:07 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 16:20:41 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,5 @@
 # define SHIFT	64
 
 # define MAX_DCLICK_DELAY	250
-# define MIN_DCLICK_DELAY	30
 
 #endif
