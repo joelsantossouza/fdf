@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 13:56:54 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 00:50:51 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 11:23:09 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,9 @@ int	player_motions(t_vox *vox)
 	// RESPONSIBLE VALUES HERE!
 	if ((keyboard & SPACE) && (player->floor == player->pos->z || player->move == player_fly))
 		player->zforce = player->stats->jump_force;
-	if (keyboard & R_SHIFT)
+	if (keyboard & CTRL)
 		player->zforce -= player->stats->jump_force;
-	if (keyboard & L_SHIFT)
+	if (keyboard & SHIFT)
 		player->speed = player->stats->run_speed_max;
 	else
 		player->speed = player->stats->speed_max;
