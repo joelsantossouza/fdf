@@ -3,3 +3,4 @@ CompileFlags:
     - "-I../../libs/libft"
     - "-I../../libs/minilibx-linux"
     - "-I../../includes"
+    - "-I../events"

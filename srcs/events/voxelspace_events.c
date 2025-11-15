@@ -6,14 +6,13 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 12:58:18 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 13:50:01 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/15 14:38:15 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "voxelspace.h"
 #include "events.h"
 #include "mlx.h"
-#include <sys/time.h>
 
 int	player_mouse(int x, int y, t_vox *vox)
 {
