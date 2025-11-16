@@ -6,61 +6,11 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:11:03 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 10:36:59 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 18:01:52 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-static inline
-void	render_fdf_horizontal_lines(t_image *img, t_fdf *fdf,
-			t_linedrawer *drawline)
-{
-	const t_map	*map = fdf->map;
-	size_t		offset;
-	t_point		p;
-	t_point		prev;
-	t_point		curr;
-
-	p.y = -1;
-	while (++p.y < map->height)
-	{
-		p.x = 0;
-		prev = fdf->transformed[map->width * p.y + p.x];
-		while (++p.x < map->width)
-		{
-			offset = map->width * p.y + p.x;
-			curr = fdf->transformed[offset];
-			drawline(img, prev, curr, map->color[offset]);
-			prev = curr;
-		}
-	}
-}
-
-static inline
-void	render_fdf_vertical_lines(t_image *img, t_fdf *fdf,
-			t_linedrawer *drawline)
-{
-	const t_map	*map = fdf->map;
-	size_t		offset;
-	t_point		p;
-	t_point		prev;
-	t_point		curr;
-
-	p.x = -1;
-	while (++p.x < map->width)
-	{
-		p.y = 0;
-		prev = fdf->transformed[map->width * p.y + p.x];
-		while (++p.y < map->height)
-		{
-			offset = map->width * p.y + p.x;
-			curr = fdf->transformed[offset];
-			drawline(img, prev, curr, map->color[offset]);
-			prev = curr;
-		}
-	}
-}
 
 static inline
 void	transform_fdf_points(t_fdf *fdf)
@@ -92,9 +42,28 @@ void	transform_fdf_points(t_fdf *fdf)
 
 void	render_fdf(t_image *img, t_fdf *fdf, t_linedrawer *drawline)
 {
+	const t_map	*map = fdf->map;
+	const int	width = map->width;
+	t_point			p;
+	unsigned int	color;
+	size_t			offset;
+
 	transform_fdf_points(fdf);
-	if (fdf->map->width == 1 && fdf->map->height == 1)
-		return (putpixel(img, fdf->transformed[0].x, fdf->transformed[0].y, WHITE));
-	render_fdf_horizontal_lines(img, fdf, drawline);
-	render_fdf_vertical_lines(img, fdf, drawline);
+	if (width == 1 && map->height == 1)
+		return (putpixel(img, fdf->transformed[0].x, fdf->transformed[0].y, map->color[0]));
+	p.y = 0;
+	while (p.y < map->total)
+	{
+		p.x = -1;
+		while (++p.x < width)
+		{
+			offset = p.y + p.x;
+			color = map->color[offset];
+			if (p.x + 1 < width)
+				drawline(img, fdf->transformed[offset], fdf->transformed[offset + 1], color);
+			if (p.y + width < map->total)
+				drawline(img, fdf->transformed[offset], fdf->transformed[offset + width], color); 
+		}
+		p.y += width;
+	}
 }
