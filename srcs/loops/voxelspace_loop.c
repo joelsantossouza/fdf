@@ -6,22 +6,23 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 21:56:36 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 15:56:02 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 20:17:45 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "voxelspace.h"
-#include "events.h"
 #include "mlx.h"
 
 int	voxelspace_loop(t_vox *vox)
 {
 	t_player	*player;
+	t_map		*map;
 	t_image		*img;
 
 	player = vox->player;
+	map = vox->map;
 	img = vox->img;
-	player_events(vox);
+	player_events(player, map, *vox->keyboard);
 	if (player->move == player_walk)
 		gravity(&player->pos->z, &player->zforce, player->floor, vox->world->gravity);
 	else if (player->zforce != 0)

@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 13:31:47 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 20:16:05 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ t_fdf	fdf;
 double anglex = 0;
 double angley = 0;
 double anglez = 0;
-
-t_linedrawer *drawline = bresenham_drawline;
 
 int	render(int keycode)
 {
@@ -99,8 +97,8 @@ int	render(int keycode)
 //		fdf.zoom /= 1.1;
 //	else if (keycode == KEY8)
 //		fdf.zoom *= 1.1;
-	fdf_events(&fdf);
-	render_fdf(&image, &fdf, drawline);
+	fdf_events(fdf.stats, fdf.keyboard);
+	render_fdf(&image, fdf.stats, &map);
 	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
 	return (0);
 }
@@ -143,24 +141,26 @@ int	main(int argc, char **argv)
 	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.linelen, &temp);
 	image.bpp >>= 3;
 	fdf.map = &map;
-fdf.center.x = -(map.width / 2 * 15);
-fdf.center.y = -(map.height / 2 * 15);
-fdf.pos.x = WIDTH / 2;
-fdf.pos.y = HEIGHT / 2;
-fdf.spacing = 15;
-fdf.zoom = 1;
-fdf.keyboard = 0;  // ← Make sure to initialize this!
+	t_fdf_stats stats;
+stats.center.x = -(map.width / 2 * 15);
+stats.center.y = -(map.height / 2 * 15);
+stats.pos.x = WIDTH / 2;
+stats.pos.y = HEIGHT / 2;
+stats.spacing = 15;
+stats.zoom = 1;
+fdf.keyboard = 0;
+	fdf.stats = &stats;
 	//fdf.axis.angle_x = 0;
 	//fdf.axis.angle_y = 0;
 	//fdf.axis.angle_z = 0;
-	fdf.axis.x.cos = cos(0);
-	fdf.axis.x.sin = sin(0);
-	fdf.axis.y.cos = cos(0);
-	fdf.axis.y.sin = sin(0);
-	fdf.axis.z.cos = cos(0);
-	fdf.axis.z.sin = sin(0);
-	fdf.transformed = malloc(sizeof(t_point) * map.total);
-	if (!fdf.transformed)
+	stats.axis.x.cos = cos(0);
+	stats.axis.x.sin = sin(0);
+	stats.axis.y.cos = cos(0);
+	stats.axis.y.sin = sin(0);
+	stats.axis.z.cos = cos(0);
+	stats.axis.z.sin = sin(0);
+	stats.transformed = malloc(sizeof(t_point) * map.total);
+	if (!stats.transformed)
 		return (3);
 	mlx_hook(window, 2, 1L<<0, press_key, &fdf.keyboard);
 	mlx_hook(window, 3, 1L<<1, release_key, &fdf.keyboard);

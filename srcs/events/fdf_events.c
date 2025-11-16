@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 11:11:48 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 19:57:15 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 20:18:39 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "events.h"
 
 static inline
-void	toggle_drawline_algorithmn(t_linedrawer **drawline)
+void	toggle_drawline_algorithmn(t_drawline *drawline)
 {
 	if (*drawline == bresenham_drawline)
 		*drawline = xiaolinwu_drawline;

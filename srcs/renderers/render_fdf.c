@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:11:03 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 19:54:00 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 20:11:25 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ void	transform_fdf_points(t_fdf_stats *fdf_stats, t_map *map)
 
 void	render_fdf(t_image *img, t_fdf_stats *fdf_stats, t_map *map)
 {
-	const int	width = map->width;
-	const t_linedrawer	*drawline = fdf_stats->drawline;
-	t_point			p;
-	unsigned int	color;
-	size_t			offset;
+	const int			width = map->width;
+	const t_drawline	drawline = fdf_stats->drawline;
+	t_point				p;
+	unsigned int		color;
+	size_t				offset;
 
 	transform_fdf_points(fdf_stats, map);
 	if (width == 1 && map->height == 1)

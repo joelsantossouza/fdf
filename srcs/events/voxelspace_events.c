@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 12:58:18 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 19:47:55 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 20:18:14 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	player_events(t_player *player, t_map *map, int keyboard)
 {
 	const t_trig			axis_y = player->axis_y;
 	const t_trig			axis_x = player->axis_x;
-	const t_move_func		*move = player->move;
+	const t_moveplayer		move = player->move;
 	const t_player_stats	*stats = player->stats;
 
 	handle_space_event(keyboard, player);

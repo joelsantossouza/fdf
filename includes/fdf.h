@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 19:54:22 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 20:09:41 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,17 @@ typedef struct s_axis
 	t_trig	z;
 }	t_axis;
 
-typedef int (t_linedrawer)(t_image *, t_point, t_point, unsigned int);
+typedef int (*t_drawline)(t_image *, t_point, t_point, unsigned int);
 
 typedef struct s_fdf_stats
 {
-	t_point			center;
-	t_point			pos;
-	t_point			*transformed;
-	t_axis			axis;
-	double			zoom;
-	int				spacing;
-	t_linedrawer	*drawline;
+	t_point		center;
+	t_point		pos;
+	t_point		*transformed;
+	t_axis		axis;
+	double		zoom;
+	int			spacing;
+	t_drawline	drawline;
 }	t_fdf_stats;
 
 typedef struct s_fdf

@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 19:48:36 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 20:10:17 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_camera
 	int			zfar;
 }	t_camera;
 
-typedef void (t_move_func)();
+typedef void (*t_moveplayer)();
 
 typedef struct s_player_stats
 {
@@ -78,7 +78,7 @@ typedef struct s_player
 	t_trig			axis_y;
 	t_trig			axis_x;
 	double			angle;
-	t_move_func		*move;
+	t_moveplayer	move;
 	int				floor;
 	double			speed;
 	double			zforce;
