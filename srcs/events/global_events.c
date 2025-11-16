@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:36:21 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 13:24:17 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 11:46:09 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ int	press_key(int keycode, int *keyboard)
 		*keyboard |= CTRL;
 	else if (keycode == 65505)
 		*keyboard |= SHIFT;
+	else if (keycode == 104)
+		*keyboard |= KEY_H;
+	else if (keycode == 108)
+		*keyboard |= KEY_L;
+	else if (keycode == 106)
+		*keyboard |= KEY_J;
+	else if (keycode == 107)
+		*keyboard |= KEY_K;
 	return (0);
 }
 
@@ -47,5 +55,13 @@ int	release_key(int keycode, int *keyboard)
 		*keyboard &= ~(CTRL);
 	else if (keycode == 65505)
 		*keyboard &= ~(SHIFT);
+	else if (keycode == 104)
+		*keyboard &= ~(KEY_H);
+	else if (keycode == 108)
+		*keyboard &= ~(KEY_L);
+	else if (keycode == 106)
+		*keyboard &= ~(KEY_J);
+	else if (keycode == 107)
+		*keyboard &= ~(KEY_K);
 	return (0);
 }

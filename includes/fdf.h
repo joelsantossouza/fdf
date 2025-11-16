@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 17:36:18 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 13:42:44 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,11 @@ typedef struct s_trig
 
 typedef struct s_axis
 {
+	double	angle_x;
 	t_trig	x;
+	double	angle_y;
 	t_trig	y;
+	double	angle_z;
 	t_trig	z;
 }	t_axis;
 
@@ -73,6 +76,7 @@ typedef struct s_fdf
 	t_axis	axis;
 	double	zoom;
 	int		spacing;
+	int		keyboard;
 }	t_fdf;
 
 typedef int (t_linedrawer)(t_image *, t_point, t_point, unsigned int);
@@ -92,8 +96,11 @@ int	liangbarsky_clipping(t_point *p0, t_point *p1, int width, int height);
 int	bresenham_drawline(t_image *img, t_point p0, t_point p1, unsigned color);
 int	xiaolinwu_drawline(t_image *img, t_point p0, t_point p1, unsigned color);
 
-// TRANSFORMATION
+// MOTIONS
 t_point	rotate(t_axis *a, int x, int y, int z);
+void	control_axis_x(t_axis *a, double change);
+void	control_axis_y(t_axis *a, double change);
+void	control_axis_z(t_axis *a, double change);
 
 // RENDER
 void	render_fdf(t_image *img, t_fdf *fdf, t_linedrawer *drawline);
@@ -101,5 +108,6 @@ void	render_fdf(t_image *img, t_fdf *fdf, t_linedrawer *drawline);
 // EVENTS
 int	press_key(int keycode, int *keyboard);
 int	release_key(int keycode, int *keyboard);
+void	fdf_events(t_fdf *fdf);
 
 #endif

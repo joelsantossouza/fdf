@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 12:58:18 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 17:47:16 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 12:04:01 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ void	handle_space_event(int keyboard, t_player *player)
 		was_released = 1;
 }
 
-int	player_events(t_vox *vox)
+void	player_events(t_vox *vox)
 {
 	const t_trig	axis_y = vox->player->axis_y;
 	const t_trig	axis_x = vox->player->axis_x;
-	const int		keyboard = vox->keyboard;
+	const int		keyboard = *vox->keyboard;
 	t_player		*player;
 	t_map			*map;
 
@@ -78,5 +78,4 @@ int	player_events(t_vox *vox)
 		player->speed = player->stats->run_speed_max;
 	else
 		player->speed = player->stats->speed_max;
-	return (0);
 }

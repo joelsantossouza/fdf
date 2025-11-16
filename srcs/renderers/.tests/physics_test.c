@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 18:34:30 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 13:30:07 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,21 +117,22 @@ int	main(int argc, char **argv)
 		.stats = &stats,
 	};
 	player.floor = map.altitude[map.width * (int)player.pos->y + (int)player.pos->x] + player.stats->height;
+	int keyboard = 0;
 	t_vox vox = {
 		.mlx = mlx,
 		.window = window,
 		.img = &image,
 		.player = &player,
 		.map = &map,
-		.keyboard = 0,
 		.world = &world,
 		.sky = &sky,
+		.keyboard = &keyboard,
 	};
 	vox.sky = 0;
 	rotate_player(&player, 0);
 	mlx_mouse_hide(mlx, window);
-	mlx_hook(window, 2, 1L<<0, press_key, &vox.keyboard);
-	mlx_hook(window, 3, 1L<<1, release_key, &vox.keyboard);
+	mlx_hook(window, 2, 1L<<0, press_key, vox.keyboard);
+	mlx_hook(window, 3, 1L<<1, release_key, vox.keyboard);
 	mlx_hook(window, 6, 1L<<6, player_mouse, &vox);
 	mlx_loop_hook(mlx, voxelspace_loop, &vox);
 	mlx_loop(mlx);
