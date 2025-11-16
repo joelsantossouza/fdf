@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 13:21:15 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 11:43:24 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 16:10:19 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define KEY_L	256
 # define KEY_J	512
 # define KEY_K	1024
+# define KEY_U	2048
+# define KEY_I	4096
 
 # define MAX_DCLICK_DELAY	250
 
