@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 12:58:18 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 12:04:01 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 19:47:55 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,26 @@ void	handle_space_event(int keyboard, t_player *player)
 		was_released = 1;
 }
 
-void	player_events(t_vox *vox)
+void	player_events(t_player *player, t_map *map, int keyboard)
 {
-	const t_trig	axis_y = vox->player->axis_y;
-	const t_trig	axis_x = vox->player->axis_x;
-	const int		keyboard = *vox->keyboard;
-	t_player		*player;
-	t_map			*map;
+	const t_trig			axis_y = player->axis_y;
+	const t_trig			axis_x = player->axis_x;
+	const t_move_func		*move = player->move;
+	const t_player_stats	*stats = player->stats;
 
-	player = vox->player;
-	map = vox->map;
 	handle_space_event(keyboard, player);
 	if (keyboard & KEY_W)
-		player->move(player, axis_y.sin, axis_y.cos, map);
+		move(player, axis_y.sin, axis_y.cos, map);
 	if (keyboard & KEY_S)
-		player->move(player, -axis_y.sin, -axis_y.cos, map);
+		move(player, -axis_y.sin, -axis_y.cos, map);
 	if (keyboard & KEY_D)
-		player->move(player, axis_x.sin, axis_x.cos, map);
+		move(player, axis_x.sin, axis_x.cos, map);
 	if (keyboard & KEY_A)
-		player->move(player, -axis_x.sin, -axis_x.cos, map);
+		move(player, -axis_x.sin, -axis_x.cos, map);
 	if (keyboard & CTRL)
-		player->zforce -= player->stats->dive_force;
+		player->zforce -= stats->dive_force;
 	if (keyboard & SHIFT)
-		player->speed = player->stats->run_speed_max;
+		player->speed = stats->run_speed_max;
 	else
-		player->speed = player->stats->speed_max;
+		player->speed = stats->speed_max;
 }

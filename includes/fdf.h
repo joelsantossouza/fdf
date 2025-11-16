@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 13:42:44 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 19:54:22 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,28 @@ typedef struct s_axis
 	t_trig	z;
 }	t_axis;
 
+typedef int (t_linedrawer)(t_image *, t_point, t_point, unsigned int);
+
+typedef struct s_fdf_stats
+{
+	t_point			center;
+	t_point			pos;
+	t_point			*transformed;
+	t_axis			axis;
+	double			zoom;
+	int				spacing;
+	t_linedrawer	*drawline;
+}	t_fdf_stats;
+
 typedef struct s_fdf
 {
-	t_map	*map;
-	t_point	center;
-	t_point	pos;
-	t_point	*transformed;
-	t_axis	axis;
-	double	zoom;
-	int		spacing;
-	int		keyboard;
+	void		*mlx;
+	void		*window;
+	t_image		*img;
+	t_map		*map;
+	t_fdf_stats	*stats;
+	int			keyboard;
 }	t_fdf;
-
-typedef int (t_linedrawer)(t_image *, t_point, t_point, unsigned int);
 
 // UTILS
 void		free_map(t_map *map, void (*free_struct)(void *));
@@ -103,11 +112,11 @@ void	control_axis_y(t_axis *a, double change);
 void	control_axis_z(t_axis *a, double change);
 
 // RENDER
-void	render_fdf(t_image *img, t_fdf *fdf, t_linedrawer *drawline);
+void	render_fdf(t_image *img, t_fdf_stats *fdf_stats, t_map *map);
 
 // EVENTS
 int	press_key(int keycode, int *keyboard);
 int	release_key(int keycode, int *keyboard);
-void	fdf_events(t_fdf *fdf);
+void	fdf_events(t_fdf_stats *fdf_stats, int keyboard);
 
 #endif
