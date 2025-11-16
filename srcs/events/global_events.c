@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:36:21 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 16:13:38 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 17:22:26 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	press_key(int keycode, int *keyboard)
 {
-	if (keycode == 119)
+	if (keycode == 65307)
+		*keyboard |= ESC;
+	else if (keycode == 119)
 		*keyboard |= KEY_W;
 	else if (keycode == 115)
 		*keyboard |= KEY_S;
