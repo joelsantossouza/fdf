@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 13:21:15 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 17:20:12 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 23:38:53 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define KEY_U	2048
 # define KEY_I	4096
 # define ESC	8192
+# define TAB	16384
 
 # define MAX_DCLICK_DELAY	250
 

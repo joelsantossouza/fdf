@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 20:20:01 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 23:52:53 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "fdf.h"
 #include <stdio.h>
 #include <math.h>
+#include "../../events/events.h"
 #include "voxelspace.h"
 #include <stdlib.h>
 #include <unistd.h>
@@ -41,67 +42,35 @@ double anglex = 0;
 double angley = 0;
 double anglez = 0;
 
-int	render(int keycode)
+int     app_loop_test(t_app *app)
 {
-	(void)keycode;
-	ft_bzero(image.addr, WIDTH * HEIGHT * image.bpp);
-//	if (keycode == 113)
-//		drawline = bresenham_drawline;
-//	else if (keycode == 101)
-//		drawline = xiaolinwu_drawline;
-//	else if (keycode == 119)
-//		fdf.pos.y -= SPEED;
-//	else if (keycode == 97)
-//		fdf.pos.x -= SPEED;
-//	else if (keycode == 115)
-//		fdf.pos.y += SPEED;
-//	else if (keycode == 100)
-//		fdf.pos.x += SPEED;
-//	else if (keycode == KEY1)
-//	{
-//		anglex += 0.1;
-//		fdf.axis.x.cos = cos(anglex);
-//		fdf.axis.x.sin = sin(anglex);
-//	}
-//	else if (keycode == KEY2)
-//	{
-//		anglex -= 0.1;
-//		fdf.axis.x.cos = cos(anglex);
-//		fdf.axis.x.sin = sin(anglex);
-//	}
-//	else if (keycode == KEY3)
-//	{
-//		angley -= 0.1;
-//		fdf.axis.y.cos = cos(angley);
-//		fdf.axis.y.sin = sin(angley);
-//	}
-//	else if (keycode == KEY4)
-//	{
-//		angley += 0.1;
-//		fdf.axis.y.cos = cos(angley);
-//		fdf.axis.y.sin = sin(angley);
-//	}
-//	else if (keycode == KEY5)
-//	{
-//		anglez -= 0.1;
-//		fdf.axis.z.cos = cos(anglez);
-//		fdf.axis.z.sin = sin(anglez);
-//	}
-//	else if (keycode == KEY6)
-//	{
-//		anglez += 0.1;
-//		fdf.axis.z.cos = cos(anglez);
-//		fdf.axis.z.sin = sin(anglez);
-//	}
-//	else if (keycode == KEY7)
-//		fdf.zoom /= 1.1;
-//	else if (keycode == KEY8)
-//		fdf.zoom *= 1.1;
-	fdf_events(fdf.stats, fdf.keyboard);
-	render_fdf(&image, fdf.stats, &map);
-	mlx_put_image_to_window(mlx, window, image.data, 0, 0);
-	return (0);
+        const int       keyboard = app->keyboard;
+        t_map           *map;
+        t_vox           *vox;
+        t_player        *player;
+        t_fdf           *fdf;
+
+        //if (keyboard & ESC)
+        //      mlx_loop_end(app->mlx);
+        map = app->map;
+        if (keyboard & TAB)
+        {
+                player = app->vox->player;
+                vox = app->vox;
+                player_events(player, map, keyboard);
+                player_physics(player, vox->gravity);
+                render_voxelspace(app->img, map, player->cam, vox->sky);
+        }
+        else
+        {
+                fdf = app->fdf;
+                fdf_events(fdf, keyboard);
+                render_fdf(app->img, fdf, map);
+        }
+        mlx_put_image_to_window(app->mlx, app->window, app->img->data, 0, 0);
+        return (0);
 }
+
 
 int	main(int argc, char **argv)
 {
@@ -140,32 +109,69 @@ int	main(int argc, char **argv)
 	image.height = HEIGHT;
 	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.linelen, &temp);
 	image.bpp >>= 3;
-	fdf.map = &map;
-	t_fdf_stats stats;
-stats.center.x = -(map.width / 2 * 15);
-stats.center.y = -(map.height / 2 * 15);
-stats.pos.x = WIDTH / 2;
-stats.pos.y = HEIGHT / 2;
-stats.spacing = 15;
-stats.zoom = 1;
-	stats.drawline = bresenham_drawline;
-fdf.keyboard = 0;
-	fdf.stats = &stats;
+	t_fdf fdf;
+fdf.center.x = -(map.width / 2 * 15);
+fdf.center.y = -(map.height / 2 * 15);
+fdf.pos.x = WIDTH / 2;
+fdf.pos.y = HEIGHT / 2;
+fdf.spacing = 15;
+fdf.zoom = 1;
+	fdf.drawline = bresenham_drawline;
 	//fdf.axis.angle_x = 0;
 	//fdf.axis.angle_y = 0;
 	//fdf.axis.angle_z = 0;
-	stats.axis.x.cos = cos(0);
-	stats.axis.x.sin = sin(0);
-	stats.axis.y.cos = cos(0);
-	stats.axis.y.sin = sin(0);
-	stats.axis.z.cos = cos(0);
-	stats.axis.z.sin = sin(0);
-	stats.transformed = malloc(sizeof(t_point) * map.total);
-	if (!stats.transformed)
+	fdf.axis.x.cos = cos(0);
+	fdf.axis.x.sin = sin(0);
+	fdf.axis.y.cos = cos(0);
+	fdf.axis.y.sin = sin(0);
+	fdf.axis.z.cos = cos(0);
+	fdf.axis.z.sin = sin(0);
+	fdf.transformed = malloc(sizeof(t_point) * map.total);
+	if (!fdf.transformed)
 		return (3);
-	mlx_hook(window, 2, 1L<<0, press_key, &fdf.keyboard);
-	mlx_hook(window, 3, 1L<<1, release_key, &fdf.keyboard);
-	mlx_loop_hook(mlx, render, 0);
+	t_camera camera = (t_camera){
+		.pos.x = map.width / 2.0,
+		.pos.y = map.height / 5.0,
+		.pos.z = 300 * 200,
+		.horizon = image.height >> 1,
+		.zfar = 11000,
+	};
+	t_player_stats	stats = {
+		.climb_max = 10 * 200,
+		.sensibility = 0.001,
+		.height = 80 * 200,
+		.jump_force = 15 * 200,
+		.dive_force = 2 * 200,
+		.speed_max = 5,
+		.run_speed_max = 9,
+	};
+	t_player player = (t_player){
+		.pos = &camera.pos,
+		.cam = &camera,
+		.speed = 1,
+		.move = player_walk,
+		.stats = &stats,
+	};
+	player.floor = map.altitude[map.width * (int)player.pos->y + (int)player.pos->x] + player.stats->height;
+	t_vox vox = {
+		.player = &player,
+		.gravity = 3,
+		.unity = 200,
+		.min_horizon = -HEIGHT + (HEIGHT / 1.5),
+		.max_horizon = HEIGHT + (HEIGHT >>1),
+	};
+	t_app app = {
+		.mlx = mlx,
+		.window = window,
+		.img = &image,
+		.map = &map,
+		.fdf = &fdf,
+		.vox = &vox,
+		.keyboard = 0,
+	};
+	mlx_hook(window, 2, 1L<<0, press_key, &app.keyboard);
+	mlx_hook(window, 3, 1L<<1, release_key, &app.keyboard);
+	mlx_loop_hook(mlx, app_loop_test, &app);
 	mlx_loop(mlx);
 	mlx_destroy_image(mlx, image.data);
 	mlx_destroy_window(mlx, window);

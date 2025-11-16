@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 20:09:41 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 22:53:08 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,25 +69,15 @@ typedef struct s_axis
 
 typedef int (*t_drawline)(t_image *, t_point, t_point, unsigned int);
 
-typedef struct s_fdf_stats
+typedef struct s_fdf
 {
 	t_point		center;
 	t_point		pos;
 	t_point		*transformed;
 	t_axis		axis;
+	t_drawline	drawline;
 	double		zoom;
 	int			spacing;
-	t_drawline	drawline;
-}	t_fdf_stats;
-
-typedef struct s_fdf
-{
-	void		*mlx;
-	void		*window;
-	t_image		*img;
-	t_map		*map;
-	t_fdf_stats	*stats;
-	int			keyboard;
 }	t_fdf;
 
 // UTILS
@@ -112,11 +102,11 @@ void	control_axis_y(t_axis *a, double change);
 void	control_axis_z(t_axis *a, double change);
 
 // RENDER
-void	render_fdf(t_image *img, t_fdf_stats *fdf_stats, t_map *map);
+void	render_fdf(t_image *img, t_fdf *fdf, t_map *map);
 
 // EVENTS
 int	press_key(int keycode, int *keyboard);
 int	release_key(int keycode, int *keyboard);
-void	fdf_events(t_fdf_stats *fdf_stats, int keyboard);
+void	fdf_events(t_fdf *fdf, int keyboard);
 
 #endif

@@ -1,36 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   voxelspace_loop.c                                  :+:      :+:    :+:   */
+/*   app_loop.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 21:56:36 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 20:17:45 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 23:44:42 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "fdf.h"
 #include "voxelspace.h"
+#include "events.h"
 #include "mlx.h"
 
-int	voxelspace_loop(t_vox *vox)
+int	app_loop(t_app *app)
 {
-	t_player	*player;
+	const int	keyboard = app->keyboard;
 	t_map		*map;
-	t_image		*img;
+	t_vox		*vox;
+	t_player	*player;
+	t_fdf		*fdf;
 
-	player = vox->player;
-	map = vox->map;
-	img = vox->img;
-	player_events(player, map, *vox->keyboard);
-	if (player->move == player_walk)
-		gravity(&player->pos->z, &player->zforce, player->floor, vox->world->gravity);
-	else if (player->zforce != 0)
+	//if (keyboard & ESC)
+	//	mlx_loop_end(app->mlx);
+	map = app->map;
+	if (keyboard & TAB)
 	{
-		player->pos->z += player->zforce;
-		player->zforce = 0;
+		player = app->vox->player;
+		vox = app->vox;
+		player_events(player, map, keyboard);
+		player_physics(player, vox->gravity);
+		render_voxelspace(app->img, map, player->cam, vox->sky);
 	}
-	render_voxelspace(img, vox->map, player->cam, vox->sky);
-	mlx_put_image_to_window(vox->mlx, vox->window, img->data, 0, 0);
+	else
+	{
+		fdf = app->fdf;
+		fdf_events(fdf, keyboard);
+		render_fdf(app->img, fdf, map);
+	}
+	mlx_put_image_to_window(app->mlx, app->window, app->img->data, 0, 0);
 	return (0);
 }

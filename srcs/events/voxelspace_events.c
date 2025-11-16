@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 12:58:18 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 20:18:14 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 22:57:38 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 #include "events.h"
 #include "mlx.h"
 
-int	player_mouse(int x, int y, t_vox *vox)
+int	player_mouse(int x, int y, t_app *app)
 {
-	const t_point	center = vox->img->center;
+	const t_vox		*vox = app->vox;
+	const t_point	center = app->img->center;
 	const t_point	delta = {x - center.x, y - center.y};
-	const t_physic	*world = vox->world;
 	t_camera		*cam;
 	int				nxt_horizon;
 
 	rotate_player(vox->player, delta.x);
 	cam = vox->player->cam;
 	nxt_horizon = cam->horizon - delta.y;
-	if (nxt_horizon >= world->min_horizon && nxt_horizon <= world->max_horizon)
+	if (nxt_horizon >= vox->min_horizon && nxt_horizon <= vox->max_horizon)
 		cam->horizon = nxt_horizon;
-	mlx_mouse_move(vox->mlx, vox->window, center.x, center.y);
+	mlx_mouse_move(app->mlx, app->window, center.x, center.y);
 	return (0);
 }
 

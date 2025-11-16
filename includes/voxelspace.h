@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 20:10:17 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 23:41:33 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,31 +85,33 @@ typedef struct s_player
 	t_player_stats	*stats;
 }	t_player;
 
-typedef struct s_physic
-{
-	double	gravity;
-	int		unity;
-	int		min_horizon;
-	int		max_horizon;
-}	t_physic;
-
 typedef struct s_vox
 {
-	void		*mlx;
-	void		*window;
-	t_image		*img;
 	t_player	*player;
-	t_map		*map;
 	t_pic		*sky;
-	t_physic	*world;
-	int			*keyboard;
+	double		gravity;
+	int			unity;
+	int			min_horizon;
+	int			max_horizon;
 }	t_vox;
+
+typedef struct s_app
+{
+	void	*mlx;
+	void	*window;
+	t_image	*img;
+	t_map	*map;
+	t_fdf	*fdf;
+	t_vox	*vox;
+	int		keyboard;
+}	t_app;
 
 // PARSERS
 int		parse_voxel_file(const char *color_file, const char *altitude_file, t_map *map, int heightscale);
 
 // PHYSICS
 void	gravity(double *height, double *zforce, int floor, double gravity);
+void	player_physics(t_player *player, double gravity_force);
 
 // MOTIONS
 void	player_walk(t_player *player, double sine, double cosine, t_map *map);
@@ -120,10 +122,10 @@ void	rotate_player(t_player *player, double rotation);
 void	render_voxelspace(t_image *img, t_map *map, t_camera *cam, t_pic *sky);
 
 // EVENTS
-int		player_mouse(int x, int y, t_vox *vox);
+int	player_mouse(int x, int y, t_app *app);
 void	player_events(t_player *player, t_map *map, int keyboard);
 
 // LOOPS
-int	voxelspace_loop(t_vox *vox);
+int	app_loop(t_app *app);
 
 #endif
