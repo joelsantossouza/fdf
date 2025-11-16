@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 11:11:48 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 20:29:33 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 20:36:56 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void	handle_space_event(int keyboard, t_drawline *drawline)
 {
 	static int	was_released = 1;
 
-	if ((keyboard & SPACE) && was_released)
+	if (!(keyboard & SPACE))
+		was_released = 1;
+	else if (was_released)
 	{
 		if (*drawline == bresenham_drawline)
 			*drawline = xiaolinwu_drawline;
@@ -26,8 +28,6 @@ void	handle_space_event(int keyboard, t_drawline *drawline)
 			*drawline = bresenham_drawline;
 		was_released = 0;
 	}
-	else
-		was_released = 1;
 }
 
 void	fdf_events(t_fdf_stats *fdf_stats, int keyboard)
