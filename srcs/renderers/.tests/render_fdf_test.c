@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 20:16:05 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 20:20:01 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ stats.pos.x = WIDTH / 2;
 stats.pos.y = HEIGHT / 2;
 stats.spacing = 15;
 stats.zoom = 1;
+	stats.drawline = bresenham_drawline;
 fdf.keyboard = 0;
 	fdf.stats = &stats;
 	//fdf.axis.angle_x = 0;

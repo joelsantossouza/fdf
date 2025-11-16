@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 11:11:48 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 20:18:39 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 20:29:33 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,25 @@
 #include "events.h"
 
 static inline
-void	toggle_drawline_algorithmn(t_drawline *drawline)
+void	handle_space_event(int keyboard, t_drawline *drawline)
 {
-	if (*drawline == bresenham_drawline)
-		*drawline = xiaolinwu_drawline;
+	static int	was_released = 1;
+
+	if ((keyboard & SPACE) && was_released)
+	{
+		if (*drawline == bresenham_drawline)
+			*drawline = xiaolinwu_drawline;
+		else
+			*drawline = bresenham_drawline;
+		was_released = 0;
+	}
 	else
-		*drawline = bresenham_drawline;
+		was_released = 1;
 }
 
 void	fdf_events(t_fdf_stats *fdf_stats, int keyboard)
 {
-	if (keyboard & SPACE)
-		toggle_drawline_algorithmn(&fdf_stats->drawline);
+	handle_space_event(keyboard, &fdf_stats->drawline);
 	if (keyboard & KEY_W)
 		fdf_stats->pos.y--;
 	if (keyboard & KEY_S)
