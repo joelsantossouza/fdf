@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 11:11:48 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 22:52:40 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/17 17:42:15 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,27 @@ void	handle_space_event(int keyboard, t_drawline *drawline)
 	}
 }
 
+static inline
+void	handle_zoom_event(int keyboard, double *zoom, double max_zoom, double min_zoom)
+{
+	if (keyboard & SHIFT)
+	{
+		*zoom *= 1.1;
+		if (*zoom > max_zoom)
+			*zoom = max_zoom;
+	}
+	if (keyboard & CTRL)
+	{
+		*zoom /= 1.1;
+		if (*zoom < min_zoom)
+			*zoom = min_zoom;
+	}
+}
+
 void	fdf_events(t_fdf *fdf, int keyboard)
 {
 	handle_space_event(keyboard, &fdf->drawline);
+	handle_zoom_event(keyboard, &fdf->zoom, fdf->max_zoom, fdf->min_zoom);
 	if (keyboard & KEY_W)
 		fdf->pos.y--;
 	if (keyboard & KEY_S)
@@ -41,10 +59,6 @@ void	fdf_events(t_fdf *fdf, int keyboard)
 		fdf->pos.x++;
 	if (keyboard & KEY_A)
 		fdf->pos.x--;
-	if (keyboard & SHIFT)
-		fdf->zoom *= 1.1;
-	if (keyboard & CTRL)
-		fdf->zoom /= 1.1;
 	if (keyboard & KEY_J)
 		control_axis_x(&fdf->axis, -0.1);
 	if (keyboard & KEY_K)

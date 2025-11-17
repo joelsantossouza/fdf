@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/17 13:15:52 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/17 17:53:43 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 #include <unistd.h>
 #include "libft.h"
 
-#define WIDTH	1000
-#define HEIGHT	1000
+#define WIDTH	1920
+#define HEIGHT	1080
 #define SPEED	10
 
 # define KEY1 65436
@@ -64,6 +64,7 @@ int     app_loop_test(t_app *app)
                 fdf = app->fdf;
                 fdf_events(fdf, keyboard);
                 render_fdf(app->img, fdf, map);
+				printf("min: %f\tcurr: %f\tmax: %f\n", fdf->min_zoom, fdf->zoom, fdf->max_zoom);
         }
         mlx_put_image_to_window(app->mlx, app->window, app->img->data, 0, 0);
         return (0);
@@ -127,10 +128,14 @@ int	main(int argc, char **argv)
 	fdf.pos.y = HEIGHT / 2;
 	fdf.spacing = 15;
 	fdf.zoom = 1;
+	double map_diag = sqrt(map.width * map.width + map.height + map.height);
+	double screen_diag = sqrt(image.width * image.width + image.height * image.height);
+	fdf.min_zoom = 0.02;
+	fdf.max_zoom = screen_diag / (map_diag  *  0.5);
 	fdf.drawline = bresenham_drawline;
-	//fdf.axis.angle_x = 0;
-	//fdf.axis.angle_y = 0;
-	//fdf.axis.angle_z = 0;
+	fdf.axis.angle_x = 0;
+	fdf.axis.angle_y = 0;
+	fdf.axis.angle_z = 0;
 	fdf.axis.x.cos = cos(0);
 	fdf.axis.x.sin = sin(0);
 	fdf.axis.y.cos = cos(0);
