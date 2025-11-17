@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/17 11:59:04 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/17 13:15:52 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,20 +73,32 @@ int	main(int argc, char **argv)
 {
 	int	temp;
 	t_fdf	fdf;
-	if (argc == 2)
+	t_pic	sky;
+
+	if (argc == 3)
 	{
 		if (parse_fdf_file(argv[1], &map) < 0)
 		{
 			ft_fprintf(2, "Fail to load map\n");
 			return (1);
 		}
+		if (parse_picture(argv[2], &sky.data, &sky.width, &sky.height) < 0)
+		{
+			ft_fprintf(2, "Fail to load sky\n");
+			return (2);
+		}
 	}
-	else if (argc == 3)
+	else if (argc == 4)
 	{
 		if (parse_voxel_file(argv[1], argv[2], &map) < 0)
 		{
 			ft_fprintf(2, "Fail to load map\n");
 			return (1);
+		}
+		if (parse_picture(argv[3], &sky.data, &sky.width, &sky.height) < 0)
+		{
+			ft_fprintf(2, "Fail to load sky\n");
+			return (2);
 		}
 	}
 	else
