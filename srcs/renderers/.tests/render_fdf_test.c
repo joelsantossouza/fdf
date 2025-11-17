@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 23:52:53 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/16 23:59:53 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,10 @@ fdf.zoom = 1;
 		.vox = &vox,
 		.keyboard = 0,
 	};
+	rotate_player(&player, 0);
 	mlx_hook(window, 2, 1L<<0, press_key, &app.keyboard);
 	mlx_hook(window, 3, 1L<<1, release_key, &app.keyboard);
+	mlx_hook(window, 6, 1L<<6, player_mouse, &app);
 	mlx_loop_hook(mlx, app_loop_test, &app);
 	mlx_loop(mlx);
 	mlx_destroy_image(mlx, image.data);
