@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 23:59:53 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/17 00:06:27 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int     app_loop_test(t_app *app)
         //if (keyboard & ESC)
         //      mlx_loop_end(app->mlx);
         map = app->map;
-        if (keyboard & TAB)
+        if (!(keyboard & TAB))
         {
                 player = app->vox->player;
                 vox = app->vox;
@@ -109,6 +109,7 @@ int	main(int argc, char **argv)
 	image.height = HEIGHT;
 	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.linelen, &temp);
 	image.bpp >>= 3;
+	image.center = (t_point){WIDTH >>1, HEIGHT >>1};
 	t_fdf fdf;
 fdf.center.x = -(map.width / 2 * 15);
 fdf.center.y = -(map.height / 2 * 15);
@@ -170,6 +171,7 @@ fdf.zoom = 1;
 		.keyboard = 0,
 	};
 	rotate_player(&player, 0);
+	mlx_mouse_hide(mlx, window);
 	mlx_hook(window, 2, 1L<<0, press_key, &app.keyboard);
 	mlx_hook(window, 3, 1L<<1, release_key, &app.keyboard);
 	mlx_hook(window, 6, 1L<<6, player_mouse, &app);
