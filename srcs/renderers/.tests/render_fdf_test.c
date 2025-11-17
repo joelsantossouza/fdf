@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/17 11:42:53 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/17 11:59:04 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,8 @@ int     app_loop_test(t_app *app)
         t_player        *player;
         t_fdf           *fdf;
 
-        //if (keyboard & ESC)
-        //      mlx_loop_end(app->mlx);
         map = app->map;
-        if (keyboard & KEY_Q)
-        {
-                app->fdf->scale--;
-                app->vox->player->cam->scale = app->fdf->scale * 30;
-        }
-        if (keyboard & KEY_E)
-        {
-                app->fdf->scale++;
-                app->vox->player->cam->scale = app->fdf->scale * 30;
-        }
+        global_events(app->mlx, app->fdf, app->vox, keyboard);
         if (keyboard & TAB)
         {
                 player = app->vox->player;

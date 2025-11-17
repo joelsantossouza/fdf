@@ -6,11 +6,13 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:36:21 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/17 11:04:53 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/17 11:56:10 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "voxelspace.h"
 #include "events.h"
+#include "mlx.h"
 
 int	press_key(int keycode, int *keyboard)
 {
@@ -84,4 +86,20 @@ int	release_key(int keycode, int *keyboard)
 	else if (keycode == 101)
 		*keyboard &= ~(KEY_E);
 	return (0);
+}
+
+void	global_events(void *mlx, t_fdf *fdf, t_vox *vox, int keyboard)
+{
+	if (keyboard & ESC)
+		mlx_loop_end(mlx);
+	if (keyboard & KEY_E)
+	{
+		fdf->scale++;
+		vox->player->cam->scale += 30;
+	}
+	if (keyboard & KEY_Q)
+	{
+		fdf->scale--;
+		vox->player->cam->scale -= 30;
+	}
 }

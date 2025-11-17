@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/17 10:41:03 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/17 11:56:53 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ void	rotate_player(t_player *player, double rotation);
 void	render_voxelspace(t_image *img, t_map *map, t_camera *cam, t_pic *sky);
 
 // EVENTS
-int	player_mouse(int x, int y, t_app *app);
+void	global_events(void *mlx, t_fdf *fdf, t_vox *vox, int keyboard);
+int		player_mouse(int x, int y, t_app *app);
 void	player_events(t_player *player, t_map *map, int keyboard);
 
 // LOOPS
