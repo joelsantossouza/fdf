@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/17 00:06:27 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/17 11:42:53 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	*mlx;
 void	*window;
 t_image	image;
 t_map	map;
-t_fdf	fdf;
 double anglex = 0;
 double angley = 0;
 double anglez = 0;
@@ -53,7 +52,17 @@ int     app_loop_test(t_app *app)
         //if (keyboard & ESC)
         //      mlx_loop_end(app->mlx);
         map = app->map;
-        if (!(keyboard & TAB))
+        if (keyboard & KEY_Q)
+        {
+                app->fdf->scale--;
+                app->vox->player->cam->scale = app->fdf->scale * 30;
+        }
+        if (keyboard & KEY_E)
+        {
+                app->fdf->scale++;
+                app->vox->player->cam->scale = app->fdf->scale * 30;
+        }
+        if (keyboard & TAB)
         {
                 player = app->vox->player;
                 vox = app->vox;
@@ -71,10 +80,10 @@ int     app_loop_test(t_app *app)
         return (0);
 }
 
-
 int	main(int argc, char **argv)
 {
 	int	temp;
+	t_fdf	fdf;
 	if (argc == 2)
 	{
 		if (parse_fdf_file(argv[1], &map) < 0)
@@ -85,7 +94,7 @@ int	main(int argc, char **argv)
 	}
 	else if (argc == 3)
 	{
-		if (parse_voxel_file(argv[1], argv[2], &map, 200) < 0)
+		if (parse_voxel_file(argv[1], argv[2], &map) < 0)
 		{
 			ft_fprintf(2, "Fail to load map\n");
 			return (1);
@@ -110,13 +119,13 @@ int	main(int argc, char **argv)
 	image.addr = mlx_get_data_addr(image.data, &image.bpp, &image.linelen, &temp);
 	image.bpp >>= 3;
 	image.center = (t_point){WIDTH >>1, HEIGHT >>1};
-	t_fdf fdf;
-fdf.center.x = -(map.width / 2 * 15);
-fdf.center.y = -(map.height / 2 * 15);
-fdf.pos.x = WIDTH / 2;
-fdf.pos.y = HEIGHT / 2;
-fdf.spacing = 15;
-fdf.zoom = 1;
+	fdf.scale = 1;
+	fdf.center.x = -(map.width / 2 * 15);
+	fdf.center.y = -(map.height / 2 * 15);
+	fdf.pos.x = WIDTH / 2;
+	fdf.pos.y = HEIGHT / 2;
+	fdf.spacing = 15;
+	fdf.zoom = 1;
 	fdf.drawline = bresenham_drawline;
 	//fdf.axis.angle_x = 0;
 	//fdf.axis.angle_y = 0;
@@ -133,18 +142,19 @@ fdf.zoom = 1;
 	t_camera camera = (t_camera){
 		.pos.x = map.width / 2.0,
 		.pos.y = map.height / 5.0,
-		.pos.z = 300 * 200,
+		.pos.z = 300,
 		.horizon = image.height >> 1,
 		.zfar = 11000,
+		.scale = 200,
 	};
 	t_player_stats	stats = {
-		.climb_max = 10 * 200,
+		.climb_max = 10,
 		.sensibility = 0.001,
-		.height = 80 * 200,
-		.jump_force = 15 * 200,
-		.dive_force = 2 * 200,
-		.speed_max = 5,
-		.run_speed_max = 9,
+		.height = 10,
+		.jump_force = 5,
+		.dive_force = 5,
+		.speed_max = 3,
+		.run_speed_max = 7,
 	};
 	t_player player = (t_player){
 		.pos = &camera.pos,
@@ -156,8 +166,7 @@ fdf.zoom = 1;
 	player.floor = map.altitude[map.width * (int)player.pos->y + (int)player.pos->x] + player.stats->height;
 	t_vox vox = {
 		.player = &player,
-		.gravity = 3,
-		.unity = 200,
+		.gravity = 0.0096,
 		.min_horizon = -HEIGHT + (HEIGHT / 1.5),
 		.max_horizon = HEIGHT + (HEIGHT >>1),
 	};

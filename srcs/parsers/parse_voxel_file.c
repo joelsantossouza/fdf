@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:29 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 13:31:34 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/17 10:33:33 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "parsers.h"
 #include <stdlib.h>
 
-int	parse_voxel_file(const char *color_file, const char *height_file, t_map *map, int heightscale)
+int	parse_voxel_file(const char *color_file, const char *height_file, t_map *map)
 {
 	t_point			size;
 	unsigned char	*color;
@@ -39,7 +39,7 @@ int	parse_voxel_file(const char *color_file, const char *height_file, t_map *map
 	while (++i < map->total)
 	{
 		map->color[i] = color[i * 3] << 16 | color[i * 3 + 1] << 8 | color[i * 3 + 2];
-		map->altitude[i] = height[i] * heightscale;
+		map->altitude[i] = height[i];
 	}
 	return (stbi_image_free(color), stbi_image_free(height), SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 22:53:08 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/17 11:34:40 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_fdf
 	t_point		*transformed;
 	t_axis		axis;
 	t_drawline	drawline;
+	double		scale;
 	double		zoom;
 	int			spacing;
 }	t_fdf;
