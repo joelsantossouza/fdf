@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:36:21 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/17 11:56:10 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/17 12:11:08 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,21 @@ int	release_key(int keycode, int *keyboard)
 
 void	global_events(void *mlx, t_fdf *fdf, t_vox *vox, int keyboard)
 {
+	t_camera	*cam;
+
+	cam = vox->player->cam;
 	if (keyboard & ESC)
 		mlx_loop_end(mlx);
 	if (keyboard & KEY_E)
 	{
 		fdf->scale++;
-		vox->player->cam->scale += 30;
+		cam->scale += 30;
 	}
 	if (keyboard & KEY_Q)
 	{
 		fdf->scale--;
-		vox->player->cam->scale -= 30;
+		cam->scale -= 30;
+		if (cam->scale < 1)
+			cam->scale = 1;
 	}
 }
