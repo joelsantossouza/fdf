@@ -6,10 +6,11 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 12:58:18 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 22:57:38 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/17 17:06:48 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "voxelspace.h"
 #include "events.h"
 #include "mlx.h"
@@ -22,6 +23,8 @@ int	player_mouse(int x, int y, t_app *app)
 	t_camera		*cam;
 	int				nxt_horizon;
 
+	if (ft_abs(delta.x) < 3 && ft_abs(delta.y) < 3)
+		return (0);
 	rotate_player(vox->player, delta.x);
 	cam = vox->player->cam;
 	nxt_horizon = cam->horizon - delta.y;
