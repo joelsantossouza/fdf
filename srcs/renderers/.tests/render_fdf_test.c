@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 17:51:00 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 18:17:14 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	main(int argc, char **argv)
 	(void)argc;
 	if (!(parse_arguments(argv, &app.map, &app.vox.sky, 0) & MAP_DONE))
 	{
+		free_map(&app.map, NULL);
+		free_pic(&app.vox.sky, NULL);
 		ft_fprintf(2, "Fail to parse arguments\n");
 		return (1);
 	}
