@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/13 11:56:34 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 16:05:10 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include "voxelspace.h"
 #include <unistd.h>
+#include "../parsers.h"
 #include "libft.h"
 
 #define SPEED	1
@@ -69,7 +70,7 @@ int	main(int argc, char **argv)
 	}
 	else if (argc == 3)
 	{
-		if (parse_voxel_file(argv[1], argv[2], &map, 1) < 0)
+		if (parse_voxel_file(argv[1], argv[2], &map) < 0)
 		{
 			ft_fprintf(2, "Fail to load map\n");
 			return (1);

@@ -6,19 +6,19 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/02 01:11:47 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/13 09:28:58 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/18 16:20:02 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g
 
-NAME = parse_test parse_voxel_test
+NAME = parse_test parse_voxel_test parse_arguments_test
 
 INCLUDES = $(addprefix -I, ../../../includes/ ../../../libs/libft ../../../libs/minilibx-linux/)
 LIBS = ../../../libs/libft/libft.a ../../../libs/minilibx-linux/libmlx.a
-SRCS = ../parse_fdf_file.c ../../utils/map_utils.c ../parse_voxel_file.c ../../utils/draw_utils.c \
-../../parsers/parse_picture.c
+SRCS = ../parse_fdf_file.c ../../free/free_map.c ../parse_voxel_file.c ../../utils/draw_utils.c \
+../../parsers/parse_picture.c ../parse_arguments.c ../../free/free_pic.c
 
 all: $(NAME)
 

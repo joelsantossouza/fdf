@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:19 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 15:47:22 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 16:41:18 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	validate_map(const char *path, t_map *map)
 	char		*line;
 
 	// CREATE BETTER ERRORS RETURNS FOR EACH CASE
+	if (fd < 0)
+		return (ERROR);
 	line = NULL;
 	ft_getline(&line, fd);
 	map->width = ft_word_count(line, ' ');
