@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 15:00:27 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 17:38:35 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 19:23:50 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 int	parse_arguments(char **argv, t_map *map, t_pic *sky, int flags)
 {
-	ft_mempset(map, 0, sizeof(*map));
-	ft_mempset(sky, 0, sizeof(*sky));
+	*map = (t_map){};
+	*sky = (t_pic){};
 	while (*++argv && (flags & DONE) != DONE)
 	{
 		if (!(flags & MAP_DONE) && !ft_strcmp(*argv, "--images") && *(argv + 1) && *(argv + 2))

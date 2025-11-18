@@ -6,14 +6,14 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 11:42:19 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/16 13:35:58 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 19:34:08 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <math.h>
 
-t_point	rotate(t_axis *a, int x, int y, int z)
+t_pos	rotate(t_axis *a, int x, int y, int z)
 {
 	int	tmp_x;
 	int	tmp_y;
@@ -25,7 +25,7 @@ t_point	rotate(t_axis *a, int x, int y, int z)
 	x = tmp_x * a->y.cos + tmp_z * a->y.sin;
 	y = tmp_y;
 	z = tmp_x * -a->y.sin + tmp_z * a->y.cos;
-	return ((t_point){x * a->z.cos + y * -a->z.sin, x * a->z.sin + y * a->z.cos});
+	return ((t_pos){x * a->z.cos + y * -a->z.sin, x * a->z.sin + y * a->z.cos});
 }
 
 void	control_axis_x(t_axis *a, double change)

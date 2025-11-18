@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:36:21 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 17:19:14 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 19:47:49 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	global_events(t_app *app)
 {
 	const int	keyboard = app->keyboard;
 	t_fdf		*fdf;
-	t_camera	*cam;
+	t_cam		*cam;
 
 	if (keyboard & ESC)
 		mlx_loop_end(app->mlx);

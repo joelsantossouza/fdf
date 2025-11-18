@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 15:04:10 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 19:41:49 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@
 # define CIRCLE		6.283185307179586476925286766559
 # define PI			3.14159265358979323846264338327950288419716939937510
 
-typedef struct s_dpoint2
+typedef struct s_dpos2
 {
 	double	x;
 	double	y;
-}	t_dpoint2;
+}	t_dpos2;
 
-typedef struct s_dpoint3
+typedef struct s_dpos3
 {
 	double	x;
 	double	y;
 	double	z;
-}	t_dpoint3;
+}	t_dpos3;
 
 typedef struct s_ray
 {
@@ -50,14 +50,14 @@ typedef struct s_fov
 	double	pry;
 }	t_fov;
 
-typedef struct s_camera
+typedef struct s_cam
 {
-	t_dpoint3	pos;
+	t_dpos3	pos;
 	t_fov		fov;
 	int			horizon;
 	int			zfar;
 	int			scale;
-}	t_camera;
+}	t_cam;
 
 typedef void (*t_moveplayer)();
 
@@ -74,8 +74,8 @@ typedef struct s_player_stats
 
 typedef struct s_player
 {
-	t_dpoint3		*pos;
-	t_camera		*cam;
+	t_dpos3			*pos;
+	t_cam			*cam;
 	t_trig			axis_y;
 	t_trig			axis_x;
 	double			angle;
@@ -99,7 +99,7 @@ typedef struct s_app
 {
 	void	*mlx;
 	void	*window;
-	t_image	img;
+	t_img	img;
 	t_map	map;
 	t_fdf	fdf;
 	t_vox	vox;
@@ -120,7 +120,7 @@ void	player_fly(t_player *player, double sine, double cosine, t_map *map);
 void	rotate_player(t_player *player, double rotation);
 
 // RENDER
-void	render_voxelspace(t_image *img, t_map *map, t_camera *cam, t_pic *sky);
+void	render_voxelspace(t_img *img, t_map *map, t_cam *cam, t_pic *sky);
 
 // EVENTS
 void	global_events(t_app *app);

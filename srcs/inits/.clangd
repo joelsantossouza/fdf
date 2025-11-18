@@ -1,0 +1,6 @@
+CompileFlags:
+  Add:
+    - "-I../../libs/libft"
+    - "-I../../libs/minilibx-linux"
+    - "-I../../includes"
+    - "-I../parsers"

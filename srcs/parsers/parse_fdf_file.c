@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:19 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 16:41:18 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 19:19:55 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ int	validate_map(const char *path, t_map *map)
 	ft_getline(&line, fd);
 	map->width = ft_word_count(line, ' ');
 	if (!map->width || ft_getline(&line, fd) < 0)
-		return (close(fd), ft_bzero(map, sizeof(*map)), ERROR);
+		return (close(fd), *map = (t_map){}, ERROR);
 	map->height = 1;
 	while (line)
 	{
 		if (ft_word_count(line, ' ') != (size_t)map->width
 			|| ft_getline(&line, fd) < 0)
-			return (close(fd), ft_bzero(map, sizeof(*map)), free(line), ERROR);
+			return (close(fd), *map = (t_map){}, free(line), ERROR);
 		map->height++;
 	}
 	map->total = map->width * map->height;

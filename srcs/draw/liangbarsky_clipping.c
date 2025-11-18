@@ -6,20 +6,20 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 13:55:37 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/14 09:41:39 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 19:30:12 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <math.h>
 
-int	liangbarsky_clipping(t_point *p0, t_point *p1, int width, int height)
+int	liangbarsky_clipping(t_pos *p0, t_pos *p1, int width, int height)
 {
-	const t_point	delta = {p1->x - p0->x, p1->y - p0->y};
-	const int		p[4] = {-delta.x, delta.x, -delta.y, delta.y};
-	const int		q[4] = {p0->x, width - p0->x, p0->y, height - p0->y};
-	double			t[2];
-	int				i;
+	const t_pos	delta = {p1->x - p0->x, p1->y - p0->y};
+	const int	p[4] = {-delta.x, delta.x, -delta.y, delta.y};
+	const int	q[4] = {p0->x, width - p0->x, p0->y, height - p0->y};
+	double		t[2];
+	int			i;
 
 	t[0] = 0.0;
 	t[1] = 1.0;

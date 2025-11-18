@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:03:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/17 10:41:47 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 19:40:31 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <math.h>
 
 static inline
-void	raymarching(t_image *img, t_map *map, t_camera *cam, t_ray *ray)
+void	raymarching(t_img *img, t_map *map, t_cam *cam, t_ray *ray)
 {
 	const int		width = map->width;
 	size_t			offset;
@@ -44,12 +44,12 @@ void	raymarching(t_image *img, t_map *map, t_camera *cam, t_ray *ray)
 }
 
 static inline
-void	put_background(t_image *img, t_ray *ray, t_camera *cam, t_pic *sky)
+void	put_background(t_img *img, t_ray *ray, t_cam *cam, t_pic *sky)
 {
 	const int	horizon = cam->horizon;
 	const int	max_height = ray->max_height;
-	t_dpoint2	angle;
-	t_point		texture;
+	t_dpos2		angle;
+	t_pos		texture;
 	int			i;
 
 	angle.x = atan2(ray->dy, ray->dx);
@@ -64,7 +64,7 @@ void	put_background(t_image *img, t_ray *ray, t_camera *cam, t_pic *sky)
 }
 
 static inline
-void	fill_black_column(t_image *img, int x, int y)
+void	fill_black_column(t_img *img, int x, int y)
 {
 	const int		linelen = img->linelen / sizeof(int);
 	unsigned int	*ptr;
@@ -77,13 +77,13 @@ void	fill_black_column(t_image *img, int x, int y)
 	}
 }
 
-void	render_voxelspace(t_image *img, t_map *map, t_camera *cam, t_pic *sky)
+void	render_voxelspace(t_img *img, t_map *map, t_cam *cam, t_pic *sky)
 {
 	t_ray			ray;
 	const int		has_sky = sky != 0 && sky->data != 0;
 	const t_fov		*fov = &cam->fov;
 	const double	zfar = 1.0 / cam->zfar;
-	const t_dpoint2	fov_delta = {
+	const t_dpos2	fov_delta = {
 		(fov->prx - fov->plx) / img->width,
 		(fov->pry - fov->ply) / img->width,
 	};

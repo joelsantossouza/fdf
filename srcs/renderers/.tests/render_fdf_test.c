@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 18:17:14 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 20:28:29 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@
 
 int	main(int argc, char **argv)
 {
-	int	temp;
 	t_app app;
 
 	(void)argc;
@@ -53,39 +52,11 @@ int	main(int argc, char **argv)
 	app.window = mlx_new_window(app.mlx, WIDTH, HEIGHT, "Bresenham test");
 	if (!app.window)
 		return (2);
-	app.img.data = mlx_new_image(app.mlx, WIDTH, HEIGHT);
-	if (!app.img.data)
-		return (3);
-	app.img.width = WIDTH;
-	app.img.height = HEIGHT;
-	app.img.addr = mlx_get_data_addr(app.img.data, &app.img.bpp, &app.img.linelen, &temp);
-	app.img.bpp >>= 3;
-	app.img.center = (t_point){WIDTH >>1, HEIGHT >>1};
-	app.fdf.scale = 1;
-	app.fdf.center.x = -(app.map.width / 2 * 15);
-	app.fdf.center.y = -(app.map.height / 2 * 15);
-	app.fdf.pos.x = WIDTH / 2;
-	app.fdf.pos.y = HEIGHT / 2;
-	app.fdf.spacing = 15;
-	app.fdf.zoom = 1;
-	double map_diag = sqrt(app.map.width * app.map.width + app.map.height + app.map.height);
-	double screen_diag = sqrt(app.img.width * app.img.width + app.img.height * app.img.height);
-	app.fdf.min_zoom = 0.02;
-	app.fdf.max_zoom = screen_diag / (map_diag  *  0.5);
-	app.fdf.drawline = bresenham_drawline;
-	app.fdf.axis.angle_x = 0;
-	app.fdf.axis.angle_y = 0;
-	app.fdf.axis.angle_z = 0;
-	app.fdf.axis.x.cos = cos(0);
-	app.fdf.axis.x.sin = sin(0);
-	app.fdf.axis.y.cos = cos(0);
-	app.fdf.axis.y.sin = sin(0);
-	app.fdf.axis.z.cos = cos(0);
-	app.fdf.axis.z.sin = sin(0);
-	app.fdf.transformed = malloc(sizeof(t_point) * app.map.total);
-	if (!app.fdf.transformed)
-		return (3);
-	t_camera camera = (t_camera){
+	if (init_img(app.mlx, &app.img, WIDTH, HEIGHT) < 0)
+		return (1);
+	if (init_fdf(&app.fdf, WIDTH >> 1, HEIGHT >> 1, &app.map) < 0)
+		return (1);
+	t_cam camera = (t_cam){
 		.pos.x = app.map.width / 2.0,
 		.pos.y = app.map.height / 5.0,
 		.pos.z = 300,

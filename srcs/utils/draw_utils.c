@@ -6,13 +6,13 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 18:23:01 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 18:30:55 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 19:29:29 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	putpixel(t_image *img, int x, int y, unsigned int color)
+void	putpixel(t_img *img, int x, int y, unsigned int color)
 {
 	*(unsigned int *)(img->bpp * x + img->linelen * y + img->addr) = color;
 }

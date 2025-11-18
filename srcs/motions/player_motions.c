@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 13:56:54 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 00:11:42 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 19:47:16 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	player_walk(t_player *player, double sine, double cosine, t_map *map)
 {
 	const int				width = map->width;
 	const t_player_stats	*stats = player->stats;
-	t_dpoint3				*pos;
-	t_dpoint3				next;
+	t_dpos3					*pos;
+	t_dpos3					next;
 	double					height_difference;
 
 	pos = player->pos;
@@ -40,8 +40,8 @@ void	player_walk(t_player *player, double sine, double cosine, t_map *map)
 
 void	player_fly(t_player *player, double sine, double cosine, t_map *map)
 {
-	t_dpoint3	*pos;
-	t_dpoint2	next;
+	t_dpos3	*pos;
+	t_dpos2	next;
 	
 	pos = player->pos;
 	next.x = pos->x + cosine * player->speed;
