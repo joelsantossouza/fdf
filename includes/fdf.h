@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 12:28:49 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 15:53:35 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ typedef struct s_fdf
 }	t_fdf;
 
 // UTILS
-void		free_map(t_map *map, void (*free_struct)(void *));
+void		free_map(t_map **map, void (*free_struct)(void *));
+void		free_pic(t_pic **pic, void (*free_struct)(void *));
 void		putpixel(t_image *img, int x, int y, unsigned color);
 unsigned	brightness(unsigned color, double scale);
 int			is_double_click(int keys);

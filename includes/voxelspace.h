@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 12:26:48 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 15:04:10 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ typedef struct s_player
 
 typedef struct s_vox
 {
-	t_player	*player;
-	t_pic		*sky;
+	t_player	player;
+	t_pic		sky;
 	double		gravity;
 	int			min_horizon;
 	int			max_horizon;
@@ -99,10 +99,10 @@ typedef struct s_app
 {
 	void	*mlx;
 	void	*window;
-	t_image	*img;
-	t_map	*map;
-	t_fdf	*fdf;
-	t_vox	*vox;
+	t_image	img;
+	t_map	map;
+	t_fdf	fdf;
+	t_vox	vox;
 	double	fps;
 	int		keyboard;
 }	t_app;

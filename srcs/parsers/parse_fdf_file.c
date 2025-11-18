@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:19 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/15 13:32:14 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 15:47:22 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,7 @@ int	validate_map(const char *path, t_map *map)
 	map->altitude = malloc(sizeof(*map->altitude) * map->total);
 	map->color = malloc(sizeof(*map->color) * map->total);
 	if (!map->altitude || !map->color)
-	{
-		free_map(map, NULL);
-		return (close(fd), ft_bzero(map, sizeof(*map)), ERROR);
-	}
+		return (close(fd), free_map(map, NULL), ERROR);
 	return (close(fd), SUCCESS);
 }
 
