@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:36:21 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/17 14:27:14 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 12:32:05 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,14 @@ int	press_key(int keycode, int *keyboard)
 		*keyboard |= KEY_U;
 	else if (keycode == 105)
 		*keyboard |= KEY_I;
-	else if (keycode == 65289)
-		*keyboard ^= TAB;
 	else if (keycode == 113)
 		*keyboard |= KEY_Q;
 	else if (keycode == 101)
 		*keyboard |= KEY_E;
+	else if (keycode == 65289)
+		*keyboard ^= TAB;
+	else if (keycode == 102)
+		*keyboard ^= KEY_F;
 	return (0);
 }
 
@@ -88,25 +90,28 @@ int	release_key(int keycode, int *keyboard)
 	return (0);
 }
 
-void	global_events(void *mlx, t_fdf *fdf, t_vox *vox, int keyboard)
+void	global_events(t_app *app)
 {
+	const int	keyboard = app->keyboard;
+	t_fdf		*fdf;
 	t_camera	*cam;
 
-	cam = vox->player->cam;
 	if (keyboard & ESC)
-		mlx_loop_end(mlx);
+		mlx_loop_end(app->mlx);
+	fdf = app->fdf;
 	if (keyboard & KEY_E)
-	{
 		fdf->scale++;
-		cam->scale = fdf->scale * 30;
-		if (cam->scale < 0)
-			cam->scale = 0;
-	}
 	if (keyboard & KEY_Q)
-	{
 		fdf->scale--;
+	if (keyboard & (KEY_E | KEY_Q))
+	{
+		cam = app->vox->player->cam;
 		cam->scale = fdf->scale * 30;
 		if (cam->scale < 0)
 			cam->scale = 0;
 	}
+	if (keyboard & KEY_F)
+		app->fps = get_fps();
+	else
+		app->fps = 1;
 }

@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 00:03:54 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 12:28:49 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,6 @@ void	render_fdf(t_image *img, t_fdf *fdf, t_map *map);
 // EVENTS
 int	press_key(int keycode, int *keyboard);
 int	release_key(int keycode, int *keyboard);
-void	fdf_events(t_fdf *fdf, int keyboard);
+void	fdf_events(t_fdf *fdf, double fps, int keyboard);
 
 #endif

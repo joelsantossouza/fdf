@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/17 17:53:43 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 12:30:46 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,20 @@ int     app_loop_test(t_app *app)
         t_fdf           *fdf;
 
         map = app->map;
-        global_events(app->mlx, app->fdf, app->vox, keyboard);
+        global_events(app);
         if (keyboard & TAB)
         {
                 player = app->vox->player;
                 vox = app->vox;
-                player_events(player, map, keyboard);
-                player_physics(player, vox->gravity);
+                player_events(player, map, app->fps, keyboard);
+                player_physics(player, vox->gravity * app->fps);
                 render_voxelspace(app->img, map, player->cam, vox->sky);
         }
         else
         {
                 fdf = app->fdf;
-                fdf_events(fdf, keyboard);
+                fdf_events(fdf, app->fps, keyboard);
                 render_fdf(app->img, fdf, map);
-				printf("min: %f\tcurr: %f\tmax: %f\n", fdf->min_zoom, fdf->zoom, fdf->max_zoom);
         }
         mlx_put_image_to_window(app->mlx, app->window, app->img->data, 0, 0);
         return (0);
