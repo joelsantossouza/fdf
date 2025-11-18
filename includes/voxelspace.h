@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 19:41:49 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 21:32:45 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ typedef struct s_fov
 typedef struct s_cam
 {
 	t_dpos3	pos;
-	t_fov		fov;
-	int			horizon;
-	int			zfar;
-	int			scale;
+	t_fov	fov;
+	int		horizon;
+	int		zfar;
+	int		scale;
 }	t_cam;
 
 typedef void (*t_moveplayer)();

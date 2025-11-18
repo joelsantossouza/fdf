@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 20:27:13 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 23:13:24 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ double		get_fps(void);
 
 // INITS
 int			init_img(void *mlx, t_img *img, int width, int height);
-int			init_fdf(t_fdf *fdf, int x, int y, t_map *map);
+int			init_fdf(t_fdf *fdf, t_pos pos, t_map *map, t_img *img);
 
 // FREES
 void		free_map(t_map *map, void (*free_struct)(void *));

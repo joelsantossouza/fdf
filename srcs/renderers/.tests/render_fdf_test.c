@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 20:28:29 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 23:14:28 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	main(int argc, char **argv)
 		return (2);
 	if (init_img(app.mlx, &app.img, WIDTH, HEIGHT) < 0)
 		return (1);
-	if (init_fdf(&app.fdf, WIDTH >> 1, HEIGHT >> 1, &app.map) < 0)
+	if (init_fdf(&app.fdf, (t_pos){WIDTH >> 1, HEIGHT >> 1}, &app.map, &app.img) < 0)
 		return (1);
 	t_cam camera = (t_cam){
 		.pos.x = app.map.width / 2.0,
