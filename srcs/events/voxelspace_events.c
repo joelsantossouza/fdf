@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 12:58:18 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 12:26:12 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 17:29:41 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,17 @@
 
 int	player_mouse(int x, int y, t_app *app)
 {
-	const t_vox		*vox = app->vox;
-	const t_point	center = app->img->center;
+	const t_point	center = app->img.center;
 	const t_point	delta = {x - center.x, y - center.y};
+	t_vox			*vox;
 	t_camera		*cam;
 	int				nxt_horizon;
 
 	if (ft_abs(delta.x) < 3 && ft_abs(delta.y) < 3)
 		return (0);
-	rotate_player(vox->player, delta.x);
-	cam = vox->player->cam;
+	vox = &app->vox;
+	rotate_player(&vox->player, delta.x);
+	cam = vox->player.cam;
 	nxt_horizon = cam->horizon - delta.y;
 	if (nxt_horizon >= vox->min_horizon && nxt_horizon <= vox->max_horizon)
 		cam->horizon = nxt_horizon;

@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:36:21 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 12:32:05 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 17:19:14 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,14 @@ void	global_events(t_app *app)
 
 	if (keyboard & ESC)
 		mlx_loop_end(app->mlx);
-	fdf = app->fdf;
+	fdf = &app->fdf;
 	if (keyboard & KEY_E)
 		fdf->scale++;
 	if (keyboard & KEY_Q)
 		fdf->scale--;
 	if (keyboard & (KEY_E | KEY_Q))
 	{
-		cam = app->vox->player->cam;
+		cam = app->vox.player.cam;
 		cam->scale = fdf->scale * 30;
 		if (cam->scale < 0)
 			cam->scale = 0;
