@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/17 17:36:32 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/18 00:03:54 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void		free_map(t_map *map, void (*free_struct)(void *));
 void		putpixel(t_image *img, int x, int y, unsigned color);
 unsigned	brightness(unsigned color, double scale);
 int			is_double_click(int keys);
+double		get_fps(void);
 
 // PARSING
 int			parse_fdf_file(const char *path, t_map *map);
