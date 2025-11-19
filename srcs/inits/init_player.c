@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 10:17:47 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 12:50:47 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 17:57:30 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	init_player(t_player *player, double height, double walk_speed, t_map *map)
 	player->cam.pos = (t_dpos3){center.x, center.y, player->floor + height * 42};
 	player->cam.horizon = 0;
 	player->cam.zfar = ZFAR;
-	player->cam.scale = 300;
+	player->cam.scale = 60;
 	player->pos = &player->cam.pos;
 	player->stats.height = height;
 	player->stats.walk_speed = walk_speed;
