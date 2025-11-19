@@ -6,12 +6,14 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 11:48:00 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 12:16:45 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 12:54:58 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "voxelspace.h"
 #include "parsers.h"
+#include "inits.h"
+
 #include "mlx.h"
 
 int	init_app(t_app *app, char **argv, int width, int height)
@@ -27,5 +29,12 @@ int	init_app(t_app *app, char **argv, int width, int height)
 		return (free_app(app, NULL), ERROR);
 	if (!(parse_arguments(argv, &app->map, &app->vox.sky, 0) & MAP_DONE))
 	 	return (free_app(app, NULL), ERROR);
-	if (init_fdf(&app.fdf, (t_pos){width >> 1, height >> 1}, &
+	if (init_fdf(&app->fdf, (t_pos){width >> 1, height >> 1}, &app->map, &app->img) < 0)
+		return (free_app(app, NULL), ERROR);
+	init_player(&app->vox.player, PLAYER_HEIGHT, WALK_SPEED, &app->map);
+	app->vox.gravity = GRAVITY;
+	app->vox.min_horizon = -height + (height / 1.5);
+	app->vox.max_horizon = height + (height >> 1);
+	app->keyboard = 0;
+	return (SUCCESS);
 }

@@ -6,18 +6,20 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 11:36:29 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 11:51:05 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 13:25:12 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "voxelspace.h"
+#include "mlx.h"
 
 int	main(int argc, char **argv)
 {
 	t_app	app;
 
-	if (init_app(&app) < 0)
+	(void) argc;
+	if (init_app(&app, argv, SCREEN_WIDTH, SCREEN_HEIGHT) < 0)
 		return (1);
 	mlx_mouse_hide(app.mlx, app.window);
 	mlx_hook(app.window, 2, 1L << 0, press_key, &app.keyboard);

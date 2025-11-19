@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 12:07:26 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 12:58:12 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define FDF_H
 
 # include <stddef.h>
+
+# define SCREEN_WIDTH	1920
+# define SCREEN_HEIGHT	1080
 
 # define WHITE	0xFFFFFFFF
 # define BLACK	0x00000000
