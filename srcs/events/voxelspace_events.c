@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 12:58:18 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 11:21:00 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 20:14:31 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ int	player_mouse(int x, int y, t_app *app)
 }
 
 static inline
-void	handle_space_event(int keyboard, t_player *player)
+void	handle_space_event(int keyboard, t_player *player, t_map *map)
 {
 	static int	was_released;
+	t_dpos3		*pos;
 
 	if (keyboard & SPACE)
 	{
@@ -47,7 +48,11 @@ void	handle_space_event(int keyboard, t_player *player)
 			if (player->move == player_walk)
 				player->move = player_fly;
 			else
+			{
 				player->move = player_walk;
+				pos = player->pos;
+				player->floor = map->altitude[map->width * (int)pos->y + (int)pos->x] + player->stats.height;
+			}
 		}
 		else if (player->move == player_fly || player->floor == player->pos->z)
 			player->zforce = player->stats.jump_force;
@@ -64,7 +69,7 @@ void	player_events(t_player *player, t_map *map, int keyboard)
 	const t_moveplayer		move = player->move;
 	const t_player_stats	*stats = &player->stats;
 
-	handle_space_event(keyboard, player);
+	handle_space_event(keyboard, player, map);
 	if (keyboard & KEY_W)
 		move(player, axis_y.sin, axis_y.cos, map);
 	if (keyboard & KEY_S)

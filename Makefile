@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/30 15:41:12 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/19 15:10:48 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/19 20:24:36 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ LIBS = $(addprefix $(LIBS_DIR)/, $(LIBFT) $(MINILIBX))
 
 HEADERS = $(addprefix $(HEADERS_DIR)/, fdf.h voxelspace.h stb_image.h) $(INITS_DIR)/inits.h \
 		  $(EVENTS_DIR)/events.h $(PARSERS_DIR)/parsers.h
-LINKING = -lm -lXext -lX11
+LINKING = -lX11 -lXext -lm
 INCLUDES= $(addprefix -I, $(dir $(LIBS)) $(HEADERS_DIR) $(EVENTS_DIR) $(PARSERS_DIR))
 OBJS = $(UTILS:.c=.o) $(INITS:.c=.o) $(FREE:.c=.o) $(PARSERS:.c=.o) $(DRAW:.c=.o) \
 	$(MOTIONS:.c=.o) $(PHYSICS:.c=.o) $(EVENTS:.c=.o) $(RENDERERS:.c=.o) $(LOOPS:.c=.o) \
