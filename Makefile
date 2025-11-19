@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/30 15:41:12 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/19 13:24:54 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/19 15:10:48 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,8 @@ LIBFT = libft/libft.a
 MINILIBX = minilibx-linux/libmlx_Linux.a
 LIBS = $(addprefix $(LIBS_DIR)/, $(LIBFT) $(MINILIBX))
 
-HEADERS = $(addprefix $(HEADERS_DIR)/, fdf.h voxelspace.h stb_image.h)
+HEADERS = $(addprefix $(HEADERS_DIR)/, fdf.h voxelspace.h stb_image.h) $(INITS_DIR)/inits.h \
+		  $(EVENTS_DIR)/events.h $(PARSERS_DIR)/parsers.h
 LINKING = -lm -lXext -lX11
 INCLUDES= $(addprefix -I, $(dir $(LIBS)) $(HEADERS_DIR) $(EVENTS_DIR) $(PARSERS_DIR))
 OBJS = $(UTILS:.c=.o) $(INITS:.c=.o) $(FREE:.c=.o) $(PARSERS:.c=.o) $(DRAW:.c=.o) \
