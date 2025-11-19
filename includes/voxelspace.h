@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 21:32:45 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 08:51:43 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ typedef struct s_app
 	t_map	map;
 	t_fdf	fdf;
 	t_vox	vox;
-	double	fps;
 	int		keyboard;
 }	t_app;
 
@@ -123,9 +122,9 @@ void	rotate_player(t_player *player, double rotation);
 void	render_voxelspace(t_img *img, t_map *map, t_cam *cam, t_pic *sky);
 
 // EVENTS
-void	global_events(t_app *app);
+void	global_events(void *mlx, t_fdf *fdf, t_vox *vox, int keyboard);
 int		player_mouse(int x, int y, t_app *app);
-void	player_events(t_player *player, t_map *map, double fps, int keyboard);
+void	player_events(t_player *player, t_map *map, int keyboard);
 
 // LOOPS
 int	app_loop(t_app *app);

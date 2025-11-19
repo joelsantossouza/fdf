@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 13:21:15 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 12:20:34 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 08:47:33 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 # define TAB	16384
 # define KEY_Q	32768
 # define KEY_E	65536
-# define KEY_F	131072
 
 # define MAX_DCLICK_DELAY	250
 

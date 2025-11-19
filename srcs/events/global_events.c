@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:36:21 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 19:47:49 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 08:51:19 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	press_key(int keycode, int *keyboard)
 		*keyboard |= KEY_E;
 	else if (keycode == 65289)
 		*keyboard ^= TAB;
-	else if (keycode == 102)
-		*keyboard ^= KEY_F;
+	//else if (keycode == 102)
+	//	*keyboard ^= KEY_F;
 	return (0);
 }
 
@@ -90,28 +90,21 @@ int	release_key(int keycode, int *keyboard)
 	return (0);
 }
 
-void	global_events(t_app *app)
+void	global_events(void *mlx, t_fdf *fdf, t_vox *vox, int keyboard)
 {
-	const int	keyboard = app->keyboard;
-	t_fdf		*fdf;
 	t_cam		*cam;
 
 	if (keyboard & ESC)
-		mlx_loop_end(app->mlx);
-	fdf = &app->fdf;
+		mlx_loop_end(mlx);
 	if (keyboard & KEY_E)
 		fdf->scale++;
 	if (keyboard & KEY_Q)
 		fdf->scale--;
 	if (keyboard & (KEY_E | KEY_Q))
 	{
-		cam = app->vox.player.cam;
+		cam = vox->player.cam;
 		cam->scale = fdf->scale * 30;
 		if (cam->scale < 0)
 			cam->scale = 0;
 	}
-	if (keyboard & KEY_F)
-		app->fps = get_fps();
-	else
-		app->fps = 1;
 }

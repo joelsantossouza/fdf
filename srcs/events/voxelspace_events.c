@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 12:58:18 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 19:48:17 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 08:49:55 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	handle_space_event(int keyboard, t_player *player)
 		was_released = 1;
 }
 
-void	player_events(t_player *player, t_map *map, double fps, int keyboard)
+void	player_events(t_player *player, t_map *map, int keyboard)
 {
 	const t_trig			axis_y = player->axis_y;
 	const t_trig			axis_x = player->axis_x;
@@ -66,13 +66,13 @@ void	player_events(t_player *player, t_map *map, double fps, int keyboard)
 
 	handle_space_event(keyboard, player);
 	if (keyboard & KEY_W)
-		move(player, axis_y.sin * fps, axis_y.cos * fps, map);
+		move(player, axis_y.sin, axis_y.cos, map);
 	if (keyboard & KEY_S)
-		move(player, -axis_y.sin * fps, -axis_y.cos * fps, map);
+		move(player, -axis_y.sin, -axis_y.cos, map);
 	if (keyboard & KEY_D)
-		move(player, axis_x.sin * fps, axis_x.cos * fps, map);
+		move(player, axis_x.sin, axis_x.cos, map);
 	if (keyboard & KEY_A)
-		move(player, -axis_x.sin * fps, -axis_x.cos * fps, map);
+		move(player, -axis_x.sin, -axis_x.cos, map);
 	if (keyboard & CTRL)
 		player->zforce -= stats->dive_force;
 	if (keyboard & SHIFT)
