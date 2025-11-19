@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 10:10:16 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 12:07:26 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int			init_fdf(t_fdf *fdf, t_pos pos, t_map *map, t_img *img);
 // FREES
 void		free_map(t_map *map, void (*free_struct)(void *));
 void		free_pic(t_pic *pic, void (*free_struct)(void *));
-void		free_img(t_img *img, void (*free_struct)(void *));
+void		free_img(void *mlx, t_img *img, void (*free_struct)(void *));
 
 // PARSING
 int			parse_fdf_file(const char *path, t_map *map);

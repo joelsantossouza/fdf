@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 10:17:47 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 10:49:44 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 11:33:04 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	init_player(t_player *player, double height, double walk_speed, t_map *map)
 	player->stats.walk_speed = walk_speed;
 	player->stats.run_speed = walk_speed * 2;
 	player->stats.climb_max = height;
-	player->stats.jump_force = height * 2;
-	player->stats.dive_force = height * 2 - height * 2 / 5;
+	player->stats.jump_force = JUMP_FORCE;
+	player->stats.dive_force = JUMP_FORCE - JUMP_FORCE / 5;
 	player->stats.sensibility = SENSIBILITY;
 	player->move = player_fly;
 	player->angle = 0;

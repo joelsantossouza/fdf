@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 10:22:43 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 11:02:23 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 11:33:55 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # define SPACING		15
 
+# define GRAVITY		0.096
 # define ZFAR			1000
+# define JUMP_FORCE		10
 # define SENSIBILITY	0.001
 
 #endif

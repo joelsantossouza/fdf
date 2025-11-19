@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:48:50 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 19:44:55 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 12:08:04 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	init_img(void *mlx, t_img *img, int width, int height)
 		return (*img = (t_img){}, ERROR);
 	img->addr = mlx_get_data_addr(img->data, &img->bpp, &img->linelen, &tmp);
 	if (!img->addr)
-		return (free_img(img, NULL), ERROR);
+		return (free_img(mlx, img, NULL), ERROR);
 	img->bpp >>= 3;
 	img->width = width;
 	img->height = height;

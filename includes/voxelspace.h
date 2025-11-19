@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 10:57:17 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 12:14:16 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,9 @@ int		parse_voxel_file(const char *color_file, const char *height_file, t_map *ma
 
 // INITS
 int	init_player(t_player *player, double height, double walk_speed, t_map *map);
+
+// FREES
+void	free_app(t_app *app, void (*free_struct)(void *));
 
 // PHYSICS
 void	gravity(double *height, double *zforce, int floor, double gravity);
