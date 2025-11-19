@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 12:58:18 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 11:00:37 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 11:17:18 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	player_mouse(int x, int y, t_app *app)
 	t_cam			*cam;
 	int				nxt_horizon;
 
-	if (ft_abs(delta.x) < 3 && ft_abs(delta.y) < 3)
+	if (ft_abs(delta.x) < 2 && ft_abs(delta.y) < 2)
 		return (0);
 	vox = &app->vox;
 	rotate_player(&vox->player, delta.x);
