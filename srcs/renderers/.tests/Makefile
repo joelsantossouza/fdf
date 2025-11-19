@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/02 01:11:47 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/18 20:30:11 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/19 10:02:11 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS = ../../draw/bresenham_drawline.c ../../utils/draw_utils.c ../../draw/xiaol
 ../render_voxelspace.c ../../parsers/parse_voxel_file.c ../../physics/gravity.c ../../motions/player_motions.c \
 ../../events/global_events.c ../../parsers/parse_picture.c ../../loops/app_loop.c ../../events/voxelspace_events.c \
 ../../utils/events_utils.c ../../events/fdf_events.c ../../physics/player_physics.c ../../free/free_pic.c \
-../../utils/render_utils.c ../../parsers/parse_arguments.c ../../inits/init_img.c ../../free/free_img.c ../../inits/init_fdf.c
+../../parsers/parse_arguments.c ../../inits/init_img.c ../../free/free_img.c ../../inits/init_fdf.c
 
 all: $(NAME)
 
