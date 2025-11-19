@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:36:21 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 08:51:19 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 10:53:43 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	global_events(void *mlx, t_fdf *fdf, t_vox *vox, int keyboard)
 		fdf->scale--;
 	if (keyboard & (KEY_E | KEY_Q))
 	{
-		cam = vox->player.cam;
+		cam = &vox->player.cam;
 		cam->scale = fdf->scale * 30;
 		if (cam->scale < 0)
 			cam->scale = 0;

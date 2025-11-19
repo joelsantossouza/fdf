@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 22:40:13 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 23:14:28 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 10:51:38 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,37 +56,12 @@ int	main(int argc, char **argv)
 		return (1);
 	if (init_fdf(&app.fdf, (t_pos){WIDTH >> 1, HEIGHT >> 1}, &app.map, &app.img) < 0)
 		return (1);
-	t_cam camera = (t_cam){
-		.pos.x = app.map.width / 2.0,
-		.pos.y = app.map.height / 5.0,
-		.pos.z = 300,
-		.horizon = app.img.height >> 1,
-		.zfar = 1000,
-		.scale = 200,
-	};
-	t_player_stats	stats = {
-		.climb_max = 10,
-		.sensibility = 0.001,
-		.height = 10,
-		.jump_force = 5,
-		.dive_force = 5,
-		.speed_max = 3,
-		.run_speed_max = 7,
-	};
-	app.vox.player = (t_player){
-		.pos = &camera.pos,
-		.cam = &camera,
-		.speed = 1,
-		.move = player_walk,
-		.stats = &stats,
-	};
-	t_player player = app.vox.player;
-	app.vox.player.floor = app.map.altitude[app.map.width * (int)player.pos->y + (int)player.pos->x] + player.stats->height;
+	if (init_player(&app.vox.player, 10, 2, &app.map) < 0)
+		return (1);
 	app.vox.gravity = 0.0096;
 	app.vox.min_horizon = -HEIGHT + (HEIGHT / 1.5);
 	app.vox.max_horizon = HEIGHT + (HEIGHT >>1);
 	app.keyboard = 0;
-	rotate_player(&player, 0);
 	mlx_mouse_hide(app.mlx, app.window);
 	mlx_hook(app.window, 2, 1L<<0, press_key, &app.keyboard);
 	mlx_hook(app.window, 3, 1L<<1, release_key, &app.keyboard);

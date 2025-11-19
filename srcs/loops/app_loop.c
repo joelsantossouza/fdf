@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 21:56:36 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 08:52:39 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 10:54:01 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	app_loop(t_app *app)
 		vox = &app->vox;
 		player_events(player, map, keyboard);
 		player_physics(player, vox->gravity);
-		render_voxelspace(&app->img, map, player->cam, &vox->sky);
+		render_voxelspace(&app->img, map, &player->cam, &vox->sky);
 	}
 	else
 	{

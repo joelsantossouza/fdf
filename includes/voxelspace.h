@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 08:51:43 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 10:57:17 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ typedef void (*t_moveplayer)();
 typedef struct s_player_stats
 {
 	double	height;
-	double	speed_max;
-	double	run_speed_max;
+	double	walk_speed;
+	double	run_speed;
 	double	climb_max;
 	double	jump_force;
 	double	dive_force;
@@ -75,7 +75,7 @@ typedef struct s_player_stats
 typedef struct s_player
 {
 	t_dpos3			*pos;
-	t_cam			*cam;
+	t_cam			cam;
 	t_trig			axis_y;
 	t_trig			axis_x;
 	double			angle;
@@ -83,7 +83,7 @@ typedef struct s_player
 	int				floor;
 	double			speed;
 	double			zforce;
-	t_player_stats	*stats;
+	t_player_stats	stats;
 }	t_player;
 
 typedef struct s_vox
@@ -108,6 +108,9 @@ typedef struct s_app
 
 // PARSERS
 int		parse_voxel_file(const char *color_file, const char *height_file, t_map *map);
+
+// INITS
+int	init_player(t_player *player, double height, double walk_speed, t_map *map);
 
 // PHYSICS
 void	gravity(double *height, double *zforce, int floor, double gravity);

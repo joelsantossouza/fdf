@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 08:46:47 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 10:10:16 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ typedef struct s_fdf
 void		putpixel(t_img *img, int x, int y, unsigned int color);
 unsigned	brightness(unsigned color, double scale);
 int			is_double_click(int keys);
-double		get_fps(void);
 
 // INITS
 int			init_img(void *mlx, t_img *img, int width, int height);
