@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 12:58:18 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 10:55:41 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 11:00:37 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	player_events(t_player *player, t_map *map, int keyboard)
 	if (keyboard & CTRL)
 		player->zforce -= stats->dive_force;
 	if (keyboard & SHIFT)
-		player->speed = stats->walk_speed;
-	else
 		player->speed = stats->run_speed;
+	else
+		player->speed = stats->walk_speed;
 }
