@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/30 15:41:12 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/19 20:24:36 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/19 23:40:10 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ UTILS_DIR = $(SRCS_DIR)/utils
 UTILS = $(addprefix $(UTILS_DIR)/, events_utils.c draw_utils.c)
 
 INITS_DIR = $(SRCS_DIR)/inits
-INITS = $(addprefix $(INITS_DIR)/, init_app.c init_fdf.c init_img.c init_player.c)
+INITS = $(addprefix $(INITS_DIR)/, init_app.c init_fdf.c init_img.c init_player.c \
+		init_axis.c)
 
 FREE_DIR = $(SRCS_DIR)/free
 FREE = $(addprefix $(FREE_DIR)/, free_app.c free_img.c free_map.c free_pic.c)

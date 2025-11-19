@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 11:11:48 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 08:46:32 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 23:38:18 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,6 @@ void	fdf_events(t_fdf *fdf, int keyboard)
 		control_axis_z(&fdf->axis, -0.1);
 	if (keyboard & KEY_I)
 		control_axis_z(&fdf->axis, +0.1);
+	if (keyboard & KEY_O)
+		init_axis(&fdf->axis, 0, 0, 0);
 }
