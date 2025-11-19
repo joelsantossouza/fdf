@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_motions.c                                   :+:      :+:    :+:   */
+/*   voxelspace_motions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 13:56:54 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 10:53:00 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 16:02:57 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,19 @@ void	player_walk(t_player *player, double sine, double cosine, t_map *map)
 
 void	player_fly(t_player *player, double sine, double cosine, t_map *map)
 {
-	t_dpos3	*pos;
-	t_dpos2	next;
+	const int		width = map->width;
+	const double	speed = player->speed;
+	t_dpos3			*pos;
+	t_dpos2			next;
 	
 	pos = player->pos;
-	next.x = pos->x + cosine * player->speed;
-	next.y = pos->y + sine * player->speed;
-	if (next.x >= 0 && next.x < map->width && next.y >= 0 && next.y < map->height)
+	next.x = pos->x + cosine * speed;
+	next.y = pos->y + sine * speed;
+	if (next.x >= 0 && next.x < width && next.y >= 0 && next.y < map->height)
 	{
 		pos->x = next.x;
 		pos->y = next.y;
+		player->floor = map->altitude[width * (int)next.y + (int)next.x] + player->stats.height;
 	}
 }
 
