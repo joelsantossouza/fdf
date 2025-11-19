@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 20:00:01 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 16:30:55 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 16:44:56 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ int	init_fdf(t_fdf *fdf, t_pos pos, t_map *map, t_img *img)
 	fdf->center.y = -((map->height >> 1) * SPACING);
 	fdf->pos = pos;
 	// FIX ISOMETRIC PROJECTION AND ZOOM
-	axis->angle_x = PI / 8.0;
-	axis->x = (t_trig){PI / 8.0, PI / 8.0};
-	axis->angle_y = PI / -6.0;
-	axis->y = (t_trig){PI / -6.0, PI / -6.0};
-	axis->angle_z = PI / 5.0;
-	axis->z = (t_trig){PI / 5.0, PI / 5.0};
+	axis->angle_x = 0.392699081;
+	axis->x = (t_trig){0.38268343, 0.92387953};
+	axis->angle_y = -0.523598775;
+	axis->y = (t_trig){-0.5, 0.8660254};
+	axis->angle_z = 0.628318530;
+	axis->z = (t_trig){0.58778525, 0.80901699};
 	fdf->drawline = bresenham_drawline;
 	fdf->zoom = 1;
 	fdf->max_zoom = hypotenuse.y / (hypotenuse.x * 0.5);
