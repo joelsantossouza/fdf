@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 11:36:29 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 13:40:21 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:45:47 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(int argc, char **argv)
 	mlx_hook(app.window, 2, 1L << 0, press_key, &app.keyboard);
 	mlx_hook(app.window, 3, 1L << 1, release_key, &app.keyboard);
 	mlx_hook(app.window, 6, 1L << 6, player_mouse, &app);
+	mlx_hook(app.window, 17, 0, mlx_loop_end, app.mlx);
 	mlx_loop_hook(app.mlx, app_loop, &app);
 	mlx_loop(app.mlx);
 	return (free_app(&app, NULL), 0);
