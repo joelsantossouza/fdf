@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 13:26:46 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 15:39:29 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 11:04:10 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # define RGB		3
 # define GRAYSCALE	1
 
-# define MAP_DONE	1
-# define SKY_DONE	2
+# define MAP		1
+# define SKY		2
 # define DONE		3
 
 #endif

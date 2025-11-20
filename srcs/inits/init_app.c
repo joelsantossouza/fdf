@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 11:48:00 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/20 10:24:44 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 11:07:41 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 int	init_app(t_app *app, char **argv, int width, int height)
 {
 	*app = (t_app){};
-	if (!(parse_arguments(argv, &app->map, &app->vox.sky, 0) & MAP_DONE))
+	if (!(parse_arguments(argv, &app->map, &app->vox.sky, 0) & MAP))
 		return (ERROR);
 	app->mlx = mlx_init();
 	if (!app->mlx)
