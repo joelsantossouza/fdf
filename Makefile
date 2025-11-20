@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/30 15:41:12 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/19 23:40:10 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/20 22:40:47 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,8 +52,7 @@ MAIN_DIR = $(SRCS_DIR)
 MAIN = $(addprefix $(MAIN_DIR)/, main.c)
 
 CC = cc
-#FLAGS = -Wall -Wextra -Werror -g -O3 -Ofast -march=native -mtune=native -fopenmp -funroll-loops
-FLAGS= -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror -g -O3 -Ofast -march=native -mtune=native -fopenmp -funroll-loops
 
 LIBFT = libft/libft.a
 MINILIBX = minilibx-linux/libmlx_Linux.a
