@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 11:48:00 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 14:07:04 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 10:24:44 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	init_app(t_app *app, char **argv, int width, int height)
 {
 	*app = (t_app){};
 	if (!(parse_arguments(argv, &app->map, &app->vox.sky, 0) & MAP_DONE))
-	 	return (ERROR);
+		return (ERROR);
 	app->mlx = mlx_init();
 	if (!app->mlx)
 		return (free_app(app, NULL), ERROR);
@@ -29,7 +29,8 @@ int	init_app(t_app *app, char **argv, int width, int height)
 		return (free_app(app, NULL), ERROR);
 	if (init_img(app->mlx, &app->img, width, height) < 0)
 		return (free_app(app, NULL), ERROR);
-	if (init_fdf(&app->fdf, (t_pos){width >> 1, height >> 1}, &app->map, &app->img) < 0)
+	if (init_fdf(&app->fdf, (t_pos){width >> 1, height >> 1},
+		&app->map, &app->img) < 0)
 		return (free_app(app, NULL), ERROR);
 	init_player(&app->vox.player, PLAYER_HEIGHT, WALK_SPEED, &app->map);
 	app->vox.gravity = GRAVITY;

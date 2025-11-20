@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 15:55:51 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 19:17:56 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 10:25:38 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,3 @@ void	free_map(t_map *map, void (*free_struct)(void *))
 	if (free_struct)
 		free_struct(map);
 }
-

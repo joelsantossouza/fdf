@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 15:00:27 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 17:36:36 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 10:52:08 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	map_error(void)
 }
 
 static inline
-void	sky_error()
+void	sky_error(void)
 {
 	write(2, "Fail loading sky\n", 17);
 }

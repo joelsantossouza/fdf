@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 11:11:48 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 23:38:18 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 10:26:17 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	handle_space_event(int keyboard, t_drawline *drawline)
 }
 
 static inline
-void	handle_zoom_event(int keyboard, double *zoom, double max_zoom, double min_zoom)
+void	handle_zoom_event(int keyboard, double *zoom, double max_zoom,
+			double min_zoom)
 {
 	if (keyboard & SHIFT)
 	{
