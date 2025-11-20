@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:03:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/20 14:27:02 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 23:00:22 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	fill_black_column(t_img *img, int x, int y)
 	unsigned int	*ptr;
 
 	ptr = (unsigned int *)(img->bpp * x + img->linelen * y + img->addr);
-	while (y-- > 0)
+	while (y-- >= 0)
 	{
 		*ptr = BLACK;
 		ptr -= linelen;
