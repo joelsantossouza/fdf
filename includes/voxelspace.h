@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 13:03:49 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 21:23:27 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ typedef struct s_cam
 	int		scale;
 }	t_cam;
 
-typedef void (*t_moveplayer)();
-
 typedef struct s_player_stats
 {
 	double	height;
@@ -79,12 +77,14 @@ typedef struct s_player
 	t_trig			axis_y;
 	t_trig			axis_x;
 	double			angle;
-	t_moveplayer	move;
+	void			(*move)(struct s_player*, double, double, t_map*);
 	int				floor;
 	double			speed;
 	double			zforce;
 	t_player_stats	stats;
 }	t_player;
+
+typedef void (*t_moveplayer)(t_player*, double, double, t_map*);
 
 typedef struct s_vox
 {

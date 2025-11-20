@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 20:00:01 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 16:44:56 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 21:28:48 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	init_fdf(t_fdf *fdf, t_pos pos, t_map *map, t_img *img)
 	fdf->center.x = -((map->width >> 1) * SPACING);
 	fdf->center.y = -((map->height >> 1) * SPACING);
 	fdf->pos = pos;
-	// FIX ISOMETRIC PROJECTION AND ZOOM
 	axis->angle_x = 0.392699081;
 	axis->x = (t_trig){0.38268343, 0.92387953};
 	axis->angle_y = -0.523598775;

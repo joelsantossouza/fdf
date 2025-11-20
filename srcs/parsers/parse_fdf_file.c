@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:19 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/20 14:17:56 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 21:29:11 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	validate_map(const char *path, t_map *map)
 	const int	fd = open(path, O_RDONLY);
 	char		*line;
 
-	// CREATE BETTER ERRORS RETURNS FOR EACH CASE
 	if (fd < 0)
 		return (ERROR);
 	line = NULL;
