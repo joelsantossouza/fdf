@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 10:17:47 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/20 10:23:47 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 14:16:41 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	init_player(t_player *player, double height, double walk_speed, t_map *map)
 {
 	const t_pos	mid = {map->width >> 1, map->height >> 1};
 
-	player->floor = map->altitude[map->width * mid.y + mid.x];
+	player->floor = map->high[map->width * mid.y + mid.x];
 	player->cam.pos = (t_dpos3){mid.x, mid.y, player->floor + height * 42};
 	player->cam.horizon = 0;
 	player->cam.zfar = ZFAR;

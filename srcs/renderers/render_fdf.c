@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:11:03 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/20 12:37:16 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 14:21:14 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	transform_fdf_points(t_fdf *fdf, t_map *map)
 		p.x = center.x;
 		while (p.x < end.x)
 		{
-			new = rotate(&fdf->axis, p.x, p.y, map->altitude[i] * fdf->scale);
+			new = rotate(&fdf->axis, p.x, p.y, map->high[i] * fdf->scale);
 			fdf->data[i].x = new.x * fdf->zoom + fdf->pos.x;
 			fdf->data[i++].y = new.y * fdf->zoom + fdf->pos.y;
 			p.x += fdf->spacing;

@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 23:36:57 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 14:15:52 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_map
 	int			height;
 	long		total;
 	unsigned	*color;	
-	int			*altitude;	
+	int			*high;	
 }	t_map;
 
 typedef struct s_pos

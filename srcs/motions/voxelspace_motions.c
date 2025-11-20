@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 13:56:54 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 20:06:12 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 14:20:05 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	player_walk(t_player *player, double sine, double cosine, t_map *map)
 	next.y = pos->y + player->speed * sine;
 	if (next.x < 0 || next.x >= width || next.y < 0 || next.y >= map->height)
 		return ;
-	next.z = map->altitude[width * (int)next.y + (int)next.x] + stats->height;
+	next.z = map->high[width * (int)next.y + (int)next.x] + stats->height;
 	height_difference = next.z - pos->z;
 	if (height_difference <= stats->climb_max)
 	{

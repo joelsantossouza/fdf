@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 12:58:18 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/20 10:27:00 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 14:20:24 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	handle_space_event(int keyboard, t_player *player, t_map *map)
 			{
 				player->move = player_walk;
 				pos = player->pos;
-				player->floor = map->altitude[map->width * (int)pos->y + (int)pos->x] + player->stats.height;
+				player->floor = map->high[map->width * (int)pos->y + (int)pos->x] + player->stats.height;
 			}
 		}
 		else if (player->move == player_fly || player->floor == player->pos->z)

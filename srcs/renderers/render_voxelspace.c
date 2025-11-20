@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:03:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/20 12:40:07 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 14:21:28 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	raymarching(t_img *img, t_map *map, t_cam *cam, t_ray *ray)
 		if (ray->x < 0 || ray->x >= width || ray->y < 0 || ray->y >= map->height)
 			break ;
 		idx = width * (int)ray->y + (int)ray->x;
-		new_height = (cam->pos.z - map->altitude[idx]) * cam->scale / i + cam->horizon;
+		new_height = (cam->pos.z - map->high[idx]) * cam->scale / i + cam->horizon;
 		if (new_height < 0)
 			new_height = 0;
 		if (new_height < ray->max_height)

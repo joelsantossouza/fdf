@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:19 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 19:19:55 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 14:17:56 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int	validate_map(const char *path, t_map *map)
 		map->height++;
 	}
 	map->total = map->width * map->height;
-	map->altitude = malloc(sizeof(*map->altitude) * map->total);
+	map->high = malloc(sizeof(*map->high) * map->total);
 	map->color = malloc(sizeof(*map->color) * map->total);
-	if (!map->altitude || !map->color)
+	if (!map->high || !map->color)
 		return (close(fd), free_map(map, NULL), ERROR);
 	return (close(fd), SUCCESS);
 }
@@ -60,7 +60,7 @@ int	parse_fdf_file(const char *path, t_map *map)
 	ptr = file;
 	while (++i < map->total)
 	{
-		map->altitude[i] = ft_atol_base(ptr, &ptr, DEC_BASE);
+		map->high[i] = ft_atol_base(ptr, &ptr, DEC_BASE);
 		if (*ptr == ',')
 			map->color[i] = ft_atoh(++ptr, &ptr);
 		else

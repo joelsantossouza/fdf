@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 18:04:29 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 19:22:57 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 14:19:12 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,27 @@ int	parse_voxel_file(const char *color_file, const char *height_file,
 		t_map *map)
 {
 	unsigned char	*color;
-	unsigned char	*height;
+	unsigned char	*high;
 	t_pos			size;
 	long			i;
 
 	color = stbi_load(color_file, &size.x, &size.y, 0, RGB);
-	height = stbi_load(height_file, &map->width, &map->height, 0, GRAYSCALE);
-	if (!color || !height || map->width != size.x || map->height != size.y)
+	high = stbi_load(height_file, &map->width, &map->height, 0, GRAYSCALE);
+	if (!color || !high || map->width != size.x || map->height != size.y)
 		return (*map = (t_map){}, stbi_image_free(color),
-			stbi_image_free(height), ERROR);
+			stbi_image_free(high), ERROR);
 	map->total = map->width * map->height;
 	map->color = malloc(sizeof(*map->color) * map->total);
-	map->altitude = malloc(sizeof(*map->altitude) * map->total);
-	if (!map->color || !map->altitude)
+	map->high = malloc(sizeof(*map->high) * map->total);
+	if (!map->color || !map->high)
 		return (free_map(map, NULL), stbi_image_free(color),
-			stbi_image_free(height), ERROR);
+			stbi_image_free(high), ERROR);
 	i = -1;
 	while (++i < map->total)
 	{
 		map->color[i] = color[i * 3] << 16 | color[i * 3 + 1] << 8
 			| color[i * 3 + 2];
-		map->altitude[i] = height[i];
+		map->high[i] = high[i];
 	}
-	return (stbi_image_free(color), stbi_image_free(height), SUCCESS);
+	return (stbi_image_free(color), stbi_image_free(high), SUCCESS);
 }
