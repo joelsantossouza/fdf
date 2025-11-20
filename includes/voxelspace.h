@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:58:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/20 21:23:27 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 22:51:06 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct s_player
 	t_player_stats	stats;
 }	t_player;
 
-typedef void (*t_moveplayer)(t_player*, double, double, t_map*);
+typedef void	(*t_moveplayer)(t_player*, double, double, t_map*);
 
 typedef struct s_vox
 {
@@ -107,11 +107,13 @@ typedef struct s_app
 }	t_app;
 
 // PARSERS
-int		parse_voxel_file(const char *color_file, const char *height_file, t_map *map);
+int		parse_voxel_file(const char *color_file, const char *height_file,
+			t_map *map);
 
 // INITS
-int	init_player(t_player *player, double height, double walk_speed, t_map *map);
-int	init_app(t_app *app, char **argv, int width, int height);
+int		init_player(t_player *player, double height, double walk_speed,
+			t_map *map);
+int		init_app(t_app *app, char **argv, int width, int height);
 
 // FREES
 void	free_app(t_app *app, void (*free_struct)(void *));
@@ -134,6 +136,6 @@ int		player_mouse(int x, int y, t_app *app);
 void	player_events(t_player *player, t_map *map, int keyboard);
 
 // LOOPS
-int	app_loop(t_app *app);
+int		app_loop(t_app *app);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 20:48:52 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/20 14:15:52 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 22:49:25 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_axis
 	t_trig	z;
 }	t_axis;
 
-typedef int (*t_drawline)(t_img *, t_pos, t_pos, unsigned int);
+typedef int	(*t_drawline)(t_img*, t_pos, t_pos, unsigned int);
 
 typedef struct s_fdf
 {
@@ -87,42 +87,46 @@ typedef struct s_fdf
 }	t_fdf;
 
 // UTILS
-void		putpixel(t_img *img, int x, int y, unsigned int color);
-unsigned	brightness(unsigned color, double scale);
-int			is_double_click(int keys);
+void			putpixel(t_img *img, int x, int y, unsigned int color);
+unsigned int	brightness(unsigned int color, double scale);
+int				is_double_click(int keys);
 
 // INITS
-int			init_img(void *mlx, t_img *img, int width, int height);
-int			init_fdf(t_fdf *fdf, t_pos pos, t_map *map, t_img *img);
-int			init_axis(t_axis *axis, double x, double y, double z);
+int				init_img(void *mlx, t_img *img, int width, int height);
+int				init_fdf(t_fdf *fdf, t_pos pos, t_map *map, t_img *img);
+int				init_axis(t_axis *axis, double x, double y, double z);
 
 // FREES
-void		free_map(t_map *map, void (*free_struct)(void *));
-void		free_pic(t_pic *pic, void (*free_struct)(void *));
-void		free_img(void *mlx, t_img *img, void (*free_struct)(void *));
+void			free_map(t_map *map, void (*free_struct)(void *));
+void			free_pic(t_pic *pic, void (*free_struct)(void *));
+void			free_img(void *mlx, t_img *img, void (*free_struct)(void *));
 
 // PARSING
-int			parse_fdf_file(const char *path, t_map *map);
-int			parse_picture(const char *path, unsigned int **pic, int *width, int *height);
-int			parse_arguments(char **argv, t_map *map, t_pic *sky, int flags);
+int				parse_fdf_file(const char *path, t_map *map);
+int				parse_picture(const char *path, unsigned int **pic, int *width,
+					int *height);
+int				parse_arguments(char **argv, t_map *map, t_pic *sky, int flags);
 
 // DRAW
-int	liangbarsky_clipping(t_pos *p0, t_pos *p1, int width, int height);
-int	bresenham_drawline(t_img *img, t_pos p0, t_pos p1, unsigned int color);
-int	xiaolinwu_drawline(t_img *img, t_pos p0, t_pos p1, unsigned int color);
+int				liangbarsky_clipping(t_pos *p0, t_pos *p1, int width,
+					int height);
+int				bresenham_drawline(t_img *img, t_pos p0, t_pos p1,
+					unsigned int color);
+int				xiaolinwu_drawline(t_img *img, t_pos p0, t_pos p1,
+					unsigned int color);
 
 // MOTIONS
-t_pos	rotate(t_axis *a, int x, int y, int z);
-void	control_axis_x(t_axis *a, double change);
-void	control_axis_y(t_axis *a, double change);
-void	control_axis_z(t_axis *a, double change);
+t_pos			rotate(t_axis *a, int x, int y, int z);
+void			control_axis_x(t_axis *a, double change);
+void			control_axis_y(t_axis *a, double change);
+void			control_axis_z(t_axis *a, double change);
 
 // RENDER
-void	render_fdf(t_img *img, t_fdf *fdf, t_map *map);
+void			render_fdf(t_img *img, t_fdf *fdf, t_map *map);
 
 // EVENTS
-int	press_key(int keycode, int *keyboard);
-int	release_key(int keycode, int *keyboard);
-void	fdf_events(t_fdf *fdf, int keyboard);
+int				press_key(int keycode, int *keyboard);
+int				release_key(int keycode, int *keyboard);
+void			fdf_events(t_fdf *fdf, int keyboard);
 
 #endif

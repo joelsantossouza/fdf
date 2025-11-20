@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 15:00:27 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/20 12:11:30 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 22:42:45 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,21 @@
 #include <unistd.h>
 
 static inline
-void	img_map_error(void)
+int	img_map_error(void)
 {
-	write(2, "Fail loading image map\n", 23);
+	return (write(2, "Fail loading image map\n", 23));
 }
 
 static inline
-void	sky_error(void)
+int	sky_error(void)
 {
-	write(2, "Fail loading sky\n", 17);
+	return (write(2, "Fail loading sky\n", 17));
 }
 
 static inline
-void	fdf_map_error(void)
+int	fdf_map_error(void)
 {
-	write(2, "Fail loading fdf map\n", 21);
+	return (write(2, "Fail loading fdf map\n", 21));
 }
 
 int	parse_arguments(char **arr, t_map *map, t_pic *sky, int flags)
