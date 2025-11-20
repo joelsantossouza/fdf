@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:03:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/20 14:21:28 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 14:27:02 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static inline
 void	raymarching(t_img *img, t_map *map, t_cam *cam, t_ray *ray)
 {
-	const int		width = map->width;
+	const int		wid = map->width;
 	size_t			idx;
 	unsigned int	color;
 	int				new_height;
@@ -28,10 +28,11 @@ void	raymarching(t_img *img, t_map *map, t_cam *cam, t_ray *ray)
 	{
 		ray->x += ray->dx;
 		ray->y += ray->dy;
-		if (ray->x < 0 || ray->x >= width || ray->y < 0 || ray->y >= map->height)
+		if (ray->x < 0 || ray->x >= wid || ray->y < 0 || ray->y >= map->height)
 			break ;
-		idx = width * (int)ray->y + (int)ray->x;
-		new_height = (cam->pos.z - map->high[idx]) * cam->scale / i + cam->horizon;
+		idx = wid * (int)ray->y + (int)ray->x;
+		new_height = (cam->pos.z - map->high[idx]) * cam->scale / i
+			+ cam->horizon;
 		if (new_height < 0)
 			new_height = 0;
 		if (new_height < ray->max_height)

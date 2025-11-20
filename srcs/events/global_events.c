@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:36:21 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 23:42:15 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 14:30:32 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ int	press_key(int keycode, int *keyboard)
 		*keyboard |= KEY_O;
 	else if (keycode == 65289)
 		*keyboard ^= TAB;
-	//else if (keycode == 102)
-	//	*keyboard ^= KEY_F;
 	return (0);
 }
 
