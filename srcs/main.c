@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 11:36:29 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 14:45:47 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 12:00:30 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	t_app	app;
 
 	(void) argc;
-	if (init_app(&app, argv, SCREEN_WIDTH, SCREEN_HEIGHT) < 0)
+	if (init_app(&app, argv + 1, SCREEN_WIDTH, SCREEN_HEIGHT) < 0)
 		return (1);
 	//mlx_mouse_hide(app.mlx, app.window);
 	mlx_hook(app.window, 2, 1L << 0, press_key, &app.keyboard);
