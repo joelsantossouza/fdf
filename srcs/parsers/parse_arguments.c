@@ -34,31 +34,31 @@ void	fdf_map_error(void)
 	write(2, "Fail loading fdf map\n", 21);
 }
 
-int	parse_arguments(char **argv, t_map *map, t_pic *sky, int flags)
+int	parse_arguments(char **arr, t_map *map, t_pic *sky, int flags)
 {
 	*map = (t_map){};
 	*sky = (t_pic){};
-	while (*argv && (flags & DONE) != DONE)
+	while (*arr && (flags & DONE) != DONE)
 	{
-		if (!ft_strcmp(*argv, "--images") && *++argv && *++argv && !(flags & MAP))
+		if (!ft_strcmp(*arr, "--images") && *++arr && *++arr && !(flags & MAP))
 		{
-			if (parse_voxel_file(*(argv - 1), *argv, map) < 0)
+			if (parse_voxel_file(*(arr - 1), *arr, map) < 0)
 				return (img_map_error(), free_pic(sky, NULL), 0);
 			flags |= MAP;
 		}
-		else if (!ft_strcmp(*argv, "--sky") && *++argv && !(flags & SKY))
+		else if (!ft_strcmp(*arr, "--sky") && *++arr && !(flags & SKY))
 		{
-			if (parse_picture(*argv, &sky->data, &sky->width, &sky->height) < 0)
+			if (parse_picture(*arr, &sky->data, &sky->width, &sky->height) < 0)
 				return (sky_error(), free_map(map, NULL), 0);
 			flags |= SKY;
 		}
-		else if (*argv && !(flags & MAP))
+		else if (*arr && !(flags & MAP))
 		{
-			if (parse_fdf_file(*argv, map) < 0)
+			if (parse_fdf_file(*arr, map) < 0)
 				return (fdf_map_error(), free_pic(sky, NULL), 0);
 			flags |= MAP;
 		}
-		argv += *argv != 0;
+		arr += *arr != 0;
 	}
 	return (flags);
 }

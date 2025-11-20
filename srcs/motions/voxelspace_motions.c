@@ -43,11 +43,12 @@ void	player_fly(t_player *player, double sine, double cosine, t_map *map)
 	const double	speed = player->speed;
 	t_dpos3			*pos;
 	t_dpos2			next;
-	
+
 	pos = player->pos;
 	next.x = pos->x + cosine * speed;
 	next.y = pos->y + sine * speed;
-	if (next.x >= 0 && next.x < map->width && next.y >= 0 && next.y < map->height)
+	if (next.x >= 0 && next.x < map->width
+		&& next.y >= 0 && next.y < map->height)
 	{
 		pos->x = next.x;
 		pos->y = next.y;

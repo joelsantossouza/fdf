@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:03:28 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 19:40:31 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 12:40:07 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static inline
 void	raymarching(t_img *img, t_map *map, t_cam *cam, t_ray *ray)
 {
 	const int		width = map->width;
-	size_t			offset;
+	size_t			idx;
 	unsigned int	color;
 	int				new_height;
 	int				i;
@@ -30,13 +30,13 @@ void	raymarching(t_img *img, t_map *map, t_cam *cam, t_ray *ray)
 		ray->y += ray->dy;
 		if (ray->x < 0 || ray->x >= width || ray->y < 0 || ray->y >= map->height)
 			break ;
-		offset = width * (int)ray->y + (int)ray->x;
-		new_height = (cam->pos.z - map->altitude[offset]) * cam->scale / i + cam->horizon;
+		idx = width * (int)ray->y + (int)ray->x;
+		new_height = (cam->pos.z - map->altitude[idx]) * cam->scale / i + cam->horizon;
 		if (new_height < 0)
 			new_height = 0;
 		if (new_height < ray->max_height)
 		{
-			color = map->color[offset];
+			color = map->color[idx];
 			while (ray->max_height > new_height)
 				putpixel(img, ray->column, --ray->max_height, color);
 		}
@@ -49,17 +49,17 @@ void	put_background(t_img *img, t_ray *ray, t_cam *cam, t_pic *sky)
 	const int	horizon = cam->horizon;
 	const int	max_height = ray->max_height;
 	t_dpos2		angle;
-	t_pos		texture;
+	t_pos		tex;
 	int			i;
 
 	angle.x = atan2(ray->dy, ray->dx);
-	texture.x = (int)(angle.x / CIRCLE * sky->width) % sky->width;
+	tex.x = (int)(angle.x / CIRCLE * sky->width) % sky->width;
 	i = -1;
 	while (++i < max_height)
 	{
 		angle.y = (atan2(horizon - i, cam->zfar) + QUADRANT) / PI;
-		texture.y = (int)(angle.y * sky->height);
-		putpixel(img, ray->column, i, sky->data[sky->width * texture.y + texture.x]);
+		tex.y = (int)(angle.y * sky->height);
+		putpixel(img, ray->column, i, sky->data[sky->width * tex.y + tex.x]);
 	}
 }
 

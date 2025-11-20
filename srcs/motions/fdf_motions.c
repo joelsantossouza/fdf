@@ -21,7 +21,7 @@ t_pos	rotate(t_axis *a, int x, int y, int z)
 
 	tmp_x = x;
 	tmp_y = y * a->x.cos + z * -a->x.sin;
-	tmp_z = y * a->x.sin +  z * a->x.cos;
+	tmp_z = y * a->x.sin + z * a->x.cos;
 	x = tmp_x * a->y.cos + tmp_z * a->y.sin;
 	y = tmp_y;
 	z = tmp_x * -a->y.sin + tmp_z * a->y.cos;

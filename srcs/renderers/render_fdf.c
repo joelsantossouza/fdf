@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:11:03 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/18 20:29:43 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/20 12:37:16 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	render_fdf(t_img *img, t_fdf *fdf, t_map *map)
 	const int			width = map->width;
 	const t_drawline	drawline = fdf->drawline;
 	unsigned int		color;
-	size_t				offset;
+	size_t				idx;
 	t_pos				p;
 
 	ft_mempset(img->addr, 0, img->width * img->height * img->bpp);
@@ -59,12 +59,12 @@ void	render_fdf(t_img *img, t_fdf *fdf, t_map *map)
 		p.x = -1;
 		while (++p.x < width)
 		{
-			offset = p.y + p.x;
-			color = map->color[offset];
+			idx = p.y + p.x;
+			color = map->color[idx];
 			if (p.x + 1 < width)
-				drawline(img, fdf->data[offset], fdf->data[offset + 1], color);
+				drawline(img, fdf->data[idx], fdf->data[idx + 1], color);
 			if (p.y + width < map->total)
-				drawline(img, fdf->data[offset], fdf->data[offset + width], color); 
+				drawline(img, fdf->data[idx], fdf->data[idx + width], color);
 		}
 		p.y += width;
 	}

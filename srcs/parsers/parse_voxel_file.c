@@ -15,7 +15,8 @@
 #include "parsers.h"
 #include <stdlib.h>
 
-int	parse_voxel_file(const char *color_file, const char *height_file, t_map *map)
+int	parse_voxel_file(const char *color_file, const char *height_file,
+		t_map *map)
 {
 	unsigned char	*color;
 	unsigned char	*height;
@@ -25,16 +26,19 @@ int	parse_voxel_file(const char *color_file, const char *height_file, t_map *map
 	color = stbi_load(color_file, &size.x, &size.y, 0, RGB);
 	height = stbi_load(height_file, &map->width, &map->height, 0, GRAYSCALE);
 	if (!color || !height || map->width != size.x || map->height != size.y)
-		return (*map = (t_map){}, stbi_image_free(color), stbi_image_free(height), ERROR);
+		return (*map = (t_map){}, stbi_image_free(color),
+			stbi_image_free(height), ERROR);
 	map->total = map->width * map->height;
 	map->color = malloc(sizeof(*map->color) * map->total);
 	map->altitude = malloc(sizeof(*map->altitude) * map->total);
 	if (!map->color || !map->altitude)
-		return (free_map(map, NULL), stbi_image_free(color), stbi_image_free(height), ERROR);
+		return (free_map(map, NULL), stbi_image_free(color),
+			stbi_image_free(height), ERROR);
 	i = -1;
 	while (++i < map->total)
 	{
-		map->color[i] = color[i * 3] << 16 | color[i * 3 + 1] << 8 | color[i * 3 + 2];
+		map->color[i] = color[i * 3] << 16 | color[i * 3 + 1] << 8
+			| color[i * 3 + 2];
 		map->altitude[i] = height[i];
 	}
 	return (stbi_image_free(color), stbi_image_free(height), SUCCESS);
