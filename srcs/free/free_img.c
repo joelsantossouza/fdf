@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 19:13:17 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/19 12:06:53 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/21 10:32:20 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 void	free_img(void *mlx, t_img *img, void (*free_struct)(void *))
 {
-	mlx_destroy_image(mlx, img->data);
+	if (img->data)
+		mlx_destroy_image(mlx, img->data);
 	*img = (t_img){};
 	if (free_struct)
 		free_struct(img);
