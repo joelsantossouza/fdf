@@ -2,7 +2,7 @@
 
 A high-performance 3D wireframe renderer with isometric projection and voxelspace rendering capabilities.
 
-<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/f7e7a5ec-578d-4518-9d5a-fdaf8ee2cdbb" />
+<img width="1400" height="1009" alt="Image" src="https://github.com/user-attachments/assets/53017486-18d8-4c0f-bcbf-72dd2d7eb26f" />
 
 ## 🌟 Overview
 
