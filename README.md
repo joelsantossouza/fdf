@@ -4,13 +4,12 @@ A high-performance 3D wireframe renderer with isometric projection and voxelspac
 
 ## 🌟 Overview
 
-**FdF** (Fil de Fer - French for "wireframe") is a graphics project that renders 3D wireframe models in isometric projection from heightmap data. This project explores fundamental computer graphics concepts including:
+**FdF** (Fil de Fer - French for "wireframe") is a graphics project that renders 3D wireframe models in isometric projection. This project explores fundamental computer graphics concepts including:
 
 - Vector mathematics and transformations
 - Matrix multiplication
 - Line drawing algorithms (Bresenham, Xiaolin Wu)
 - Performance optimization techniques
-- Voxel-based rendering
 
 Built with **MinilibX**, a lightweight graphics library for creating efficient visual applications.
 
@@ -21,7 +20,7 @@ Built with **MinilibX**, a lightweight graphics library for creating efficient v
 - 🔄 Interactive rotation on all three axes
 - 🔍 Dynamic zoom and altitude scaling
 - 🎮 **BONUS:** First-person voxelspace exploration
-- 🖼️ **BONUS:** Image-to-heightmap conversion
+- 🖼️ **BONUS:** Image import
 - 🌅 **BONUS:** Custom skybox rendering
 
 ## 🚀 Getting Started
@@ -95,7 +94,7 @@ Format: `altitude,0xRRGGBB`
 
 ### Image-Based Maps (BONUS)
 
-Import any image as a heightmap:
+Import any image
 - **Color image:** Determines map texture/appearance
 - **Height image:** Brightness = elevation (white = high, black = low)
 
@@ -158,33 +157,6 @@ The bonus voxelspace renderer provides a first-person exploration experience usi
 
 This technique efficiently renders terrain by automatically hiding occluded voxels behind taller ones.
 
-### Features
-
-- Real-time first-person navigation
-- Height-based occlusion culling
-- Fly/walk mode toggle
-- Dynamic altitude scaling
-- Optional skybox rendering
-
-## 📁 Project Structure
-
-```
-fdf/
-├── maps/
-│   ├── fdf/          # Standard .fdf heightmaps
-│   └── voxel/        # Image pairs (color + height)
-├── src/              # Source files
-└── Makefile
-```
-
-## 🎓 Technical Highlights
-
-- **Performance-Optimized:** Efficient rendering algorithms for real-time interaction
-- **Vector Mathematics:** Full 3D transformation pipeline
-- **Multiple Line Algorithms:** Bresenham for speed, Xiaolin Wu for anti-aliasing
-- **Flexible Input:** Text files, color maps, or image imports
-- **Dual Rendering Modes:** Wireframe isometric + first-person voxelspace
-
 ## 🖼️ Example Usage
 
 ```bash
@@ -197,14 +169,5 @@ fdf/
 # Full experience with skybox
 ./fdf --images landscape.png heightmap.png --sky sunset.jpg
 ```
-
-## 💡 Tips
-
-- Use grayscale images for heightmaps to control terrain elevation precisely
-- High-resolution skybox images (2K+) provide better visual quality
-- Experiment with different line algorithms (`SPACE` key) to see quality vs. performance trade-offs
-- Try flying mode (`DOUBLE SPACE` in voxelspace) for unrestricted exploration
-
----
 
 *Transforming data into immersive 3D worlds.*
