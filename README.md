@@ -2,6 +2,8 @@
 
 A high-performance 3D wireframe renderer with isometric projection and voxelspace rendering capabilities.
 
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/f7e7a5ec-578d-4518-9d5a-fdaf8ee2cdbb" />
+
 ## 🌟 Overview
 
 **FdF** (Fil de Fer - French for "wireframe") is a graphics project that renders 3D wireframe models in isometric projection. This project explores fundamental computer graphics concepts including:
@@ -95,6 +97,9 @@ Format: `altitude,0xRRGGBB`
 ### Image-Based Maps (BONUS)
 
 Import any image
+
+<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/54ef45e2-e113-473e-812d-524b2ebb0501" />
+
 - **Color image:** Determines map texture/appearance
 - **Height image:** Brightness = elevation (white = high, black = low)
 
