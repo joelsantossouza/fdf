@@ -47,7 +47,7 @@ This generates the `fdf` executable.
 
 **Load a wireframe map:**
 ```bash
-./fdf maps/fdf/<map.fdf>
+./fdf <map.fdf>
 ```
 
 **Load from images (BONUS):**
@@ -174,10 +174,10 @@ This technique efficiently renders terrain by automatically hiding occluded voxe
 ./fdf maps/fdf/42.fdf
 
 # Import custom images
-./fdf --images terrain_color.png terrain_height.png
+./fdf --images maps/voxel/volcano/volcano.png maps/voxel/volcano/volcano_height.png
 
 # Full experience with skybox
-./fdf --images landscape.png heightmap.png --sky sunset.jpg
+./fdf --images maps/voxel/volcano/volcano.png maps/voxel/volcano/volcano_height.png --sky maps/sky/black_hole.png
 ```
 
 *Transforming data into immersive 3D worlds.*
