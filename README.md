@@ -98,7 +98,7 @@ Format: `altitude,0xRRGGBB`
 
 Import any image
 
-<img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/54ef45e2-e113-473e-812d-524b2ebb0501" />
+<img width="1155" height="850" alt="Image" src="https://github.com/user-attachments/assets/c7d72d22-499b-45a8-95e6-96be651a5675" />
 
 - **Color image:** Determines map texture/appearance
 - **Height image:** Brightness = elevation (white = high, black = low)
