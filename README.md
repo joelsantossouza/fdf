@@ -181,3 +181,5 @@ This technique efficiently renders terrain by automatically hiding occluded voxe
 ```
 
 *Transforming data into immersive 3D worlds.*
+
+<img width="1917" height="1011" alt="Image" src="https://github.com/user-attachments/assets/b1f4ae60-ff1f-4447-9298-2d222c4b9e22" />
