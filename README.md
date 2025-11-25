@@ -149,9 +149,14 @@ Import any image
 - `Q` / `E` - Scale voxel altitude down/up
 - `TAB` - Return to wireframe mode
 
+> **Note:** If your mouse look weird, uncomment the indicated line on ./srcs/main.c
+<img width="1382" height="462" alt="Image" src="https://github.com/user-attachments/assets/1729280b-e957-4253-ad65-7ca01dbe2e73" />
+
 ## 🎨 Voxelspace Rendering
 
 The bonus voxelspace renderer provides a first-person exploration experience using ray-marching techniques:
+
+<img width="1917" height="1011" alt="Image" src="https://github.com/user-attachments/assets/4c64980c-7700-49c5-880b-ed72ccacbf4d" />
 
 ### How It Works
 
